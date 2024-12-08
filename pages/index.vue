@@ -11,7 +11,7 @@ const { data } = await useAsyncData(
 const { equipes, jogos, sedes } = data.value
 
 const tabela = computed(() => {
-  return useSortBy(Object.keys(equipes).map(Number).map(calculaStatsEquipe), ['pontos', 'vitorias', 'diferenca_gols', 'gols_pro']).toReversed()
+  return useOrderBy(Object.keys(equipes).map(Number).map(calculaStatsEquipe), ['pontos', 'vitorias', 'diferenca_gols', 'gols_pro'], ['desc', 'desc', 'desc', 'desc'])
 })
 
 function calculaStatsEquipe(equipe_id: number) {
@@ -60,12 +60,12 @@ function calculaStatsEquipe(equipe_id: number) {
 
 function filtraJogosEquipe(equipe_id: number) {
   const contemEquipe = (jogo) => jogo.equipe_mandante.id === equipe_id || jogo.equipe_visitante.id === equipe_id
-  return Object.values(jogos || {}).filter(contemEquipe).filter(jogo => jogo.is_finalizado)
+  return Object.values(jogos || {}).filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
 const columns: { key: string, label: string }[] = [
   {
-    label: 'Pos',
+    label: '#',
     key: 'posicao'
   },
   {
@@ -73,31 +73,31 @@ const columns: { key: string, label: string }[] = [
     key: 'equipe'
   },
   {
-    label: 'Pontos',
+    label: 'PTS',
     key: 'pontos'
   },
   {
-    label: 'Vitórias',
+    label: 'V',
     key: 'vitorias'
   },
   {
-    label: 'Empates',
+    label: 'E',
     key: 'empates'
   },
   {
-    label: 'Derrotas',
+    label: 'D',
     key: 'derrotas'
   },
   {
-    label: 'Partidas',
+    label: 'P',
     key: 'partidas'
   },
   {
-    label: 'Gols pró',
+    label: 'GP',
     key: 'gols_pro'
   },
   {
-    label: 'Gols contra',
+    label: 'GC',
     key: 'gols_contra'
   },
   {
@@ -117,7 +117,7 @@ function badgeColor(position: number) {
 </script>
 
 <template>
-  <div>
+  <div class="max-w-3xl">
     <UCard>
       <UTable :columns="columns" :rows="tabela">
         <template #posicao-data="{ row }">
@@ -135,4 +135,8 @@ function badgeColor(position: number) {
   </div>
 </template>
 
-<style scoped></style>
+<style>
+td {
+  @apply !py-2
+}
+</style>

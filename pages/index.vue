@@ -107,11 +107,11 @@ const columns: { key: string, label: string }[] = [
 ]
 
 function badgeColor(position: number) {
-  if (position >= 1 && position <= 6) return 'green'
-  if (position >= 7 && position <= 8) return 'orange'
-  if (position >= 9 && position <= 14) return 'blue'
-  if (position >= 15 && position <= 16) return 'white'
-  if (position >= 17 && position <= 20) return 'red'
+  if (position >= 1 && position <= 6) return 'green'  // libertadores
+  if (position >= 7 && position <= 8) return 'orange' // pré libertadores
+  if (position >= 9 && position <= 14) return 'blue'  // sudamericana
+  if (position >= 15 && position <= 16) return 'white' 
+  if (position >= 17 && position <= 20) return 'red'  // rebaixamento
 }
 
 </script>

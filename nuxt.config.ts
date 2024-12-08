@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui', "nuxt-lodash"],
+  modules: ['@nuxt/ui', "nuxt-lodash", '@nuxtjs/tailwindcss'],
   pages: true,
   ssr: false
 })

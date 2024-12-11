@@ -1,48 +1,39 @@
 <script setup lang="ts">
 
-import { filtraEmpates, filtraVitorias, somaGolsContraMandante, somaGolsContraVisitante, somaGolsProMandante, somaGolsProVisitante } from '../utils/tabela';
+const { equipes, jogos, sedes, rodada_atual } = useSimulador()
 
-const { data } = await useAsyncData(
-  'jogos',
-  () => $fetch(
-    'https://api.gcn.ge.globo.com/api/simuladores/estado-campeonato/campeonato-brasileiro/campeonato-brasileiro-2024/', {
-    method: 'GET'
-  })
-)
+import type { Jogo } from '~/types/jogo';
+import { filtraEmpates, filtraVitorias, golsContra, golsPro } from '../utils/tabela';
 
-const { equipes, jogos, sedes, rodada_atual } = data.value
+//  
 
 const jogosRodada = computed(() => {
   return Object.values(jogos || {}).filter(jogo => jogo.rodada === rodada_atual)
 })
 
 const tabela = computed(() => {
-  return useOrderBy(Object.keys(equipes).map(Number).map(calculaStatsEquipe), ['pontos', 'vitorias', 'diferenca_gols', 'gols_pro'], ['desc', 'desc', 'desc', 'desc'])
+  return useOrderBy(statsByEquipe.value, ['pontos', 'vitorias', 'diferenca_gols', 'gols_pro'], ['desc', 'desc', 'desc', 'desc'])
+})
+
+const statsByEquipe = computed(() => {
+  return Object.keys(equipes).map(Number).map(equipeId => calculaStatsEquipe(equipeId))
 })
 
 function calculaStatsEquipe(equipe_id: number) {
   const jogos_equipe = filtraJogosEquipe(equipe_id)
-
-  const gols_pro_mandante = somaGolsProMandante(jogos_equipe, equipe_id)
-
-  const gols_contra_mandante = somaGolsContraMandante(jogos_equipe, equipe_id)
-
-  const gols_pro_visitante = somaGolsProVisitante(jogos_equipe, equipe_id)
-
-  const gols_contra_visitante = somaGolsContraVisitante(jogos_equipe, equipe_id)
 
   const vitorias = filtraVitorias(jogos_equipe, equipe_id)
 
   const empates = filtraEmpates(jogos_equipe, equipe_id)
 
   return {
-    gols_pro: gols_pro_mandante + gols_pro_visitante,
-    gols_contra: gols_contra_mandante + gols_contra_visitante,
+    gols_pro: golsPro(jogos_equipe, equipe_id),
+    gols_contra: golsContra(jogos_equipe, equipe_id),
     vitorias: vitorias.length,
     empates: empates.length,
     derrotas: Math.abs((vitorias.length + empates.length) - jogos_equipe.length),
     pontos: vitorias.length * 3 + empates.length,
-    diferenca_gols: (gols_pro_mandante + gols_pro_visitante) - (gols_contra_mandante + gols_contra_visitante),
+    diferenca_gols: golsPro(jogos_equipe, equipe_id) - golsContra(jogos_equipe, equipe_id),
     equipe: equipes[equipe_id].nome_popular,
     partidas: jogos_equipe.length,
     clube_url: equipes[equipe_id].escudo.svg,
@@ -50,8 +41,8 @@ function calculaStatsEquipe(equipe_id: number) {
 
 }
 
-function filtraJogosEquipe(equipe_id: number) {
-  const contemEquipe = (jogo) => jogo.equipe_mandante.id === equipe_id || jogo.equipe_visitante.id === equipe_id
+function filtraJogosEquipe(equipe_id: number): Jogo[] {
+  const contemEquipe = (jogo: Jogo) => jogo.equipe_mandante.id === equipe_id || jogo.equipe_visitante.id === equipe_id
   return Object.values(jogos || {}).filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
@@ -132,12 +123,13 @@ function badgeColor(position: number) {
     <div>
       <UCard v-for="jogo in jogosRodada" :key="jogo.id">
         <div>
-          <div class="flex gap-4">
+          <div class="flex gap-4 items-center">
             <span>{{ jogo.equipe_mandante.sigla }}</span>
             <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
-            <UInput v-model.number="jogo.placar_oficial_mandante"></UInput>
+            <UInput class="w-10" size="xl" type="number" max="9" v-model.number="jogo.placar_oficial_mandante"></UInput>
             X
-            <UInput v-model.number="jogo.placar_oficial_visitante"></UInput>
+            <UInput class="w-10" size="xl" type="number" max="9" v-model.number="jogo.placar_oficial_visitante">
+            </UInput>
             <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
             <span>{{ jogo.equipe_visitante.sigla }}</span>
           </div>
@@ -150,5 +142,16 @@ function badgeColor(position: number) {
 <style>
 td {
   @apply !py-2
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>

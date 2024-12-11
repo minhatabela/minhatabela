@@ -30,10 +30,23 @@ export function somaGolsContraVisitante(jogos: Jogo[], equipeId: number) {
 
 export function filtraVitorias(jogos: Jogo[], equipeId: number) {
   return jogos
-    .filter(jogo => jogo.vencedor_jogo === equipeId)
+    .filter(jogo => {
+      if (jogo.equipe_mandante.id === equipeId) return Number(jogo.placar_oficial_mandante) > Number(jogo.placar_oficial_visitante)
+      else return Number(jogo.placar_oficial_visitante) > Number(jogo.placar_oficial_mandante)
+    })
 }
 
 export function filtraEmpates(jogos: Jogo[], equipeId: number) {
   return jogos
-    .filter(jogo => jogo.empate)
+    .filter(jogo => {
+      return jogo.placar_oficial_mandante === jogo.placar_oficial_visitante
+    })
+}
+
+export function golsPro(jogos: Jogo[], equipeId: number) {
+  return somaGolsProMandante(jogos, equipeId) + somaGolsProVisitante(jogos, equipeId)
+}
+
+export function golsContra(jogos: Jogo[], equipeId: number) {
+  return somaGolsContraMandante(jogos, equipeId) + somaGolsContraVisitante(jogos, equipeId)
 }

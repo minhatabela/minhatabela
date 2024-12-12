@@ -9,13 +9,13 @@ const { data } = await useAsyncData(
   { lazy: true }
 )
 
-const { equipes, jogos, sedes, rodada_atual } = data?.value || { equpes: {}, jogos: {}, sedes: {}, rodada_atual: 0 }
+const { equipes, jogos, sedes, rodada_atual } = data?.value || { equipes: {}, jogos: {}, sedes: {}, rodada_atual: 0 }
 
 export const useSimulador = () => {
   return {
     equipes,
     jogos,
     sedes,
-    rodada_atual
+    rodada_atual: toRef(rodada_atual)
   }
 }

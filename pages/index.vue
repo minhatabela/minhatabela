@@ -7,8 +7,8 @@ import { filtraEmpates, filtraVitorias, golsContra, golsPro } from '../utils/tab
 
 //  
 
-const jogosRodada = computed(() => {
-  return Object.values(jogos || {}).filter(jogo => jogo.rodada === rodada_atual)
+const jogosRodada = computed<Jogo[]>(() => {
+  return Object.values(jogos || {}).filter(jogo => jogo.rodada === rodada_atual.value)
 })
 
 const tabela = computed(() => {
@@ -120,16 +120,25 @@ function badgeColor(position: number) {
         </UTable>
       </UCard>
     </div>
-    <div>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <button :disabled="rodada_atual === 1" @click="rodada_atual = rodada_atual - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 1 }" />
+        </button>
+        <span class="font-semibold uppercase">Rodada {{ rodada_atual }}</span>
+        <button type="button" :disabled="rodada_atual === 38" @click="rodada_atual = rodada_atual + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': rodada_atual === 38 }" />
+        </button>
+      </div>
       <UCard v-for="jogo in jogosRodada" :key="jogo.id">
         <div>
-          <div class="flex gap-4 items-center">
+          <div class="flex gap-4 items-center justify-center">
             <span>{{ jogo.equipe_mandante.sigla }}</span>
             <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
-            <UInput class="w-10" size="xl" type="number" max="9" v-model.number="jogo.placar_oficial_mandante"></UInput>
+            <UInput size="xl" type="number" :max="9" v-model.number="jogo.placar_oficial_mandante" />
             X
-            <UInput class="w-10" size="xl" type="number" max="9" v-model.number="jogo.placar_oficial_visitante">
-            </UInput>
+            <UInput size="xl" type="number" :max="9" v-model.number="jogo.placar_oficial_visitante" />
             <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
             <span>{{ jogo.equipe_visitante.sigla }}</span>
           </div>
@@ -143,15 +152,20 @@ function badgeColor(position: number) {
 td {
   @apply !py-2
 }
+
 /* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
+/*input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
+*/
 /* Firefox */
-input[type=number] {
+/*input[type=number] {
   -moz-appearance: textfield;
+}
+*/ input[type=number] {
+  @apply w-20
 }
 </style>

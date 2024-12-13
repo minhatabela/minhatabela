@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const { equipes, jogos, sedes, rodada_atual } = useSimulador()
+const { equipes, jogos, sedes, rodada_atual, columns } = useSimulador()
 
 import type { Jogo } from '~/types/jogo';
 import { filtraEmpates, filtraVitorias, golsContra, golsPro } from '../utils/tabela';
@@ -46,48 +46,7 @@ function filtraJogosEquipe(equipe_id: number): Jogo[] {
   return Object.values(jogos || {}).filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
-const columns: { key: string, label: string }[] = [
-  {
-    label: '#',
-    key: 'posicao'
-  },
-  {
-    label: 'Clube',
-    key: 'equipe'
-  },
-  {
-    label: 'PTS',
-    key: 'pontos'
-  },
-  {
-    label: 'V',
-    key: 'vitorias'
-  },
-  {
-    label: 'E',
-    key: 'empates'
-  },
-  {
-    label: 'D',
-    key: 'derrotas'
-  },
-  {
-    label: 'P',
-    key: 'partidas'
-  },
-  {
-    label: 'GP',
-    key: 'gols_pro'
-  },
-  {
-    label: 'GC',
-    key: 'gols_contra'
-  },
-  {
-    label: 'Diff',
-    key: 'diferenca_gols'
-  }
-]
+
 
 function badgeColor(position: number) {
   if (position >= 1 && position <= 6) return 'green'  // libertadores
@@ -100,7 +59,7 @@ function badgeColor(position: number) {
 </script>
 
 <template>
-  <div class="max-w-3xl flex flex-col gap-10">
+  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-center">
     <div>
       <UCard>
         <UTable :columns="columns" :rows="tabela">
@@ -127,28 +86,33 @@ function badgeColor(position: number) {
         </button>
         <span class="font-semibold uppercase">Rodada {{ rodada_atual }}</span>
         <button type="button" :disabled="rodada_atual === 38" @click="rodada_atual = rodada_atual + 1">
-          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
-            :class="{ 'opacity-40': rodada_atual === 38 }" />
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 38 }" />
         </button>
       </div>
-      <UCard v-for="jogo in jogosRodada" :key="jogo.id">
-        <div>
-          <div class="flex gap-4 items-center justify-center">
-            <span>{{ jogo.equipe_mandante.sigla }}</span>
-            <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
-            <UInput size="xl" type="number" :max="9" v-model.number="jogo.placar_oficial_mandante" />
-            X
-            <UInput size="xl" type="number" :max="9" v-model.number="jogo.placar_oficial_visitante" />
-            <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
-            <span>{{ jogo.equipe_visitante.sigla }}</span>
+      <div class="grid lg:grid-cols-2 gap-4">
+        <UCard v-for="jogo in jogosRodada" :key="jogo.id">
+          <div>
+            <div class="flex gap-4 items-center justify-center">
+              <!-- <span>{{ jogo.equipe_mandante.sigla }}</span> -->
+              <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
+              <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_mandante" />
+              X
+              <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_visitante" />
+              <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
+              <!-- <span>{{ jogo.equipe_visitante.sigla }}</span> -->
+            </div>
           </div>
-        </div>
-      </UCard>
+        </UCard>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
+html,
+body {
+  font-family: 'DM Sans', sans-serif;
+}
 td {
   @apply !py-2
 }

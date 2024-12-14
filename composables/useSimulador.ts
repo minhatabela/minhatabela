@@ -1,12 +1,12 @@
 
 
-const { data } = await useAsyncData(
+const { data } = await useLazyAsyncData(
   'jogos',
   () => $fetch(
     'https://api.gcn.ge.globo.com/api/simuladores/estado-campeonato/campeonato-brasileiro/campeonato-brasileiro-2024/', {
     method: 'GET'
   }),
-  { lazy: true }
+
 )
 
 const { equipes, jogos, sedes, rodada_atual } = data?.value || { equipes: {}, jogos: {}, sedes: {}, rodada_atual: 0 }

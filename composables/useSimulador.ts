@@ -1,17 +1,5 @@
-
-
-const { data } = await useLazyAsyncData(
-  'jogos',
-  () => $fetch(
-    'https://api.gcn.ge.globo.com/api/simuladores/estado-campeonato/campeonato-brasileiro/campeonato-brasileiro-2024/', {
-    method: 'GET'
-  }),
-
-)
-
-const { equipes, jogos, sedes, rodada_atual } = data?.value || { equipes: {}, jogos: {}, sedes: {}, rodada_atual: 0 }
-
 export const useSimulador = () => {
+
   const columns = computed(() => {
     const { width } = useWindowSize()
 
@@ -65,10 +53,6 @@ export const useSimulador = () => {
   })
 
   return {
-    equipes,
-    jogos,
-    sedes,
-    rodada_atual: toRef(rodada_atual),
-    columns
+    columns,
   }
 }

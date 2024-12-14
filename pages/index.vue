@@ -7,14 +7,13 @@ const { data, execute } = useAsyncData(
   () => $fetch(
     'https://api.gcn.ge.globo.com/api/simuladores/estado-campeonato/campeonato-brasileiro/campeonato-brasileiro-2024/', {
     method: 'GET'
-  })
+  }),
+  { immediate: false, default: () => { return { equipes: {}, rodada_atual: 0, sedes: {}, jogos: {} } } }
 )
 
 onBeforeMount(async () => {
   await execute()
 })
-
-// const { equipes, jogos, sedes, rodada_atual } = toRefs(data.value || { equipes: {}, rodada_atual: 0, sedes: {}, jogos: {} }) 
 
 import type { Jogo } from '~/types/jogo';
 import { filtraEmpates, filtraVitorias, golsContra, golsPro } from '../utils/tabela';
@@ -71,58 +70,58 @@ function badgeColor(position: number) {
 </script>
 
 <template>
-  <Suspense>
+  <!-- <Suspense> -->
 
-    <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-center">
-      <div>
-        <UCard>
-          <UTable :columns="columns" :rows="tabela">
-            <template #posicao-data="{ row }">
-              <UBadge :color="badgeColor(tabela.indexOf(row) + 1)" :ui="{ rounded: 'rounded-full' }"
-                :label="tabela.indexOf(row) + 1" />
-            </template>
-            <template #equipe-data="{ row }">
-              <div class="flex gap-2 items-center">
-                <img style="width: 20px;" :src="row.clube_url" alt="">
-                <span class="font-bold">{{ row.equipe }}</span>
-              </div>
-            </template>
-            <template #pontos-data="{ row }">
-              <span class="font-bold">{{ row.pontos }}</span>
-            </template>
-          </UTable>
+  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-center">
+    <div>
+      <UCard>
+        <UTable :columns="columns" :rows="tabela">
+          <template #posicao-data="{ row }">
+            <UBadge :color="badgeColor(tabela.indexOf(row) + 1)" :ui="{ rounded: 'rounded-full' }"
+              :label="tabela.indexOf(row) + 1" />
+          </template>
+          <template #equipe-data="{ row }">
+            <div class="flex gap-2 items-center">
+              <img style="width: 20px;" :src="row.clube_url" alt="">
+              <span class="font-bold">{{ row.equipe }}</span>
+            </div>
+          </template>
+          <template #pontos-data="{ row }">
+            <span class="font-bold">{{ row.pontos }}</span>
+          </template>
+        </UTable>
+      </UCard>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <button :disabled="data.rodada_atual === 1" @click="data.rodada_atual = data.rodada_atual - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': data.rodada_atual === 1 }" />
+        </button>
+        <span class="font-semibold uppercase">Rodada {{ data.rodada_atual }}</span>
+        <button type="button" :disabled="data.rodada_atual === 38" @click="data.rodada_atual = data.rodada_atual + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': data.rodada_atual === 38 }" />
+        </button>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-4">
+        <UCard v-for="jogo in jogosRodada" :key="jogo.id">
+          <div>
+            <div class="flex gap-4 items-center justify-center">
+              <!-- <span>{{ jogo.equipe_mandante.sigla }}</span> -->
+              <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
+              <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_mandante" />
+              X
+              <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_visitante" />
+              <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
+              <!-- <span>{{ jogo.equipe_visitante.sigla }}</span> -->
+            </div>
+          </div>
         </UCard>
       </div>
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center justify-between">
-          <button :disabled="data.rodada_atual === 1" @click="data.rodada_atual = data.rodada_atual - 1">
-            <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer"
-              :class="{ 'opacity-40': data.rodada_atual === 1 }" />
-          </button>
-          <span class="font-semibold uppercase">Rodada {{ data.rodada_atual }}</span>
-          <button type="button" :disabled="data.rodada_atual === 38" @click="data.rodada_atual = data.rodada_atual + 1">
-            <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
-              :class="{ 'opacity-40': data.rodada_atual === 38 }" />
-          </button>
-        </div>
-        <div class="grid lg:grid-cols-2 gap-4">
-          <UCard v-for="jogo in jogosRodada" :key="jogo.id">
-            <div>
-              <div class="flex gap-4 items-center justify-center">
-                <!-- <span>{{ jogo.equipe_mandante.sigla }}</span> -->
-                <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
-                <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_mandante" />
-                X
-                <UInput size="xl" type="number" :max="9" :min="0" v-model.number="jogo.placar_oficial_visitante" />
-                <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
-                <!-- <span>{{ jogo.equipe_visitante.sigla }}</span> -->
-              </div>
-            </div>
-          </UCard>
-        </div>
-      </div>
     </div>
-  </Suspense>
+  </div>
+  <!-- </Suspense> -->
 </template>
 
 <style>

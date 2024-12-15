@@ -57,7 +57,10 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ layout: false })
+definePageMeta({ layout: false });
+useHead({
+  title: "Home · minhatabela"
+})
 </script>
 <style>
 html,

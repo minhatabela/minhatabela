@@ -3,19 +3,21 @@
     <nav class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm">
       <div class="max-w-7xl w-full">
         <h1
-          class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
+          class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
           minhatabela
         </h1>
       </div>
     </nav>
     <div class="max-w-7xl w-full h-full flex pt-20">
-      <div>
-        <div class="flex flex-col gap-4 w-2/5">
+      <div class="px-4">
+        <div class="flex flex-col gap-4">
           <h1
             class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
             minhatabela
           </h1>
-          <p class="text-lg font-normal text-slate-800 dark:text-slate-300">Simule a classificação do Brasileirão rodada
+          <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">Simule a classificação do
+            Brasileirão
+            rodada
             a
             rodada e veja
             as chances do seu time do coração de alcançar um dos mais desejados títulos nacionais.
@@ -23,7 +25,7 @@
           <UButton to="/simular" trailing size="lg" icon="material-symbols:arrow-forward-rounded" class="w-fit mt-4"
             color="indigo" :ui="{ rounded: 'rounded-full' }">Simular agora</UButton>
         </div>
-        <div class="grid grid-cols-3 gap-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
           <UCard>
             <h1 class="text-semibold text-lg py-2">
               📈 Visualize a classificação

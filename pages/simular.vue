@@ -75,7 +75,7 @@ function badgeColor(position: number) {
 <template>
   <!-- <Suspense> -->
 
-  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-center">
+  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 ">
     <div>
       <UCard>
         <UTable :columns="columns" :rows="tabela">
@@ -108,7 +108,7 @@ function badgeColor(position: number) {
         </button>
       </div>
       <div class="grid lg:grid-cols-2 gap-4">
-        <UCard v-for="jogo in jogosRodada" :key="jogo.id">
+        <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="p-2">
           <div>
             <div class="flex gap-4 items-center justify-center">
               <!-- <span>{{ jogo.equipe_mandante.sigla }}</span> -->

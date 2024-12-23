@@ -62,10 +62,8 @@ function filtraJogosEquipe(jogos: Jogo[], equipeId: number): Jogo[] {
 
 export function calculaStatsEquipe(jogos: Jogo[], equipe_id: number) {
   const jogos_equipe = filtraJogosEquipe(jogos, equipe_id)
-  console.log('jogos equipe', jogos_equipe)
-  console.log('equipe id', equipe_id)
+
   const equipe = jogos_equipe[0].equipe_visitante.id === equipe_id ? jogos_equipe[0].equipe_visitante : jogos_equipe[0].equipe_mandante
-  console.log(equipe)
 
   const vitorias = filtraVitorias(jogos_equipe, equipe_id)
 

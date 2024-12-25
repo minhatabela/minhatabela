@@ -9,6 +9,12 @@ const { data } = useAsyncData(
   }
 )
 
+const { data: partidas } = useAsyncData('partidas', () => $fetch('/api/partidas'))
+const { data: clubes } = useAsyncData('clubes', () => $fetch('/api/clubes'))
+
+
+
+
 export const useApi = () => {
-  return { data }
+  return { data, partidas, clubes }
 }

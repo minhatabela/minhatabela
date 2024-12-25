@@ -51,7 +51,7 @@ export function golsContra(jogos: Jogo[], equipeId: number) {
   return somaGolsContraMandante(jogos, equipeId) + somaGolsContraVisitante(jogos, equipeId)
 }
 
-export function filtraJogosRodada(jogos: Jogo[], rodada: number) {
+export function filtraJogosRodada(jogos: Jogo[] = [], rodada: number) {
   return jogos.filter(jogo => jogo.rodada === rodada)
 }
 

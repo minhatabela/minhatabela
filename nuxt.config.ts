@@ -9,14 +9,10 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: [
-    '@nuxt/ui',
-    "nuxt-lodash",
-    '@nuxtjs/tailwindcss',
-    '@vueuse/nuxt',
-    '@nuxt/fonts',
-    'nuxt-gtag'
-  ],
+  modules: ['@nuxt/ui', "nuxt-lodash", '@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxt/fonts', 'nuxt-gtag', '@nuxtjs/supabase'],
+  supabase: {
+    redirect: false
+  },
   pages: true,
   ssr: false,
   app: {

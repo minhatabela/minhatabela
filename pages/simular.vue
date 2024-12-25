@@ -4,10 +4,12 @@ useHead({
 })
 
 import { badgeColor } from "../utils/tabela";
-const { data } = useApi()
+const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
 const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimuladoVisitante } = useSimulador()
 
+// const { data: partidas } = await useAsyncData('partidas', () => $fetch('/api/partidas'))
+// const { data: clubes } = await useAsyncData('clubes', () => $fetch('/api/clubes'))
 
 </script>
 
@@ -49,27 +51,27 @@ const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimula
         <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="p-2 flex items-center justify-center">
           <!-- <div> -->
           <div class="flex gap-4 items-center justify-center">
-            <UTooltip :text="jogo.equipe_mandante.nome_popular">
-              <img class="w-7" :src="jogo.equipe_mandante.escudo.svg" alt="">
+            <UTooltip :text="jogo.mandante.nome_popular">
+              <img class="w-7" :src="jogo.mandante.escudo" alt="">
             </UTooltip>
-            <UInput v-if="!jogo.is_finalizado" size="xl" type="number" :max="9" :min="0"
+            <UInput v-if="!jogo.finalizado" size="xl" type="number" :max="9" :min="0"
               @blur="updatePlacarSimuladoMandante(jogo.id, Number($event.target.value))"
               :model-value="jogo.placar_oficial_mandante" />
             <UTooltip v-else
               :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id)?.placarSimuladoMandante : undefined">
-              <span class="text-3xl px-4 w-20 text-center">{{ jogo.placar_oficial_mandante }}</span>
+              <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_mandante }}</span>
             </UTooltip>
             X
-            <UInput v-if="!jogo.is_finalizado" size="xl" type="number" :max="9" :min="0"
+            <UInput v-if="!jogo.finalizado" size="xl" type="number" :max="9" :min="0"
               @blur="updatePlacarSimuladoVisitante(jogo.id, Number($event.target.value))"
               :model-value="jogo.placar_oficial_visitante" />
             <UTooltip v-else
               :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id)?.placarSimuladoVisitante : undefined">
-              <span class="text-3xl px-4 w-20 text-center">{{ jogo.placar_oficial_visitante }}</span>
+              <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_visitante }}</span>
             </UTooltip>
 
-            <UTooltip :text="jogo.equipe_visitante.nome_popular">
-              <img class="w-7" :src="jogo.equipe_visitante.escudo.svg" alt="">
+            <UTooltip :text="jogo.visitante.nome_popular">
+              <img class="w-7" :src="jogo.visitante.escudo" alt="">
             </UTooltip>
           </div>
           <!-- </div> -->

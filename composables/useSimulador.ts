@@ -1,11 +1,13 @@
 
-const { data } = useApi()
+const { data, partidas } = useApi()
+
+const rodada_atual = 1
 
 const simulacao = useLocalStorage('simulador', new Map([]))
 
 export const useSimulador = () => {
   const jogosRodada = computed(() => {
-    return filtraJogosRodada(Object.values(data.value.jogos), data.value.rodada_atual)
+    return filtraJogosRodada(partidas.value || [], rodada_atual)
   })
 
   function updatePlacarSimuladoMandante(jogoId: number, placarSimuladoMandante: number) {

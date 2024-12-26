@@ -8,8 +8,6 @@ const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
 const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimuladoVisitante } = useSimulador()
 
-// const { data: partidas } = await useAsyncData('partidas', () => $fetch('/api/partidas'))
-// const { data: clubes } = await useAsyncData('clubes', () => $fetch('/api/clubes'))
 
 </script>
 
@@ -56,7 +54,7 @@ const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimula
             </UTooltip>
             <UInput v-if="!jogo.finalizado" size="xl" type="number" :max="9" :min="0"
               @blur="updatePlacarSimuladoMandante(jogo.id, Number($event.target.value))"
-              :model-value="jogo.placar_oficial_mandante" />
+              :model-value="jogo.placar_oficial_mandante || simulacao.get(jogo.id)?.placarSimuladoMandante" />
             <UTooltip v-else
               :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id)?.placarSimuladoMandante : undefined">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_mandante }}</span>
@@ -64,7 +62,7 @@ const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimula
             X
             <UInput v-if="!jogo.finalizado" size="xl" type="number" :max="9" :min="0"
               @blur="updatePlacarSimuladoVisitante(jogo.id, Number($event.target.value))"
-              :model-value="jogo.placar_oficial_visitante" />
+              :model-value="jogo.placar_oficial_visitante || simulacao.get(jogo.id)?.placarSimuladoVisitante" />
             <UTooltip v-else
               :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id)?.placarSimuladoVisitante : undefined">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_visitante }}</span>

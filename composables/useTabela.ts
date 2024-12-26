@@ -1,6 +1,6 @@
 import { calculaStatsEquipe } from "~/utils/tabela"
 
-const { data } = useApi()
+const { data, partidas, clubes } = useApi()
 
 export const useTabela = () => {
 
@@ -58,7 +58,7 @@ export const useTabela = () => {
 
 
   const statsByEquipe = computed(() => {
-    return Object.keys(data?.value?.equipes || {}).map(Number).map(equipeId => calculaStatsEquipe(Object.values(data.value.jogos), equipeId))
+    return clubes.value?.map(({ id }) => calculaStatsEquipe(partidas.value || [], id))
   })
 
   const tabela = computed(() => {

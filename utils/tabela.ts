@@ -1,53 +1,53 @@
 import { type Jogo } from "~/types/jogo";
 
-export function somaGolsProMandante(jogos: Jogo[], equipeId: number) {
+export function somaGolsProMandante(jogos: Jogo[], equipeId: string | number) {
   return jogos
-    .filter(jogo => jogo.equipe_mandante.id === equipeId)
-    .map(jogo => Number(jogo.placar_oficial_mandante))
+    .filter(jogo => jogo.mandante.id === equipeId)
+    .map(jogo => Number(jogo.gols_mandante))
     .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
 }
 
-export function somaGolsContraMandante(jogos: Jogo[], equipeId: number) {
+export function somaGolsContraMandante(jogos: Jogo[], equipeId: number | string) {
   return jogos
-    .filter(jogo => jogo.equipe_mandante.id === equipeId)
-    .map(jogo => Number(jogo.placar_oficial_visitante))
+    .filter(jogo => jogo.mandante.id === equipeId)
+    .map(jogo => Number(jogo.gols_visitante))
     .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
 }
 
-export function somaGolsProVisitante(jogos: Jogo[], equipeId: number) {
+export function somaGolsProVisitante(jogos: Jogo[], equipeId: number | string) {
   return jogos
-    .filter(jogo => jogo.equipe_visitante.id === equipeId)
-    .map(jogo => Number(jogo.placar_oficial_visitante))
+    .filter(jogo => jogo.visitante.id === equipeId)
+    .map(jogo => Number(jogo.gols_visitante))
     .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
 }
 
-export function somaGolsContraVisitante(jogos: Jogo[], equipeId: number) {
+export function somaGolsContraVisitante(jogos: Jogo[], equipeId: number | string) {
   return jogos
-    .filter(jogo => jogo.equipe_visitante.id === equipeId)
-    .map(jogo => Number(jogo.placar_oficial_mandante))
+    .filter(jogo => jogo.visitante.id === equipeId)
+    .map(jogo => Number(jogo.gols_mandante))
     .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
 }
 
-export function filtraVitorias(jogos: Jogo[], equipeId: number) {
+export function filtraVitorias(jogos: Jogo[], equipeId: number | string) {
   return jogos
     .filter(jogo => {
-      if (jogo.equipe_mandante.id === equipeId) return Number(jogo.placar_oficial_mandante) > Number(jogo.placar_oficial_visitante)
-      else return Number(jogo.placar_oficial_visitante) > Number(jogo.placar_oficial_mandante)
+      if (jogo.mandante.id === equipeId) return Number(jogo.gols_mandante) > Number(jogo.gols_visitante)
+      else return Number(jogo.gols_visitante) > Number(jogo.gols_mandante)
     })
 }
 
-export function filtraEmpates(jogos: Jogo[], equipeId: number) {
+export function filtraEmpates(jogos: Jogo[]) {
   return jogos
     .filter(jogo => {
-      return jogo.placar_oficial_mandante === jogo.placar_oficial_visitante
+      return jogo.gols_mandante === jogo.gols_visitante
     })
 }
 
-export function golsPro(jogos: Jogo[], equipeId: number) {
+export function golsPro(jogos: Jogo[], equipeId: number | string) {
   return somaGolsProMandante(jogos, equipeId) + somaGolsProVisitante(jogos, equipeId)
 }
 
-export function golsContra(jogos: Jogo[], equipeId: number) {
+export function golsContra(jogos: Jogo[], equipeId: number | string) {
   return somaGolsContraMandante(jogos, equipeId) + somaGolsContraVisitante(jogos, equipeId)
 }
 
@@ -55,19 +55,19 @@ export function filtraJogosRodada(jogos: Jogo[] = [], rodada: number) {
   return jogos.filter(jogo => jogo.rodada === rodada)
 }
 
-function filtraJogosEquipe(jogos: Jogo[], equipeId: number): Jogo[] {
-  const contemEquipe = (jogo: Jogo) => jogo.equipe_mandante.id === equipeId || jogo.equipe_visitante.id === equipeId
+function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string): Jogo[] {
+  const contemEquipe = (jogo: Jogo) => jogo.mandante.id === equipeId || jogo.visitante.id === equipeId
   return jogos.filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
-export function calculaStatsEquipe(jogos: Jogo[], equipe_id: number) {
+export function calculaStatsEquipe(jogos: Jogo[], equipe_id: number | string) {
   const jogos_equipe = filtraJogosEquipe(jogos, equipe_id)
 
-  const equipe = jogos_equipe[0].equipe_visitante.id === equipe_id ? jogos_equipe[0].equipe_visitante : jogos_equipe[0].equipe_mandante
+  const equipe = jogos_equipe[0].visitante.id === equipe_id ? jogos_equipe[0].visitante : jogos_equipe[0].mandante
 
   const vitorias = filtraVitorias(jogos_equipe, equipe_id)
 
-  const empates = filtraEmpates(jogos_equipe, equipe_id)
+  const empates = filtraEmpates(jogos_equipe)
 
   return {
     gols_pro: golsPro(jogos_equipe, equipe_id),
@@ -79,7 +79,7 @@ export function calculaStatsEquipe(jogos: Jogo[], equipe_id: number) {
     diferenca_gols: golsPro(jogos_equipe, equipe_id) - golsContra(jogos_equipe, equipe_id),
     equipe: equipe.nome_popular,
     partidas: jogos_equipe.length,
-    clube_url: equipe.escudo.svg,
+    clube_url: equipe.escudo,
   }
 
 }

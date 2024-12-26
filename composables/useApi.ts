@@ -9,8 +9,8 @@ const { data } = useAsyncData(
   }
 )
 
-const { data: partidas } = useAsyncData('partidas', () => $fetch('/api/partidas'))
-const { data: clubes } = useAsyncData('clubes', () => $fetch('/api/clubes'))
+const { data: partidas } = useAsyncData('partidas', () => $fetch('/api/partidas'), { default: () => [] })
+const { data: clubes } = useAsyncData('clubes', () => $fetch('/api/clubes'), { default: () => [] })
 
 
 

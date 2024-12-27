@@ -50,6 +50,7 @@ export type Database = {
           mandante: string | null
           rodada: number
           sede: string | null
+          status: Database["public"]["Enums"]["status"]
           updated_at: string | null
           visitante: string | null
         }
@@ -63,6 +64,7 @@ export type Database = {
           mandante?: string | null
           rodada: number
           sede?: string | null
+          status?: Database["public"]["Enums"]["status"]
           updated_at?: string | null
           visitante?: string | null
         }
@@ -76,6 +78,7 @@ export type Database = {
           mandante?: string | null
           rodada?: number
           sede?: string | null
+          status?: Database["public"]["Enums"]["status"]
           updated_at?: string | null
           visitante?: string | null
         }
@@ -138,7 +141,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      status:
+        | "nao_iniciada"
+        | "iniciada"
+        | "finalizada"
+        | "cancelada"
+        | "wo"
+        | "postergada"
+        | "simulada"
     }
     CompositeTypes: {
       [_ in never]: never

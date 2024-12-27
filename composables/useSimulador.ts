@@ -10,19 +10,19 @@ export const useSimulador = () => {
     return filtraJogosRodada(partidas.value || [], rodada_atual)
   })
 
-  function updatePlacarSimuladoMandante(jogoId: number, placarSimuladoMandante: number) {
+  function updatePlacarSimuladoMandante(jogoId: number, clubeId: string, placarSimuladoMandante: number) {
     if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { placarSimuladoMandante }))
+      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { [clubeId]: placarSimuladoMandante }))
     } else {
-      simulacao.value.set(jogoId, { placarSimuladoMandante })
+      simulacao.value.set(jogoId, { [clubeId]: placarSimuladoMandante })
     }
   }
 
-  function updatePlacarSimuladoVisitante(jogoId: number, placarSimuladoVisitante: number) {
+  function updatePlacarSimuladoVisitante(jogoId: number, clubeId: string, placarSimuladoVisitante: number) {
     if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { placarSimuladoVisitante }))
+      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { [clubeId]: placarSimuladoVisitante }))
     } else {
-      simulacao.value.set(jogoId, { placarSimuladoVisitante })
+      simulacao.value.set(jogoId, { [clubeId]: placarSimuladoVisitante })
     }
 
   }

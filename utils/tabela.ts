@@ -1,3 +1,5 @@
+import { type Enums } from "~/types/database.types";
+import type { Equipe } from "~/types/equipe";
 import { type Jogo } from "~/types/jogo";
 
 export function somaGolsProMandante(jogos: Jogo[], equipeId: string | number) {
@@ -30,16 +32,26 @@ export function somaGolsContraVisitante(jogos: Jogo[], equipeId: number | string
 
 export function filtraVitorias(jogos: Jogo[], equipeId: number | string) {
   return jogos
+    .filter(jogo => jogo.status === 'nao_iniciada' as Enums<'status'>)
     .filter(jogo => {
       if (jogo.mandante.id === equipeId) return Number(jogo.gols_mandante) > Number(jogo.gols_visitante)
       else return Number(jogo.gols_visitante) > Number(jogo.gols_mandante)
     })
 }
 
+export function filtraDerrotas(jogos: Jogo[], equipeId: number | string) {
+  return jogos
+    .filter(jogo => jogo.status === 'nao_iniciada' as Enums<'status'>)
+    .filter(jogo => {
+      if (jogo.mandante.id === equipeId) return Number(jogo.gols_mandante) < Number(jogo.gols_visitante)
+      else return Number(jogo.gols_visitante) < Number(jogo.gols_mandante)
+    })
+}
+
 export function filtraEmpates(jogos: Jogo[]) {
   return jogos
     .filter(jogo => {
-      return jogo.gols_mandante === jogo.gols_visitante
+      return (jogo.gols_mandante != null && jogo.gols_visitante != null) && jogo.gols_mandante === jogo.gols_visitante && jogo.status === 'nao_iniciada' as Enums<'status'>
     })
 }
 
@@ -55,31 +67,32 @@ export function filtraJogosRodada(jogos: Jogo[] = [], rodada: number) {
   return jogos.filter(jogo => jogo.rodada === rodada)
 }
 
-function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string): Jogo[] {
-  const contemEquipe = (jogo: Jogo) => jogo.mandante.id === equipeId || jogo.visitante.id === equipeId
+function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string, simulador: Set<any> = new Set()): Jogo[] {
+  const contemEquipe = (jogo: Jogo) => (jogo.mandante.id === equipeId || jogo.visitante.id === equipeId) && jogo.status === 'nao_iniciada' as Enums<'status'>
   return jogos.filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
-export function calculaStatsEquipe(jogos: Jogo[], equipe_id: number | string) {
-  const jogos_equipe = filtraJogosEquipe(jogos, equipe_id)
+export function calculaStatsEquipe(jogos: Jogo[], clube: Equipe) {
+  //TODO adicionar filtro por simulador
+  const jogos_equipe = filtraJogosEquipe(jogos, clube.id)
 
-  const equipe = jogos_equipe[0].visitante.id === equipe_id ? jogos_equipe[0].visitante : jogos_equipe[0].mandante
+  // const equipe = jogos_equipe[0].visitante.id === clube.id ? jogos_equipe[0].visitante : jogos_equipe[0].mandante
 
-  const vitorias = filtraVitorias(jogos_equipe, equipe_id)
+  const vitorias = filtraVitorias(jogos_equipe, clube.id)
 
   const empates = filtraEmpates(jogos_equipe)
 
   return {
-    gols_pro: golsPro(jogos_equipe, equipe_id),
-    gols_contra: golsContra(jogos_equipe, equipe_id),
+    gols_pro: golsPro(jogos_equipe, clube.id),
+    gols_contra: golsContra(jogos_equipe, clube.id),
     vitorias: vitorias.length,
     empates: empates.length,
-    derrotas: Math.abs((vitorias.length + empates.length) - jogos_equipe.length),
+    derrotas: filtraDerrotas(jogos_equipe, clube.id).length,
     pontos: vitorias.length * 3 + empates.length,
-    diferenca_gols: golsPro(jogos_equipe, equipe_id) - golsContra(jogos_equipe, equipe_id),
-    equipe: equipe.nome_popular,
+    diferenca_gols: golsPro(jogos_equipe, clube.id) - golsContra(jogos_equipe, clube.id),
+    equipe: clube.nome_popular,
     partidas: jogos_equipe.length,
-    clube_url: equipe.escudo,
+    clube_url: clube.escudo,
   }
 
 }

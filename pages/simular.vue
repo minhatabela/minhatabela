@@ -8,13 +8,13 @@ import { type Jogo } from '~/types/jogo';
 import { badgeColor } from "../utils/tabela";
 const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
-const { jogosRodada, simulacao, updatePlacarSimuladoMandante, updatePlacarSimuladoVisitante } = useSimulador()
+const { jogosRodada, simulacao, simularPartida } = useSimulador()
 
 function getPlacarMandante(jogo: Jogo) {
   if (jogo.gols_mandante) {
     return jogo.gols_mandante
   } else if (simulacao.value.get(jogo.id)) {
-    return simulacao.value.get(jogo.id)[jogo.mandante.id]
+    return simulacao.value.get(jogo.id).gols_mandante
   }
 
   return undefined
@@ -25,7 +25,7 @@ function getPlacarVisitante(jogo: Jogo) {
   if (jogo.gols_visitante) {
     return jogo.gols_visitante
   } else if (simulacao.value.get(jogo.id)) {
-    return simulacao.value.get(jogo.id)[jogo.visitante.id]
+    return simulacao.value.get(jogo.id).gols_visitante
   }
 
   return undefined
@@ -75,17 +75,17 @@ function getPlacarVisitante(jogo: Jogo) {
             <UTooltip :text="jogo.mandante.nome_popular">
               <img class="w-7" :src="jogo.mandante.escudo" alt="">
             </UTooltip>
-            <UInput v-if="jogo.status === 'nao_iniciada'" size="xl" type="number" :max="9" :min="0"
-              @blur="updatePlacarSimuladoMandante(jogo.id, jogo.mandante.id, Number($event.target.value))"
+            <UInput v-if="jogo.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
+              @blur="simularPartida(jogo, jogo.mandante.id, Number($event.target.value))"
               :model-value="getPlacarMandante(jogo)" />
-            <UTooltip v-else :text="getPlacarMandante(jogo)">
+            <UTooltip v-else :text="simulacao.get(jogo.id).gols_mandante">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_mandante }}</span>
             </UTooltip>
             X
-            <UInput v-if="jogo.status === 'nao_iniciada'" size="xl" type="number" :max="9" :min="0"
-              @blur="updatePlacarSimuladoVisitante(jogo.id, jogo.visitante.id, Number($event.target.value))"
+            <UInput v-if="jogo.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
+              @blur="simularPartida(jogo, jogo.visitante.id, Number($event.target.value))"
               :model-value="getPlacarVisitante(jogo)" />
-            <UTooltip v-else :text="getPlacarVisitante(jogo)">
+            <UTooltip v-else :text="simulacao.get(jogo.id).gols_visitante">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_visitante }}</span>
             </UTooltip>
 

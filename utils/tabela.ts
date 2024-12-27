@@ -32,7 +32,7 @@ export function somaGolsContraVisitante(jogos: Jogo[], equipeId: number | string
 
 export function filtraVitorias(jogos: Jogo[], equipeId: number | string) {
   return jogos
-    .filter(jogo => jogo.status === 'nao_iniciada' as Enums<'status'>)
+    .filter(jogo => jogo.status !== 'nao_iniciada' as Enums<'status'>)
     .filter(jogo => {
       if (jogo.mandante.id === equipeId) return Number(jogo.gols_mandante) > Number(jogo.gols_visitante)
       else return Number(jogo.gols_visitante) > Number(jogo.gols_mandante)
@@ -41,7 +41,7 @@ export function filtraVitorias(jogos: Jogo[], equipeId: number | string) {
 
 export function filtraDerrotas(jogos: Jogo[], equipeId: number | string) {
   return jogos
-    .filter(jogo => jogo.status === 'nao_iniciada' as Enums<'status'>)
+    .filter(jogo => jogo.status !== 'nao_iniciada' as Enums<'status'>)
     .filter(jogo => {
       if (jogo.mandante.id === equipeId) return Number(jogo.gols_mandante) < Number(jogo.gols_visitante)
       else return Number(jogo.gols_visitante) < Number(jogo.gols_mandante)
@@ -51,7 +51,7 @@ export function filtraDerrotas(jogos: Jogo[], equipeId: number | string) {
 export function filtraEmpates(jogos: Jogo[]) {
   return jogos
     .filter(jogo => {
-      return (jogo.gols_mandante != null && jogo.gols_visitante != null) && jogo.gols_mandante === jogo.gols_visitante && jogo.status === 'nao_iniciada' as Enums<'status'>
+      return (jogo.gols_mandante != null && jogo.gols_visitante != null) && jogo.gols_mandante === jogo.gols_visitante && jogo.status !== 'nao_iniciada' as Enums<'status'>
     })
 }
 
@@ -67,14 +67,19 @@ export function filtraJogosRodada(jogos: Jogo[] = [], rodada: number) {
   return jogos.filter(jogo => jogo.rodada === rodada)
 }
 
-function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string, simulador: Set<any> = new Set()): Jogo[] {
-  const contemEquipe = (jogo: Jogo) => (jogo.mandante.id === equipeId || jogo.visitante.id === equipeId) && jogo.status === 'nao_iniciada' as Enums<'status'>
+function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string): Jogo[] {
+  const contemEquipe = (jogo: Jogo) => (jogo.mandante.id === equipeId || jogo.visitante.id === equipeId) && jogo.status !== 'nao_iniciada' as Enums<'status'>
   return jogos.filter(contemEquipe)//.filter(jogo => jogo.is_finalizado)
 }
 
-export function calculaStatsEquipe(jogos: Jogo[], clube: Equipe) {
+export function calculaStatsEquipe(jogos: Jogo[], clube: Equipe, simulador: Map<string, Jogo> = new Map([])) {
   //TODO adicionar filtro por simulador
-  const jogos_equipe = filtraJogosEquipe(jogos, clube.id)
+  const jogos_equipe_finalizado = filtraJogosEquipe(jogos, clube.id)
+  const ids_jogos_finalizados = jogos_equipe_finalizado.map(partida => partida.id)
+  const jogos_equipe_simulado = Array.from(simulador.values()).filter(partida => (partida.mandante.id === clube.id || partida.visitante.id === clube.id) && !ids_jogos_finalizados.includes(partida.id))
+
+  const jogos_equipe: Jogo[] = [...jogos_equipe_finalizado, ...jogos_equipe_simulado]
+  console.log('jogos equipe: ', jogos_equipe)
 
   // const equipe = jogos_equipe[0].visitante.id === clube.id ? jogos_equipe[0].visitante : jogos_equipe[0].mandante
 

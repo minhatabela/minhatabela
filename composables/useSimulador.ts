@@ -1,5 +1,6 @@
+import type { Jogo } from "~/types/jogo"
 
-const { data, partidas } = useApi()
+const { partidas } = useApi()
 
 const rodada_atual = 1
 
@@ -10,27 +11,19 @@ export const useSimulador = () => {
     return filtraJogosRodada(partidas.value || [], rodada_atual)
   })
 
-  function updatePlacarSimuladoMandante(jogoId: number, clubeId: string, placarSimuladoMandante: number) {
-    if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { [clubeId]: placarSimuladoMandante }))
+  function simularPartida(partida: Jogo, clubeId: string, placar: number) {
+    const partidaSimulada = simulacao.value.get(partida.id)
+    const golsKey = clubeId === partida.mandante.id ? 'gols_mandante' : 'gols_visitante'
+    if (partidaSimulada) {
+      simulacao.value.set(partida.id, Object.assign(partidaSimulada, { [golsKey]: placar }))
     } else {
-      simulacao.value.set(jogoId, { [clubeId]: placarSimuladoMandante })
+      simulacao.value.set(partida.id, Object.assign(partida, { [golsKey]: placar, status: 'simulada' }))
     }
-  }
-
-  function updatePlacarSimuladoVisitante(jogoId: number, clubeId: string, placarSimuladoVisitante: number) {
-    if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { [clubeId]: placarSimuladoVisitante }))
-    } else {
-      simulacao.value.set(jogoId, { [clubeId]: placarSimuladoVisitante })
-    }
-
   }
 
   return {
     jogosRodada,
     simulacao,
-    updatePlacarSimuladoMandante,
-    updatePlacarSimuladoVisitante
+    simularPartida
   }
 }

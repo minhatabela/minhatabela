@@ -69,7 +69,15 @@ function getPlacarVisitante(jogo: Jogo) {
         </button>
       </div>
       <div class="grid lg:grid-cols-2 gap-4">
-        <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="p-2 flex items-center justify-center">
+        <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="flex items-center justify-center">
+          <div class="pb-2 flex justify-between gap-2">
+            <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
+              day: '2-digit', month: 'short',
+              hour: '2-digit', minute: '2-digit'
+            })
+              }}</span>
+            <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
+          </div>
           <!-- <div> -->
           <div class="flex gap-4 items-center justify-center">
             <UTooltip :text="jogo.mandante.nome_popular">
@@ -78,14 +86,14 @@ function getPlacarVisitante(jogo: Jogo) {
             <UInput v-if="jogo.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
               @blur="simularPartida(jogo, jogo.mandante.id, Number($event.target.value))"
               :model-value="getPlacarMandante(jogo)" />
-            <UTooltip v-else :text="simulacao.get(jogo.id).gols_mandante">
+            <UTooltip v-else :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id).gols_mandante : undefined">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_mandante }}</span>
             </UTooltip>
             X
             <UInput v-if="jogo.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
               @blur="simularPartida(jogo, jogo.visitante.id, Number($event.target.value))"
               :model-value="getPlacarVisitante(jogo)" />
-            <UTooltip v-else :text="simulacao.get(jogo.id).gols_visitante">
+            <UTooltip v-else :text="simulacao.get(jogo.id) ? simulacao.get(jogo.id).gols_visitante : undefined">
               <span class="text-3xl px-4 w-20 text-center">{{ jogo.gols_visitante }}</span>
             </UTooltip>
 

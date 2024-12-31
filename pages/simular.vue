@@ -36,9 +36,11 @@ function getPlacarVisitante(jogo: Jogo) {
 <template>
   <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 ">
     <div>
-      <UCard>
+
+      <ToggleSensitive label="tabela">
         <Table :columns="columns" :tabela="tabela" />
-      </UCard>
+      </ToggleSensitive>
+
     </div>
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between">
@@ -59,7 +61,7 @@ function getPlacarVisitante(jogo: Jogo) {
             <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
               day: '2-digit', month: 'short',
               hour: '2-digit', minute: '2-digit'
-})
+            })
               }}</span>
             <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
           </div>

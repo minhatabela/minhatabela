@@ -5,13 +5,15 @@
         :icon="enabled ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'" @click="toggle()" />
     </div>
     <div class="relative">
-      <div v-show="enabled" class="backdrop-blur-xl rounded-lg absolute top-0 left-0 right-0 bottom-0 z-10"></div>
+      <HiddenContent :enabled="enabled" />
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import HiddenContent from './HiddenContent.vue';
+
 
 const [enabled, toggle] = useToggle()
 

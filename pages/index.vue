@@ -45,6 +45,12 @@
             <p class="text-slate-400"> Veja quais foram os resultados das rodadas anteriores e os confrontos que estão
               por vir</p>
           </UCard>
+          <UCard>
+            <h1 class="text-semibold text-lg py-2">
+              📃 Salve suas simulações
+            </h1>
+            <p class="text-slate-400"> Suas simulações são salvas localmente</p>
+          </UCard>
         </div>
       </div>
     </div>

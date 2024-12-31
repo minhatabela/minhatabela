@@ -5,7 +5,6 @@ useHead({
 
 import { type Jogo } from '~/types/jogo';
 
-import { badgeColor } from "../utils/tabela";
 const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
 const { jogosRodada, simulacao, simularPartida } = useSimulador()
@@ -38,21 +37,7 @@ function getPlacarVisitante(jogo: Jogo) {
   <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 ">
     <div>
       <UCard>
-        <UTable :columns="columns" :rows="tabela">
-          <template #posicao-data="{ row }">
-            <UBadge :color="badgeColor(tabela.indexOf(row) + 1)" :ui="{ rounded: 'rounded-full' }"
-              :label="tabela.indexOf(row) + 1" />
-          </template>
-          <template #equipe-data="{ row }">
-            <div class="flex gap-2 items-center">
-              <img style="width: 20px;" :src="row.clube_url" alt="">
-              <span class="font-bold">{{ row.equipe }}</span>
-            </div>
-          </template>
-          <template #pontos-data="{ row }">
-            <span class="font-bold">{{ row.pontos }}</span>
-          </template>
-        </UTable>
+        <Table :columns="columns" :tabela="tabela" />
       </UCard>
     </div>
     <div class="flex flex-col gap-4">
@@ -74,7 +59,7 @@ function getPlacarVisitante(jogo: Jogo) {
             <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
               day: '2-digit', month: 'short',
               hour: '2-digit', minute: '2-digit'
-            })
+})
               }}</span>
             <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
           </div>

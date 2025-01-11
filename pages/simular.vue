@@ -7,7 +7,7 @@ import { type Jogo } from '~/types/jogo';
 
 const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
-const { jogosRodada, simulacao, simularPartida } = useSimulador()
+const { jogosRodada, simulacao, simularPartida, rodada_atual } = useSimulador()
 
 function getPlacarMandante(jogo: Jogo) {
   if (jogo.gols_mandante) {
@@ -44,26 +44,26 @@ function getPlacarVisitante(jogo: Jogo) {
     </div>
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between">
-        <button :disabled="data.rodada_atual === 1" @click="data.rodada_atual = Number(data.rodada_atual) - 1">
-          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer"
-            :class="{ 'opacity-40': data.rodada_atual === 1 }" />
+        <button :disabled="rodada_atual === 1" @click="rodada_atual = Number(rodada_atual) - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 1 }" />
         </button>
-        <span class="font-semibold uppercase">Rodada {{ data.rodada_atual }}</span>
-        <button type="button" :disabled="data.rodada_atual === 38"
-          @click="data.rodada_atual = Number(data.rodada_atual) + 1">
-          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
-            :class="{ 'opacity-40': data.rodada_atual === 38 }" />
+        <span class="font-semibold uppercase">Rodada {{ rodada_atual }}</span>
+        <button type="button" :disabled="rodada_atual === 38" @click="rodada_atual = Number(rodada_atual) + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 38 }" />
         </button>
       </div>
       <div class="grid lg:grid-cols-2 gap-4">
         <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="flex items-center justify-center">
-          <div class="pb-2 flex justify-between gap-2">
-            <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
-              day: '2-digit', month: 'short',
-              hour: '2-digit', minute: '2-digit'
-            })
-              }}</span>
-            <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
+          <div class="flex w-full justify-between pb-2">
+            <div class="pb-2 flex justify-between gap-2">
+              <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
+                day: '2-digit', month: 'short',
+                hour: '2-digit', minute: '2-digit'
+                })
+                }}</span>
+              <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
+            </div>
+            <Options v-if="jogo.status != 'finalizada'" :partida="jogo" />
           </div>
           <!-- <div> -->
           <div class="flex gap-4 items-center justify-center">

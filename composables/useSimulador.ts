@@ -29,6 +29,7 @@ export const useSimulador = () => {
     jogosRodada,
     simulacao,
     simularPartida,
-    removerSimulacao
+    removerSimulacao,
+    rodada_atual
   }
 }

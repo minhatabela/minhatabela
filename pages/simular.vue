@@ -5,7 +5,6 @@ useHead({
 
 import { type Jogo } from '~/types/jogo';
 
-import { badgeColor } from "../utils/tabela";
 const { data, partidas, clubes } = useApi()
 const { columns, tabela } = useTabela()
 const { jogosRodada, simulacao, simularPartida, rodada_atual } = useSimulador()
@@ -37,23 +36,11 @@ function getPlacarVisitante(jogo: Jogo) {
 <template>
   <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 ">
     <div>
-      <UCard>
-        <UTable :columns="columns" :rows="tabela">
-          <template #posicao-data="{ row }">
-            <UBadge :color="badgeColor(tabela.indexOf(row) + 1)" :ui="{ rounded: 'rounded-full' }"
-              :label="tabela.indexOf(row) + 1" />
-          </template>
-          <template #equipe-data="{ row }">
-            <div class="flex gap-2 items-center">
-              <img style="width: 20px;" :src="row.clube_url" alt="">
-              <span class="font-bold">{{ row.equipe }}</span>
-            </div>
-          </template>
-          <template #pontos-data="{ row }">
-            <span class="font-bold">{{ row.pontos }}</span>
-          </template>
-        </UTable>
-      </UCard>
+
+      <ToggleSensitive label="tabela">
+        <Table :columns="columns" :tabela="tabela" />
+      </ToggleSensitive>
+
     </div>
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between">

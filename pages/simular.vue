@@ -70,13 +70,16 @@ function getPlacarVisitante(jogo: Jogo) {
       </div>
       <div class="grid lg:grid-cols-2 gap-4">
         <UCard v-for="jogo in jogosRodada" :key="jogo.id" class="flex items-center justify-center">
-          <div class="pb-2 flex justify-between gap-2">
-            <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
-              day: '2-digit', month: 'short',
-              hour: '2-digit', minute: '2-digit'
-            })
-              }}</span>
-            <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
+          <div class="flex w-full justify-between pb-2">
+            <div class="pb-2 flex justify-between gap-2">
+              <span class="text-xs text-slate-400">{{ new Date(jogo.data).toLocaleDateString('pt-BR', {
+                day: '2-digit', month: 'short',
+                hour: '2-digit', minute: '2-digit'
+              })
+                }}</span>
+              <span class="text-xs text-slate-400">{{ jogo.sede.nome_popular }}</span>
+            </div>
+            <Options v-if="jogo.status != 'finalizada'" :partida="jogo" />
           </div>
           <!-- <div> -->
           <div class="flex gap-4 items-center justify-center">

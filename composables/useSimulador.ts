@@ -21,9 +21,14 @@ export const useSimulador = () => {
     }
   }
 
+  function removerSimulacao(partidaId: string) {
+    simulacao.value.delete(partidaId)
+  }
+
   return {
     jogosRodada,
     simulacao,
-    simularPartida
+    simularPartida,
+    removerSimulacao
   }
 }

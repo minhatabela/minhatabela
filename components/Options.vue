@@ -1,0 +1,79 @@
+<template>
+  <div>
+    <UPopover :open="false" :popper="{ placement: 'right-start' }">
+      <Icon name="mage:dots" />
+
+      <template #panel>
+        <div class="flex flex-col">
+          <span @click="atribuirVitoriaSimplesMandante"
+            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            <img class="h-6 w-6" :src="partida.mandante.escudo" alt="">
+            {{
+              partida.mandante.nome_popular }} vence</span>
+          <span @click="atribuirVitoriaSimplesVisitante"
+            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            <img class="h-6 w-6" :src="partida.visitante.escudo" alt="">
+            {{
+              partida.visitante.nome_popular }} vence</span>
+          <span @click="decretarEmpateSimples"
+            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            <Icon size="1.5rem" name="simple-line-icons:minus" />
+            Empate
+          </span>
+          <UDivider v-if="partida.status != 'finalizada' && simulacao.get(partida.id)" class="py-1" />
+          <span @click="confirm = true" v-if="partida.status != 'finalizada' && !confirm && simulacao.get(partida.id)"
+            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer text-red-500">
+            <Icon size="1.5rem" name="mynaui:trash" />
+
+            Limpar
+            simulação
+          </span>
+          <span @click="limparSimulacao(partida.id)" v-if="partida.status != 'finalizada' && confirm"
+            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer text-amber-500">
+            <Icon size="1.5rem" name="iconamoon:attention-circle-fill" />
+
+            Confirmar
+          </span>
+        </div>
+      </template>
+    </UPopover>
+  </div>
+</template>
+
+<script lang="ts" setup>
+
+import { type Jogo } from '../types/jogo';
+
+const { simulacao, simularPartida, removerSimulacao } = useSimulador()
+
+const confirm = ref(false)
+
+interface Props {
+  partida: Jogo
+}
+const props = defineProps<Props>()
+
+function atribuirVitoriaSimplesMandante() {
+  simularPartida(props.partida, props.partida.mandante.id, 1);
+  simularPartida(props.partida, props.partida.visitante.id, 0);
+}
+
+function atribuirVitoriaSimplesVisitante() {
+  simularPartida(props.partida, props.partida.visitante.id, 1);
+  simularPartida(props.partida, props.partida.mandante.id, 0);
+}
+
+function decretarEmpateSimples() {
+  simularPartida(props.partida, props.partida.visitante.id, 0);
+  simularPartida(props.partida, props.partida.mandante.id, 0);
+}
+
+function limparSimulacao(partidaId: string) {
+  removerSimulacao(partidaId)
+  confirm.value = false
+}
+
+
+</script>
+
+<style scoped></style>

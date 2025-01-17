@@ -15,7 +15,8 @@
     </div>
   </div>
   <footer class="text text-slate-300 flex justify-center py-8">
-    minhatabela 2024 | <a href="https://alexislopes.com.br" target="_blank" class="ml-2"> alexislopes</a> </footer>
+    minhatabela {{ new Date().getFullYear() }} | <a href="https://alexislopes.com.br" target="_blank" class="ml-2">
+      alexislopes</a> </footer>
 </template>
 
 <style></style>

@@ -4,7 +4,7 @@ const { partidas } = useApi()
 
 const rodada_atual = 1
 
-const simulacao = useLocalStorage('simulador', new Map([]))
+const simulacao = useLocalStorage('simulador', new Map<string, Jogo>([]))
 
 export const useSimulador = () => {
   const jogosRodada = computed(() => {

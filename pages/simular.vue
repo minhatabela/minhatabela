@@ -25,8 +25,8 @@ const arte = ref()
     </div>
     <div class="flex flex-col gap-4">
       <div class="flex justify-end">
-        <UButton @click="componentToPng(arte)" size="xs" variant="ghost" color="purple" icon="i-ic-round-download"
-          label="baixar simulação" />
+        <UButton @click="componentToPng(arte, rodada_atual)" size="xs" variant="ghost" color="purple"
+          icon="i-ic-round-download" label="baixar simulação" />
       </div>
       <div class="flex items-center justify-between">
         <button :disabled="rodada_atual === 1" @click="rodada_atual = Number(rodada_atual) - 1">

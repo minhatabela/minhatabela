@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
+  <UNotifications />
   <div class="w-full flex justify-center items-center">
     <div class="max-w-[1400px] w-full h-20 flex items-center">
       <h1

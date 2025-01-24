@@ -1,0 +1,20 @@
+<template>
+  <UPopover mode="hover" :popper="{ offsetDistance: 0 }">
+    <div class=" flex items-center gap-3 min-w-max">
+      <UAvatar :src="user.user_metadata.avatar_url" alt="Avatar" />
+      {{ user.user_metadata.name }}
+    </div>
+
+    <template #panel>
+      <UButton @click="logout" variant="link" color="purple" icon="i-solar-logout-broken">sair</UButton>
+    </template>
+  </UPopover>
+</template>
+
+<script lang="ts" setup>
+const { user, logout } = useAuth()
+
+
+</script>
+
+<style></style>

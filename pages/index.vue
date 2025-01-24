@@ -1,11 +1,13 @@
 <template>
   <div class="w-screen h-screen flex flex-col items-center">
     <nav class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm">
-      <div class="max-w-7xl w-full">
+      <div class="max-w-7xl w-full justify-between items-center flex">
         <h1
           class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
           minhatabela
         </h1>
+        <!-- <UButton v-if="!user" @click="login" color="purple">entrar</UButton> -->
+
       </div>
     </nav>
     <div class="max-w-7xl w-full h-full flex pt-20">
@@ -59,7 +61,8 @@
 
 
     <footer class="text text-slate-300 flex justify-center py-6">
-      minhatabela 2024 | <a href="https://alexislopes.com.br" target="_blank" class="ml-2"> alexislopes</a> </footer>
+      minhatabela {{ new Date().getFullYear() }} | <a href="https://alexislopes.com.br" target="_blank" class="ml-2">
+        alexislopes</a> </footer>
 
   </div>
 </template>

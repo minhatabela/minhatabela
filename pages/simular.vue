@@ -15,7 +15,7 @@ const arte = ref()
   <div v-show="false">
     <ArteRodada :rodada="rodada_atual" ref="arte" />
   </div>
-  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 ">
+  <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-between">
     <div>
 
       <ToggleSensitive label="tabela">

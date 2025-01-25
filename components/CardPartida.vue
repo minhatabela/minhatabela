@@ -5,7 +5,7 @@
         <span class="text-xs text-slate-400">{{ new Date(partida.data).toLocaleDateString('pt-BR', {
           day: '2-digit', month: 'short',
           hour: '2-digit', minute: '2-digit'
-        })
+          })
           }}</span>
         <span class="text-xs text-slate-400">{{ partida.sede.nome_popular }}</span>
       </div>
@@ -17,14 +17,14 @@
         <img class="w-7" :src="partida.mandante.escudo" alt="">
       </UTooltip>
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="simularPartida(partida, partida.mandante.id, Number($event.target.value))"
+        @blur="simularPartida(Object.assign(simulacao.get(partida.id) || { partida: partida.id }, { gols_visitante: Number($event.target.value) }), simulacao)"
         :model-value="getPlacarMandante(partida)" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_mandante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_mandante }}</span>
       </UTooltip>
       X
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="simularPartida(partida, partida.visitante.id, Number($event.target.value))"
+        @blur="simularPartida(Object.assign(simulacao.get(partida.id) || { partida: partida.id }, { gols_visitante: Number($event.target.value) }), simulacao)"
         :model-value="getPlacarVisitante(partida)" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_visitante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_visitante }}</span>
@@ -59,7 +59,6 @@ function getPlacarMandante(jogo: Jogo) {
 }
 
 function getPlacarVisitante(jogo: Jogo) {
-  console.log('placar visitante: ', jogo)
   if (jogo.gols_visitante) {
     return jogo.gols_visitante
   } else if (simulacao.value.get(jogo.id)) {

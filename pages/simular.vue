@@ -3,10 +3,26 @@ useHead({
   title: "Simulando · minhatabela"
 })
 
+// const client = useSupabaseClient()
+
+
+
+
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
 const { jogosRodada, rodada_atual } = useSimulador()
+
+
+// const { data, execute } = await useAsyncData('simulacao', async () => {
+//   const { data } = await client.from('simulacao').upsert(simulacao.value.values)
+
+//   return data
+// }, { immediate: false, watch: [simulacao] })
+
+// watch(simulacao, () => {
+//   execute()
+// })
 
 const arte = ref()
 </script>

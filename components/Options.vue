@@ -54,18 +54,27 @@ interface Props {
 const props = defineProps<Props>()
 
 function atribuirVitoriaSimplesMandante() {
-  simularPartida(props.partida, props.partida.mandante.id, 1);
-  simularPartida(props.partida, props.partida.visitante.id, 0);
+  simularPartida({
+    partida: props.partida.id,
+    gols_mandante: 1,
+    gols_visitante: 0
+  }, simulacao);
 }
 
 function atribuirVitoriaSimplesVisitante() {
-  simularPartida(props.partida, props.partida.visitante.id, 1);
-  simularPartida(props.partida, props.partida.mandante.id, 0);
+  simularPartida({
+    partida: props.partida.id,
+    gols_mandante: 0,
+    gols_visitante: 1
+  }, simulacao);
 }
 
 function decretarEmpateSimples() {
-  simularPartida(props.partida, props.partida.visitante.id, 0);
-  simularPartida(props.partida, props.partida.mandante.id, 0);
+  simularPartida({
+    partida: props.partida.id,
+    gols_mandante: 0,
+    gols_visitante: 0
+  }, simulacao);
 }
 
 function limparSimulacao(partidaId: string) {

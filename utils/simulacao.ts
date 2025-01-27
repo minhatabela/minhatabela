@@ -1,12 +1,9 @@
 import type { Tables } from "~/types/database.types";
 
 
-export function simularPartida(simulacao: Tables<'simulacao'>, simulador: Ref<Map<string, Tables<'simulacao'>>>) {
-  console.log('simulacao: ', simulacao)
-  console.log('simulador: ', simulador)
-  const partidaSimulada = toValue(simulador).get(simulacao.partida)
+export function simularPartida(simulacao: Partial<Tables<'simulacao'>>, simulador: Ref<Map<string, Tables<'simulacao'>>>) {
 
-  console.log('partida simulada: ', partidaSimulada)
+  const partidaSimulada = toValue(simulador).get(simulacao.partida)
 
   if (simulacao.gols_mandante === undefined && simulacao.gols_visitante === undefined) {
     simulador.value.delete(simulacao.partida)

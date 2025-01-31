@@ -1,6 +1,5 @@
-const user = useSupabaseUser()
-const supabase = useSupabaseClient()
 const toast = useToast()
+const supabase = useSupabaseClient()
 
 export const useAuth = () => {
 
@@ -19,5 +18,5 @@ export const useAuth = () => {
     }
   }
 
-  return { login, user, logout }
+  return { login, logout }
 }

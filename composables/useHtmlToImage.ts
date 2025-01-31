@@ -6,7 +6,6 @@ export const useHtmlToImage = () => {
   const toast = useToast()
 
   function componentToPng(component: HTMLElement, rodada: number) {
-    console.log(toValue(component))
     toPng(toValue(component), {
       width: 1080, height: 1350, canvasHeight: 1350, canvasWidth: 1080, fetchRequestInit: {
         method: 'GET',
@@ -14,10 +13,8 @@ export const useHtmlToImage = () => {
       }
     })
       .then(function (dataUrl) {
-        console.log(dataUrl)
         download(dataUrl, 'minhatabela rodada');
       }).catch(function (error) {
-        console.log('', error)
         toast.add({ title: `Erro ao baixar simulação da rodada ${rodada}`, color: 'red' })
       })
       ;

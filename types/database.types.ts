@@ -133,6 +133,44 @@ export type Database = {
         }
         Relationships: []
       }
+      simulacao: {
+        Row: {
+          created_at: string
+          gols_mandante: number | null
+          gols_visitante: number | null
+          id: string
+          partida: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          gols_mandante?: number | null
+          gols_visitante?: number | null
+          id?: string
+          partida?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          gols_mandante?: number | null
+          gols_visitante?: number | null
+          id?: string
+          partida?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "simulacao_partida_fkey"
+            columns: ["partida"]
+            isOneToOne: false
+            referencedRelation: "partida"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

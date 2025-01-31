@@ -5,7 +5,7 @@
         <span class="text-xs text-slate-400">{{ new Date(partida.data).toLocaleDateString('pt-BR', {
           day: '2-digit', month: 'short',
           hour: '2-digit', minute: '2-digit'
-        })
+})
           }}</span>
         <span class="text-xs text-slate-400">{{ partida.sede.nome_popular }}</span>
       </div>
@@ -17,15 +17,13 @@
         <img class="w-7" :src="partida.mandante.escudo" alt="">
       </UTooltip>
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="simularPartida(partida, partida.mandante.id, Number($event.target.value))"
-        :model-value="getPlacarMandante(partida)" />
+        @blur="placarMandante = Number($event.target.value)" :model-value="placarMandante" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_mandante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_mandante }}</span>
       </UTooltip>
       X
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="simularPartida(partida, partida.visitante.id, Number($event.target.value))"
-        :model-value="getPlacarVisitante(partida)" />
+        @blur="placarVisitante = Number($event.target.value)" :model-value="placarVisitante" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_visitante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_visitante }}</span>
       </UTooltip>
@@ -38,36 +36,59 @@
 </template>
 
 <script lang="ts" setup>
+import type { Tables } from '~/types/database.types';
 import { type Jogo } from '~/types/jogo';
 
-const { simulacao, simularPartida } = useSimulador()
+const { simulacao, salvarSimulacao } = useSimulador()
 
 interface Props {
   partida: Jogo
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-function getPlacarMandante(jogo: Jogo) {
-  if (jogo.gols_mandante) {
-    return jogo.gols_mandante
-  } else if (simulacao.value.get(jogo.id)) {
-    return simulacao.value.get(jogo.id).gols_mandante
+
+const placarVisitante = computed({
+  get() {
+    if (props.partida.status === 'finalizada') {
+      return props.partida.gols_visitante
+    } else {
+      return simulacao.value.get(props.partida.id)?.gols_visitante
+    }
+  },
+  async set(value: number) {
+    const schema = {
+      partida: props.partida.id,
+      gols_mandante: placarMandante.value,
+      gols_visitante: value
+    } as Tables<'simulacao'>
+
+    await salvarSimulacao(schema)
   }
+})
 
-  return undefined
-}
 
-function getPlacarVisitante(jogo: Jogo) {
-  console.log('placar visitante: ', jogo)
-  if (jogo.gols_visitante) {
-    return jogo.gols_visitante
-  } else if (simulacao.value.get(jogo.id)) {
-    return simulacao.value.get(jogo.id).gols_visitante
+const placarMandante = computed({
+  get() {
+    if (props.partida.status === 'finalizada') {
+      return props.partida.gols_mandante
+    } else {
+      return simulacao.value.get(props.partida.id)?.gols_mandante
+    }
+  },
+  async set(value: number) {
+
+    const schema = {
+      partida: props.partida.id,
+      gols_mandante: value,
+      gols_visitante: placarVisitante.value
+    } as Tables<'simulacao'>
+
+    await salvarSimulacao(schema)
   }
+})
 
-  return undefined
-}
+
 </script>
 
 <style></style>

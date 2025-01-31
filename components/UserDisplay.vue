@@ -12,7 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-const { user, logout } = useAuth()
+const { logout } = useAuth()
+const user = useSupabaseUser()
 
 
 </script>

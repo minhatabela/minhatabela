@@ -4,11 +4,16 @@ useHead({
 })
 
 
+
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_atual } = useSimulador()
+const { jogosRodada, rodada_atual, syncing, getAllSimulacoes } = useSimulador()
 
 const arte = ref()
+
+onMounted(async () => {
+  await getAllSimulacoes()
+})
 </script>
 
 <template>
@@ -24,7 +29,8 @@ const arte = ref()
 
     </div>
     <div class="flex flex-col gap-4">
-      <div class="flex justify-end">
+      <div class="flex justify-between items-center">
+        <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400" :class="{ 'animate-spin text-white': syncing }" />
         <UButton @click="componentToPng(arte, rodada_atual)" size="xs" variant="ghost" color="purple"
           icon="i-ic-round-download" label="baixar simulação" />
       </div>

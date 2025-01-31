@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { user, login } = useAuth()
+const { login } = useAuth()
+const user = useSupabaseUser()
 </script>
 
 <template>

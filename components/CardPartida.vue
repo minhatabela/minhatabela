@@ -5,7 +5,7 @@
         <span class="text-xs text-slate-400">{{ new Date(partida.data).toLocaleDateString('pt-BR', {
           day: '2-digit', month: 'short',
           hour: '2-digit', minute: '2-digit'
-          })
+})
           }}</span>
         <span class="text-xs text-slate-400">{{ partida.sede.nome_popular }}</span>
       </div>
@@ -39,7 +39,7 @@
 import type { Tables } from '~/types/database.types';
 import { type Jogo } from '~/types/jogo';
 
-const { simulacao, simularPartida } = useSimulador()
+const { simulacao, salvarSimulacao } = useSimulador()
 
 interface Props {
   partida: Jogo
@@ -56,17 +56,14 @@ const placarVisitante = computed({
       return simulacao.value.get(props.partida.id)?.gols_visitante
     }
   },
-  set(value: number) {
+  async set(value: number) {
     const schema = {
       partida: props.partida.id,
       gols_mandante: placarMandante.value,
       gols_visitante: value
     } as Tables<'simulacao'>
 
-    simularPartida(
-      schema,
-      simulacao
-    )
+    await salvarSimulacao(schema)
   }
 })
 
@@ -79,7 +76,7 @@ const placarMandante = computed({
       return simulacao.value.get(props.partida.id)?.gols_mandante
     }
   },
-  set(value: number) {
+  async set(value: number) {
 
     const schema = {
       partida: props.partida.id,
@@ -87,10 +84,7 @@ const placarMandante = computed({
       gols_visitante: placarVisitante.value
     } as Tables<'simulacao'>
 
-    simularPartida(
-      schema,
-      simulacao
-    )
+    await salvarSimulacao(schema)
   }
 })
 

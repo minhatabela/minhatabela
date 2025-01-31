@@ -1,33 +1,69 @@
 import type { Tables } from "~/types/database.types"
 import { simularPartida } from '../utils/simulacao'
 const { partidas } = useApi()
+const toast = useToast()
 
 const rodada_atual = 1
 
 const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao'>>([]))
-
+const syncing = ref(false)
 
 export const useSimulador = () => {
-
-
-  // const { data, execute, status } = useAsyncData('simulacao', () => $fetch('api/simulacao', { method: 'POST', body: { oii: 'oooi' } }), { immediate: false, watch: [simulacao] })
 
   const jogosRodada = computed(() => {
     return filtraJogosRodada(partidas.value || [], rodada_atual)
   })
 
-  // function simularPartida(partida: Jogo, clubeId: string, placar: number) {
-  //   const partidaSimulada = simulacao.value.get(partida.id)
-  //   const golsKey = clubeId === partida.mandante.id ? 'gols_mandante' : 'gols_visitante'
-  //   if (partidaSimulada) {
-  //     simulacao.value.set(partida.id, Object.assign(partidaSimulada, { [golsKey]: placar }))
-  //   } else {
-  //     simulacao.value.set(partida.id, Object.assign(partida, { [golsKey]: placar, status: 'simulada' }))
-  //   }
-  // }
 
-  function removerSimulacao(partidaId: string) {
+  async function removerSimulacao(partidaId: string) {
+    const client = useSupabaseClient()
+    const user = useSupabaseUser()
+
     simulacao.value.delete(partidaId)
+
+    if (user.value) {
+      syncing.value = true;
+      const { error } = await client.from('simulacao').delete().eq('partida', partidaId)
+
+      if (error) {
+        toast.add({ description: 'Erro ao deletar simulação', color: 'red' })
+      }
+    }
+    syncing.value = false;
+
+
+  }
+
+  async function salvarSimulacao(simulada: Tables<'simulacao'>) {
+    const client = useSupabaseClient()
+    const user = useSupabaseUser()
+
+    simularPartida(simulada as Partial<Tables<'simulacao'>>, simulacao)
+
+
+    if (user.value) {
+      syncing.value = true;
+      const { error } = await client.from('simulacao').upsert(simulada, { returning: 'minimal' })
+
+      if (error) {
+        toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
+      }
+      syncing.value = false
+    }
+  }
+
+  async function getAllSimulacoes() {
+    syncing.value = true;
+    const client = useSupabaseClient()
+    const { error, data } = await client.from('simulacao').select('id, partida, gols_visitante, gols_mandante')
+    if (error) {
+      toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
+    } else {
+      const map = data.map(simulacao => [simulacao.partida, simulacao])
+      simulacao.value = new Map(map)
+      console.log('simulações: ', data)
+    }
+    syncing.value = false
   }
 
   return {
@@ -35,6 +71,9 @@ export const useSimulador = () => {
     simulacao,
     simularPartida,
     removerSimulacao,
-    rodada_atual
+    rodada_atual,
+    salvarSimulacao,
+    syncing,
+    getAllSimulacoes
   }
 }

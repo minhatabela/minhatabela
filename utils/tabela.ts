@@ -69,7 +69,7 @@ export function filtraJogosRodada(jogos: Jogo[] = [], rodada: number) {
 
 function filtraJogosEquipe(jogos: Jogo[], equipeId: number | string): Jogo[] {
   const contemEquipe = (jogo: Jogo) => (jogo.mandante.id === equipeId || jogo.visitante.id === equipeId)
-  return jogos.filter(contemEquipe)
+  return [...jogos.filter(contemEquipe)]
 }
 
 export function calculaStatsEquipe(jogos: Jogo[], clube: Equipe, simulador: Map<string, Jogo> = new Map([])) {
@@ -79,16 +79,13 @@ export function calculaStatsEquipe(jogos: Jogo[], clube: Equipe, simulador: Map<
 
   const jogos_equipe_simulado = jogos_equipe_nao_iniciado
     .filter(partida => simulador.has(partida.id))
-    .map(partida => Object.assign(partida, { ...simulador.get(partida.id), status: 'simulada' }))
+    .map(partida => Object.assign({ ...partida }, { ...simulador.get(partida.id), status: 'simulada' }))
 
   const jogos_equipe: Jogo[] = [...jogos_equipe_finalizado, ...jogos_equipe_simulado]
-  console.log('jogos equipe: ', jogos_equipe)
 
   const vitorias = filtraVitorias(jogos_equipe, clube.id)
-  console.log('vitórias: ', vitorias)
 
   const empates = filtraEmpates(jogos_equipe)
-  console.log('empates: ', empates)
 
   return {
     gols_pro: golsPro(jogos_equipe, clube.id),

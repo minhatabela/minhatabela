@@ -44,7 +44,8 @@
 
 import { type Jogo } from '../types/jogo';
 
-const { simulacao, simularPartida, removerSimulacao } = useSimulador()
+const { simulacao, salvarSimulacao, removerSimulacao } = useSimulador()
+const user = useSupabaseUser()
 
 const confirm = ref(false)
 
@@ -53,32 +54,35 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-function atribuirVitoriaSimplesMandante() {
-  simularPartida({
+async function atribuirVitoriaSimplesMandante() {
+  await salvarSimulacao({
+    id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
     gols_mandante: 1,
     gols_visitante: 0
-  }, simulacao);
+  });
 }
 
-function atribuirVitoriaSimplesVisitante() {
-  simularPartida({
+async function atribuirVitoriaSimplesVisitante() {
+  await salvarSimulacao({
+    id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
     gols_mandante: 0,
     gols_visitante: 1
-  }, simulacao);
+  });
 }
 
-function decretarEmpateSimples() {
-  simularPartida({
+async function decretarEmpateSimples() {
+  await salvarSimulacao({
+    id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
     gols_mandante: 0,
     gols_visitante: 0
-  }, simulacao);
+  });
 }
 
-function limparSimulacao(partidaId: string) {
-  removerSimulacao(partidaId)
+async function limparSimulacao(partidaId: string) {
+  await removerSimulacao(partidaId)
   confirm.value = false
 }
 

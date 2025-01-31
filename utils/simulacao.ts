@@ -7,10 +7,10 @@ export function simularPartida(simulacao: Partial<Tables<'simulacao'>>, simulado
 
   if (simulacao.gols_mandante === undefined && simulacao.gols_visitante === undefined) {
     simulador.value.delete(simulacao.partida)
-    console.log('simulacao deletada')
   } else if (partidaSimulada) {
     partidaSimulada.gols_mandante = simulacao.gols_mandante
     partidaSimulada.gols_visitante = simulacao.gols_visitante
+    if (simulacao.id) partidaSimulada.id = simulacao.id
   } else {
     toValue(simulador).set(simulacao.partida, simulacao)
   }

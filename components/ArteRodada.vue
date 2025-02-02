@@ -6,7 +6,8 @@
       <h2 class="text-5xl font-bold">Brasileirão 2025</h2>
       <h3 class="text-3xl font-semibold">Rodada {{ rodada }}</h3>
     </div>
-    <div class="grid grid-cols-2 gap-16">
+    <!-- <div class="flex flex-wrap gap-16 justify-center"> -->
+    <div class="grid grid-cols-2 gap-16" :class="{ '!grid-cols-1': partidasRodada.length === 1 }">
       <div v-for="partida in partidasRodada" :key="partida.id"
         class="flex items-center justify-center gap-4 rounded-tl-xl rounded-br-xl border-4 border-white px-6 py-4">
         <img class="h-20 w-20" :src="partida.mandante.escudo" alt="">
@@ -31,7 +32,7 @@ const { partidas } = useApi()
 const { simulacao } = useSimulador()
 
 const partidasRodada = computed(() => {
-  return partidas.value?.filter(partida => partida.rodada = props.rodada)
+  return partidas.value?.filter(partida => partida.rodada = props.rodada).filter(partida => simulacao.value.has(partida.id))
 })
 </script>
 

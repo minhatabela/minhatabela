@@ -6,9 +6,9 @@ const user = useSupabaseUser()
 <template>
   <UNotifications />
   <div class="w-full flex justify-center items-center">
-    <div class="max-w-[1400px] w-full h-20 flex items-center justify-between">
+    <div class="max-w-[1400px] w-full h-20 flex items-center justify-between px-8 lg:px-0">
       <h1
-        class="px-4 w-full text-center lg:text-start lg:px-0 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent text-3xl font-black">
+        class="w-full bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent text-3xl font-black">
         minhatabela
       </h1>
       <UButton v-if="!user" color="purple" @click="login">entrar</UButton>

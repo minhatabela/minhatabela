@@ -8,7 +8,7 @@ useHead({
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_atual, syncing, getAllSimulacoes, simulacao } = useSimulador()
+const { jogosRodada, rodada_atual, syncing, simulacao, execute, simulacoes } = useSimulador()
 
 const arte = ref()
 
@@ -17,7 +17,8 @@ const empty = computed(() => {
 })
 
 onMounted(async () => {
-  await getAllSimulacoes()
+  // await getAllSimulacoes()
+  execute()
 })
 </script>
 

@@ -6,30 +6,30 @@
       <template #panel>
         <div class="flex flex-col">
           <span @click="atribuirVitoriaSimplesMandante"
-            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer">
             <img class="h-6 w-6" :src="partida.mandante.escudo" alt="">
             {{
-              partida.mandante.nome_popular }} vence</span>
+  partida.mandante.nome_popular }} vence</span>
           <span @click="atribuirVitoriaSimplesVisitante"
-            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            class="px-4 flex gap-2 items-center py-2 hover:dark:bg-slate-700 hover:bg-slate-100 cursor-pointer">
             <img class="h-6 w-6" :src="partida.visitante.escudo" alt="">
             {{
               partida.visitante.nome_popular }} vence</span>
           <span @click="decretarEmpateSimples"
-            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer">
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer">
             <Icon size="1.5rem" name="simple-line-icons:minus" />
             Empate
           </span>
           <UDivider v-if="partida.status != 'finalizada' && simulacao.get(partida.id)" class="py-1" />
           <span @click="confirm = true" v-if="partida.status != 'finalizada' && !confirm && simulacao.get(partida.id)"
-            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer text-red-500">
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-red-500">
             <Icon size="1.5rem" name="mynaui:trash" />
 
             Limpar
             simulação
           </span>
           <span @click="limparSimulacao(partida.id)" v-if="partida.status != 'finalizada' && confirm"
-            class="px-4 flex gap-2 items-center py-2 hover:bg-slate-700 cursor-pointer text-amber-500">
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-amber-500">
             <Icon size="1.5rem" name="iconamoon:attention-circle-fill" />
 
             Confirmar

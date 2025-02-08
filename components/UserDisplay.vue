@@ -2,7 +2,7 @@
   <UPopover mode="hover" :popper="{ offsetDistance: 0 }">
     <div class=" flex items-center gap-3 min-w-max">
       <UAvatar :src="user.user_metadata.avatar_url" alt="Avatar" />
-      {{ user.user_metadata.name }}
+      <span class="hidden lg:inline-block">{{ user.user_metadata.name }}</span>
     </div>
 
     <template #panel>

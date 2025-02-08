@@ -68,6 +68,7 @@ export const useTabela = () => {
 
   return {
     columns,
-    tabela
+    tabela,
+    clubes
   }
 }

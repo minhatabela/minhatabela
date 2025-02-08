@@ -3,13 +3,13 @@ useHead({
   title: "Simulando · minhatabela"
 })
 
-
-
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
 const { jogosRodada, rodada_atual, syncing, getAllSimulacoes } = useSimulador()
 
 const arte = ref()
+
+const rodada = ref(rodada_atual)
 
 onMounted(async () => {
   await getAllSimulacoes()
@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
   <div v-show="false">
-    <ArteRodada :rodada="rodada_atual" ref="arte" />
+    <!-- <ArteRodada :rodada="rodada_atual" ref="arte" /> -->
   </div>
   <div class="flex flex-col xl:flex-row gap-8 lg:px-0 px-8 justify-between">
     <div>
@@ -30,17 +30,18 @@ onMounted(async () => {
     </div>
     <div class="flex flex-col gap-4">
       <div class="flex justify-between items-center">
-        <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400" :class="{ 'animate-spin text-white': syncing }" />
-        <UButton @click="componentToPng(arte, rodada_atual)" size="xs" variant="ghost" color="purple"
+        <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400"
+          :class="{ 'animate-spin  text-black dark:text-white': syncing }" />
+        <UButton @click="componentToPng(arte, rodada)" size="xs" variant="ghost" color="purple"
           icon="i-ic-round-download" label="baixar simulação" />
       </div>
       <div class="flex items-center justify-between">
-        <button :disabled="rodada_atual === 1" @click="rodada_atual = Number(rodada_atual) - 1">
-          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 1 }" />
+        <button :disabled="rodada === 1" @click="rodada = Number(rodada) - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada === 1 }" />
         </button>
-        <span class="font-semibold uppercase">Rodada {{ rodada_atual }}</span>
-        <button type="button" :disabled="rodada_atual === 38" @click="rodada_atual = Number(rodada_atual) + 1">
-          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 38 }" />
+        <span class="font-semibold uppercase">Rodada {{ rodada }}</span>
+        <button type="button" :disabled="rodada === 38" @click="rodada = Number(rodada) + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada === 38 }" />
         </button>
       </div>
       <div class="grid lg:grid-cols-2 gap-4">
@@ -72,7 +73,8 @@ input::-webkit-inner-spin-button {
 /*input[type=number] {
   -moz-appearance: textfield;
 }
-*/ input[type=number] {
+*/
+input[type=number] {
   @apply w-20
 }
 </style>

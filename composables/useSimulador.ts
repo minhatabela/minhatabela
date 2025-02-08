@@ -1,9 +1,10 @@
 import type { Tables } from "~/types/database.types"
 import { simularPartida } from '../utils/simulacao'
+import { filtraJogosRodada } from "../utils/tabela"
 const { partidas } = useApi()
 const toast = useToast()
 
-const rodada_atual = 1
+const rodada_atual = 2
 
 const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao'>>([]))
 const syncing = ref(false)

@@ -11,7 +11,10 @@ const { jogosRodada, rodada_navegavel, syncing, simulacao, execute, simulacoes }
 const arte = ref()
 
 const empty = computed(() => {
-  return simulacao.value.size === 0
+  const jogosRodadaIds = jogosRodada.value.map(m => m.id);
+  const idsSimulacao = Array.from(simulacao.value?.keys()) || []
+
+  return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
 onMounted(async () => {
@@ -22,7 +25,7 @@ onMounted(async () => {
 
 <template>
   <div v-show="false">
-    <!-- <ArteRodada :rodada="rodada_atual" ref="arte" /> -->
+    <ArteRodada :rodada="rodada_navegavel" ref="arte" />
   </div>
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
     <div class="w-full">

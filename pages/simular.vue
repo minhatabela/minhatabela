@@ -6,11 +6,9 @@ useHead({
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_atual, syncing, simulacao, execute, simulacoes } = useSimulador()
+const { jogosRodada, rodada_navegavel, syncing, simulacao, execute, simulacoes } = useSimulador()
 
 const arte = ref()
-
-const rodada = ref(rodada_atual)
 
 const empty = computed(() => {
   return simulacao.value.size === 0
@@ -39,16 +37,19 @@ onMounted(async () => {
       <div class="flex justify-between items-center">
         <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400"
           :class="{ 'animate-spin  text-black dark:text-white': syncing }" />
-        <UButton :disabled="empty" @click="componentToPng(arte, rodada)" size="xs" variant="ghost" color="purple"
-          icon="i-ic-round-download" label="baixar simulação" />
+        <UButton :disabled="empty" @click="componentToPng(arte, rodada_navegavel)" size="xs" variant="ghost"
+          color="purple" icon="i-ic-round-download" label="baixar simulação" />
       </div>
       <div class="flex w-full items-center justify-between">
-        <button :disabled="rodada === 1" @click="rodada = Number(rodada) - 1">
-          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada === 1 }" />
+        <button :disabled="rodada_navegavel === 1" @click="rodada_navegavel = Number(rodada_navegavel) - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': rodada_navegavel === 1 }" />
         </button>
-        <span class="font-semibold uppercase">Rodada {{ rodada }}</span>
-        <button type="button" :disabled="rodada === 38" @click="rodada = Number(rodada) + 1">
-          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada === 38 }" />
+        <span class="font-semibold uppercase">Rodada {{ rodada_navegavel }}</span>
+        <button type="button" :disabled="rodada_navegavel === 38"
+          @click="rodada_navegavel = Number(rodada_navegavel) + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': rodada_navegavel === 38 }" />
         </button>
       </div>
       <div v-if="jogosRodada.length" class="grid lg:grid-cols-2 gap-4">

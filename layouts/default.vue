@@ -11,7 +11,7 @@ const user = useSupabaseUser()
       <h1
         class="w-full bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent text-3xl font-black">
         minhatabela
-        <UBadge class="absolute ml-1" variant="subtle" color="violet" label="beta" />
+        <UBadge :ui="{ rounded: 'rounded-full' }" class="absolute ml-1" variant="subtle" color="violet" label="beta" />
       </h1>
       <UButton v-if="!user" color="purple" @click="login">entrar</UButton>
       <UserDisplay v-else />
@@ -24,7 +24,7 @@ const user = useSupabaseUser()
   </div>
   <footer class="text text-slate-300 flex justify-center py-8">
     minhatabela {{ new Date().getFullYear() }} | <a href="https://alexislopes.com.br" target="_blank" class="ml-2">
-      alexislopes </a> | {{ pkg.version }}</footer>
+      alexislopes </a> <span class="ml-1"> | {{ pkg.version }} </span></footer>
 </template>
 
 <style></style>

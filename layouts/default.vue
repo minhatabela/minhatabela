@@ -17,6 +17,8 @@ const user = useSupabaseUser()
       <UserDisplay v-else />
     </div>
   </div>
+  <UAlert color="green" class="p-1 text-center text-xs" variant="soft"
+    description="Dado ao fato de que as partidas oficiais ainda não foram anunciadas, essas foram geradas de forma aleatória, portanto não são oficiais." />
   <div class="w-full  flex justify-center">
     <div class="max-w-[1400px] w-full">
       <slot />

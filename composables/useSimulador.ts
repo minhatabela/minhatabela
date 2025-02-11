@@ -1,5 +1,6 @@
 import type { Tables } from "~/types/database.types"
 import { simularPartida } from '../utils/simulacao'
+import { filtraJogosRodada } from "../utils/tabela"
 const { partidas } = useApi()
 const toast = useToast()
 
@@ -9,6 +10,8 @@ const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao
 const syncing = ref(false)
 
 export const useSimulador = () => {
+
+  const rodada_navegavel = ref(rodada_atual)
 
   const { data: simulacoes, execute, refresh, status } = useLazyAsyncData('simulacoes', async () => {
     const client = useSupabaseClient()
@@ -23,11 +26,8 @@ export const useSimulador = () => {
   watch(status, async (value) => {
     if (value === 'success' && useSupabaseUser().value) {
       const simulacoesIdsLocal = Array.from(simulacao.value.keys())
-      console.log('idsLocal: ', simulacoesIdsLocal)
       const simulacoesIdsNuvem = simulacoes.value.map(sim => sim.partida)
-      console.log('idsNuvem: ', simulacoesIdsNuvem)
       const diff = simulacoesIdsLocal.filter(f => !simulacoesIdsNuvem.includes(f))
-      console.log('diferença: ', diff);
 
       const sims = diff.map(m => {
         return Object.assign(
@@ -47,7 +47,7 @@ export const useSimulador = () => {
   })
 
   const jogosRodada = computed(() => {
-    return filtraJogosRodada(partidas.value || [], rodada_atual)
+    return filtraJogosRodada(partidas.value || [], rodada_navegavel.value)
   })
 
 
@@ -88,8 +88,11 @@ export const useSimulador = () => {
 
     if (user.value) {
       syncing.value = true;
-      const { error } = await client.from('simulacao').upsert(simulada, { returning: 'minimal' })
+      const { error, data } = await client.from('simulacao').upsert(simulada, { returning: 'minimal' }).select('id')
 
+      if (data?.length) {
+        simulacao.value.get(simulada.partida).id = data[0].id
+      }
       if (error) {
         toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
       }
@@ -97,37 +100,12 @@ export const useSimulador = () => {
     }
   }
 
-  // async function getAllSimulacoes() {
-  //   syncing.value = true;
-  //   const client = useSupabaseClient()
-  //   const { error, data } = await client.from('simulacao').select('id, partida, gols_visitante, gols_mandante')
-  //   if (error) {
-  //     toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
-  //   } else {
-  //     const simulacoesIdsLocal = Array.from(simulacao.value.keys())
-  //     console.log('idsLocal: ', simulacoesIdsLocal)
-  //     const simulacoesIdsNuvem = data.map(sim => sim.partida)
-  //     console.log('idsNuvem: ', simulacoesIdsNuvem)
-  //     const diff = simulacoesIdsLocal.filter(f => !simulacoesIdsNuvem.includes(f))
-  //     if (diff.length) {
-  //       const { error } = await client.from('simulacao').insert(diff.map(m => simulacao.value.get(m)))
-  //       refresh()
-  //     }
-
-  //     console.log('diferença: ', diff);
-
-  //     const map = data.map(simulacao => [simulacao.partida, simulacao])
-  //     // simulacao.value = new Map(map)
-  //   }
-  //   syncing.value = false
-  // }
-
   return {
     jogosRodada,
     simulacao,
     simularPartida,
     removerSimulacao,
-    rodada_atual,
+    rodada_navegavel,
     salvarSimulacao,
     syncing,
     // getAllSimulacoes,

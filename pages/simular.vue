@@ -4,16 +4,17 @@ useHead({
   title: "Simulando · minhatabela"
 })
 
-
-
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_atual, syncing, simulacao, execute, simulacoes } = useSimulador()
+const { jogosRodada, rodada_navegavel, syncing, simulacao, execute, simulacoes } = useSimulador()
 
 const arte = ref()
 
 const empty = computed(() => {
-  return simulacao.value.size === 0
+  const jogosRodadaIds = jogosRodada.value.map(m => m.id);
+  const idsSimulacao = Array.from(simulacao.value?.keys()) || []
+
+  return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
 onMounted(async () => {
@@ -24,7 +25,7 @@ onMounted(async () => {
 
 <template>
   <div v-show="false">
-    <ArteRodada :rodada="rodada_atual" ref="arte" />
+    <ArteRodada :rodada="rodada_navegavel" ref="arte" />
   </div>
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
     <div class="w-full">
@@ -37,17 +38,21 @@ onMounted(async () => {
     </div>
     <div class="flex w-full flex-col gap-4">
       <div class="flex justify-between items-center">
-        <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400" :class="{ 'animate-spin text-white': syncing }" />
-        <UButton :disabled="empty" @click="componentToPng(arte, rodada_atual)" size="xs" variant="ghost" color="purple"
-          icon="i-ic-round-download" label="baixar simulação" />
+        <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400"
+          :class="{ 'animate-spin  text-black dark:text-white': syncing }" />
+        <UButton :disabled="empty" @click="componentToPng(arte, rodada_navegavel)" size="xs" variant="ghost"
+          color="purple" icon="i-ic-round-download" label="baixar simulação da rodada" />
       </div>
       <div class="flex w-full items-center justify-between">
-        <button :disabled="rodada_atual === 1" @click="rodada_atual = Number(rodada_atual) - 1">
-          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 1 }" />
+        <button :disabled="rodada_navegavel === 1" @click="rodada_navegavel = Number(rodada_navegavel) - 1">
+          <UIcon name="uil:angle-left" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': rodada_navegavel === 1 }" />
         </button>
-        <span class="font-semibold uppercase">Rodada {{ rodada_atual }}</span>
-        <button type="button" :disabled="rodada_atual === 38" @click="rodada_atual = Number(rodada_atual) + 1">
-          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer" :class="{ 'opacity-40': rodada_atual === 38 }" />
+        <span class="font-semibold uppercase">Rodada {{ rodada_navegavel }}</span>
+        <button type="button" :disabled="rodada_navegavel === 38"
+          @click="rodada_navegavel = Number(rodada_navegavel) + 1">
+          <UIcon name="uil:angle-right" class="w-5 h-5 cursor-pointer"
+            :class="{ 'opacity-40': rodada_navegavel === 38 }" />
         </button>
       </div>
       <div v-if="jogosRodada.length" class="grid lg:grid-cols-2 gap-4">
@@ -82,7 +87,8 @@ input::-webkit-inner-spin-button {
 /*input[type=number] {
   -moz-appearance: textfield;
 }
-*/ input[type=number] {
+*/
+input[type=number] {
   @apply w-20
 }
 </style>

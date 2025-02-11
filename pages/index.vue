@@ -5,6 +5,9 @@
         <h1
           class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
           minhatabela
+          <UBadge :ui="{ rounded: 'rounded-full' }" class="absolute ml-1" variant="subtle" color="violet"
+            label="beta" />
+
         </h1>
         <!-- <UButton v-if="!user" @click="login" color="purple">entrar</UButton> -->
 
@@ -25,20 +28,20 @@
             as chances do seu time do coração de alcançar um dos mais desejados títulos nacionais.
           </p>
           <UButton to="/simular" trailing size="lg" icon="material-symbols:arrow-forward-rounded" class="w-fit mt-4"
-            color="indigo" :ui="{ rounded: 'rounded-full' }">Simular agora</UButton>
+            color="fuchsia" variant="outline" :ui="{ rounded: 'rounded-full' }">Simular agora</UButton>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
           <UCard>
             <h1 class="text-semibold text-lg py-2">
               📈 Visualize a classificação
             </h1>
-            <p class="text-slate-400">Veja a classificação atualizada do campeonato em forma de tabela</p>
+            <p class="text-slate-400">Veja a tabela atualizada e como ela comporta com suas simulações</p>
           </UCard>
           <UCard>
             <h1 class="text-semibold text-lg py-2">
               ✏️ Simule a rodada
             </h1>
-            <p class="text-slate-400">Simule os 10 jogos da rodada atual</p>
+            <p class="text-slate-400">Simule rodada a rodada do campeonato, desde a rodada 1</p>
           </UCard>
           <UCard>
             <h1 class="text-semibold text-lg py-2">
@@ -51,7 +54,19 @@
             <h1 class="text-semibold text-lg py-2">
               📃 Salve suas simulações
             </h1>
-            <p class="text-slate-400"> Suas simulações são salvas localmente</p>
+            <p class="text-slate-400"> Suas simulações são salvas localmente, entre para salvar na nuvem</p>
+          </UCard>
+          <UCard>
+            <h1 class="text-semibold text-lg py-2">
+              🙈 Oculte a tabela
+            </h1>
+            <p class="text-slate-400"> Com emoção: esconda a tebela enquanto simula</p>
+          </UCard>
+          <UCard>
+            <h1 class="text-semibold text-lg py-2">
+              ⬇️ Baixe a rodada simulada
+            </h1>
+            <p class="text-slate-400"> Faça download dos resultados simulados da rodada</p>
           </UCard>
         </div>
       </div>
@@ -62,16 +77,25 @@
 
     <footer class="text text-slate-300 flex justify-center py-6">
       minhatabela {{ new Date().getFullYear() }} | <a href="https://alexislopes.com.br" target="_blank" class="ml-2">
-        alexislopes</a> </footer>
+        alexislopes </a> <span class="ml-1"> | {{ pkg.version }} </span></footer>
 
   </div>
 </template>
 
 <script lang="ts" setup>
 definePageMeta({ layout: false });
+import * as pkg from '../package.json';
 useHead({
   title: "Home · minhatabela"
 })
+
+const user = useSupabaseUser()
+
+if (user.value) {
+  navigateTo('/simular')
+}
+
+
 </script>
 <style>
 html,

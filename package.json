@@ -28,5 +28,6 @@
   "devDependencies": {
     "@types/downloadjs": "^1.4.6",
     "nuxt-lodash": "^2.5.3"
-  }
+  },
+  "version": "1.0.0-beta"
 }

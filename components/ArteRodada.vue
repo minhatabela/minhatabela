@@ -32,7 +32,7 @@ const { partidas } = useApi()
 const { simulacao } = useSimulador()
 
 const partidasRodada = computed(() => {
-  return partidas.value?.filter(partida => partida.rodada = props.rodada).filter(partida => simulacao.value.has(partida.id))
+  return partidas.value?.filter(partida => partida.rodada === props.rodada).filter(partida => simulacao.value.has(partida.id))
 })
 </script>
 

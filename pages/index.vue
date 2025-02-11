@@ -72,6 +72,14 @@ definePageMeta({ layout: false });
 useHead({
   title: "Home · minhatabela"
 })
+
+const user = useSupabaseUser()
+
+if (user.value) {
+  navigateTo('/simular')
+}
+
+
 </script>
 <style>
 html,

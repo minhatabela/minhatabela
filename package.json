@@ -4,22 +4,30 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.10.3",
+    "@nuxt/icon": "^1.10.3",
     "@nuxt/ui": "^2.19.2",
+    "@nuxthub/core": "^0.8.10",
+    "@nuxtjs/seo": "^2.1.1",
+    "@nuxtjs/supabase": "^1.4.5",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@vueuse/nuxt": "^12.0.0",
+    "downloadjs": "^1.4.7",
+    "html-to-image": "^1.11.11",
     "nuxt": "^3.14.1592",
     "nuxt-gtag": "^3.0.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@types/downloadjs": "^1.4.6",
     "nuxt-lodash": "^2.5.3"
-  }
+  },
+  "version": "1.0.0-beta"
 }

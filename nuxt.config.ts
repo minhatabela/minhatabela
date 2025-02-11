@@ -9,16 +9,17 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: [
-    '@nuxt/ui',
-    "nuxt-lodash",
-    '@nuxtjs/tailwindcss',
-    '@vueuse/nuxt',
-    '@nuxt/fonts',
-    'nuxt-gtag'
-  ],
+  modules: ['@nuxt/ui', "nuxt-lodash", '@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxt/fonts', 'nuxt-gtag', '@nuxtjs/supabase', '@nuxthub/core', '@nuxt/icon'],
+  supabase: {
+    redirect: false
+  },
   pages: true,
-  ssr: false,
+  ssr: true,
+  routeRules: {
+    '/simular': { ssr: false },
+    '/': { ssr: true }
+
+  },
   app: {
     head: {
       link: [{ rel: 'icon', type: 'image/png', href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" }]

@@ -1,34 +1,115 @@
+import type { Tables } from "~/types/database.types"
+import { simularPartida } from '../utils/simulacao'
+import { filtraJogosRodada } from "../utils/tabela"
+const { partidas } = useApi()
+const toast = useToast()
 
-const { data } = useApi()
+const rodada_atual = 1
 
-const simulacao = useLocalStorage('simulador', new Map([]))
+const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao'>>([]))
+const syncing = ref(false)
 
 export const useSimulador = () => {
-  const jogosRodada = computed(() => {
-    return filtraJogosRodada(Object.values(data.value.jogos), data.value.rodada_atual)
+
+  const rodada_navegavel = ref(rodada_atual)
+
+  const { data: simulacoes, execute, refresh, status } = useLazyAsyncData('simulacoes', async () => {
+    const client = useSupabaseClient()
+    return await client.from('simulacao').select('id, partida, gols_visitante, gols_mandante')
+  },
+    {
+      immediate: false,
+      transform: (response) => response.data,
+      default: () => []
+    })
+
+  watch(status, async (value) => {
+    if (value === 'success' && useSupabaseUser().value) {
+      const simulacoesIdsLocal = Array.from(simulacao.value.keys())
+      const simulacoesIdsNuvem = simulacoes.value.map(sim => sim.partida)
+      const diff = simulacoesIdsLocal.filter(f => !simulacoesIdsNuvem.includes(f))
+
+      const sims = diff.map(m => {
+        return Object.assign(
+          simulacao.value.get(m),
+          { id: crypto.randomUUID() }
+        )
+      })
+
+      if (diff.length) {
+        await salvarMuitasSimulacoes(sims)
+        await refresh()
+      }
+
+      const map = simulacoes.value.map(simulacao => [simulacao.partida, simulacao])
+      simulacao.value = new Map(map)
+    }
   })
 
-  function updatePlacarSimuladoMandante(jogoId: number, placarSimuladoMandante: number) {
-    if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { placarSimuladoMandante }))
-    } else {
-      simulacao.value.set(jogoId, { placarSimuladoMandante })
+  const jogosRodada = computed(() => {
+    return filtraJogosRodada(partidas.value || [], rodada_navegavel.value)
+  })
+
+
+  async function removerSimulacao(partidaId: string) {
+    const client = useSupabaseClient()
+    const user = useSupabaseUser()
+
+    simulacao.value.delete(partidaId)
+
+    if (user.value) {
+      syncing.value = true;
+      const { error } = await client.from('simulacao').delete().eq('partida', partidaId)
+
+      if (error) {
+        toast.add({ description: 'Erro ao deletar simulação', color: 'red' })
+      }
+    }
+    syncing.value = false;
+
+
+  }
+
+  async function salvarMuitasSimulacoes(simulacoes: Tables<'simulacao'>[]) {
+    const client = useSupabaseClient()
+
+    const { error } = await client.from('simulacao').insert(simulacoes)
+    if (!error) {
+      toast.add({ description: "Simulações foram sincronizadas", color: 'green' })
     }
   }
 
-  function updatePlacarSimuladoVisitante(jogoId: number, placarSimuladoVisitante: number) {
-    if (simulacao.value.has(jogoId)) {
-      simulacao.value.set(jogoId, Object.assign(simulacao.value.get(jogoId), { placarSimuladoVisitante }))
-    } else {
-      simulacao.value.set(jogoId, { placarSimuladoVisitante })
-    }
+  async function salvarSimulacao(simulada: Tables<'simulacao'>) {
+    const client = useSupabaseClient()
+    const user = useSupabaseUser()
 
+    simularPartida(simulada as Partial<Tables<'simulacao'>>, simulacao)
+
+
+    if (user.value) {
+      syncing.value = true;
+      const { error, data } = await client.from('simulacao').upsert(simulada, { returning: 'minimal' }).select('id')
+
+      if (data?.length) {
+        simulacao.value.get(simulada.partida).id = data[0].id
+      }
+      if (error) {
+        toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
+      }
+      syncing.value = false
+    }
   }
 
   return {
     jogosRodada,
     simulacao,
-    updatePlacarSimuladoMandante,
-    updatePlacarSimuladoVisitante
+    simularPartida,
+    removerSimulacao,
+    rodada_navegavel,
+    salvarSimulacao,
+    syncing,
+    // getAllSimulacoes,
+    execute,
+    simulacoes
   }
 }

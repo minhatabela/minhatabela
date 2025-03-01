@@ -10,7 +10,6 @@
 
         </h1>
         <!-- <UButton v-if="!user" @click="login" color="purple">entrar</UButton> -->
-
       </div>
     </nav>
     <div class="max-w-7xl w-full h-full flex pt-20">
@@ -72,7 +71,9 @@
       </div>
     </div>
 
-
+    <Teleport to="body">
+      <CookieConsentBanner v-if="!consent" />
+    </Teleport>
 
 
     <footer class="text text-slate-300 flex justify-center py-6">
@@ -83,6 +84,8 @@
 </template>
 
 <script lang="ts" setup>
+const consent = useCookie<boolean>('consent')
+
 definePageMeta({ layout: false });
 import * as pkg from '../package.json';
 useHead({

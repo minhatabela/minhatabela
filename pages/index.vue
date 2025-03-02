@@ -70,7 +70,9 @@
       </div>
     </section>
 
-
+    <Teleport to="body">
+      <CookieConsentBanner v-if="!consent" />
+    </Teleport>
 
 
     <footer class="text text-slate-300 flex justify-center py-6">
@@ -81,6 +83,8 @@
 </template>
 
 <script lang="ts" setup>
+const consent = useCookie<boolean>('consent')
+
 definePageMeta({ layout: false });
 import * as pkg from '../package.json';
 

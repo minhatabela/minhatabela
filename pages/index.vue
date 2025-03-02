@@ -9,10 +9,9 @@
             label="beta" />
 
         </h1>
-        <!-- <UButton v-if="!user" @click="login" color="purple">entrar</UButton> -->
       </div>
     </nav>
-    <div class="max-w-7xl w-full h-full flex pt-20">
+    <section class="max-w-7xl w-full h-full flex pt-20">
       <div class="px-4">
         <div class="flex flex-col gap-4">
           <h1
@@ -69,7 +68,7 @@
           </UCard>
         </div>
       </div>
-    </div>
+    </section>
 
     <Teleport to="body">
       <CookieConsentBanner v-if="!consent" />
@@ -88,6 +87,18 @@ const consent = useCookie<boolean>('consent')
 
 definePageMeta({ layout: false });
 import * as pkg from '../package.json';
+
+useSeoMeta({
+  title: 'Home · minhatabela',
+  description: 'Simule a tabela do Brasileirão Betano 2025 rodada a rodada.',
+  colorScheme: 'dark light',
+  applicationName: 'minhatabela',
+  ogTitle: 'Home · minhatabela',
+  ogDescription: 'Simule a tabela do Brasileirão Betano 2025 rodada a rodada.',
+  ogImage: '../public/ogImage.png',
+  ogImageUrl: '../public/ogImage.png',
+})
+
 useHead({
   title: "Home · minhatabela"
 })

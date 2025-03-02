@@ -30,5 +30,5 @@
     "nuxt-lodash": "^2.5.3",
     "wrangler": "^3.110.0"
   },
-  "version": "1.0.0-beta"
+  "version": "1.0.1-beta"
 }

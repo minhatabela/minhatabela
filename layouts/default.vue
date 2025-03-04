@@ -9,7 +9,7 @@ const user = useSupabaseUser()
   <div class="w-full flex justify-center items-center">
     <div class="max-w-[1400px] w-full h-20 flex items-center justify-between px-8 lg:px-0">
       <h1
-        class="w-full bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent text-3xl font-black">
+        class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
         minhatabela
         <UBadge :ui="{ rounded: 'rounded-full' }" class="absolute ml-1" variant="subtle" color="violet" label="beta" />
       </h1>

@@ -20,7 +20,7 @@
 import LogoCookie from '@/public/logo-cookie.svg';
 
 const { gtag } = useGtag()
-const consent = useCookie<boolean>('consent')
+const consent = useCookie<boolean>('consent', { expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)) })
 
 watch(consent, (value) => {
   if (value) {

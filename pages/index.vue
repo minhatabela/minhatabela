@@ -14,10 +14,10 @@
     <section class="max-w-7xl w-full h-full flex pt-20">
       <div class="px-4">
         <div class="flex flex-col gap-4">
-          <h1
+          <h4
             class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
             minhatabela
-          </h1>
+          </h4>
           <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">Simule a classificação do
             Brasileirão
             rodada
@@ -30,40 +30,40 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               📈 Visualize a classificação
-            </h1>
+            </h4>
             <p class="text-slate-400">Veja a tabela atualizada e como ela comporta com suas simulações</p>
           </UCard>
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               ✏️ Simule a rodada
-            </h1>
+            </h4>
             <p class="text-slate-400">Simule rodada a rodada do campeonato, desde a rodada 1</p>
           </UCard>
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               🚢 Navegue pelas rodadas
-            </h1>
+            </h4>
             <p class="text-slate-400"> Veja quais foram os resultados das rodadas anteriores e os confrontos que estão
               por vir</p>
           </UCard>
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               📃 Salve suas simulações
-            </h1>
+            </h4>
             <p class="text-slate-400"> Suas simulações são salvas localmente, entre para salvar na nuvem</p>
           </UCard>
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               🙈 Oculte a tabela
-            </h1>
+            </h4>
             <p class="text-slate-400"> Com emoção: esconda a tebela enquanto simula</p>
           </UCard>
           <UCard>
-            <h1 class="text-semibold text-lg py-2">
+            <h4 class="text-semibold text-lg py-2">
               ⬇️ Baixe a rodada simulada
-            </h1>
+            </h4>
             <p class="text-slate-400"> Faça download dos resultados simulados da rodada</p>
           </UCard>
         </div>
@@ -95,8 +95,9 @@ useSeoMeta({
   applicationName: 'minhatabela',
   ogTitle: 'Home · minhatabela',
   ogDescription: 'Simule a tabela do Brasileirão Betano 2025 rodada a rodada.',
-  ogImage: '../public/ogImage.png',
-  ogImageUrl: '../public/ogImage.png',
+  ogUrl: 'https://minhatabela.com',
+  ogImage: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
+  ogImageUrl: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
 })
 
 useHead({

@@ -9,20 +9,25 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui', "nuxt-lodash", '@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxt/fonts', 'nuxt-gtag', '@nuxtjs/supabase', '@nuxthub/core', '@nuxt/icon'],
+  modules: [
+    '@nuxt/ui',
+    "nuxt-lodash",
+    '@nuxtjs/tailwindcss',
+    '@vueuse/nuxt',
+    '@nuxt/fonts',
+    'nuxt-gtag',
+    '@nuxtjs/supabase',
+    '@nuxthub/core',
+    '@nuxt/icon',
+    '@nuxt/scripts'
+  ],
   supabase: {
     redirect: false
   },
-  gtag: {
-    initCommands: [
-      ['consent', 'default', {
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        ad_storage: 'denied',
-        analytics_storage: 'denied',
-        wait_for_update: 500,
-      }]
-    ]
+  runtimeConfig: {
+    public: {
+      adsenseId: process.env.GOOGLE_ADSENSE_ID
+    }
   },
   pages: true,
   ssr: true,

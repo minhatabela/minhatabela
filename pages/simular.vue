@@ -1,7 +1,9 @@
 <script setup lang="ts">
 
+const config = useRuntimeConfig()
+
 useScript({
-  src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8459823536205931",
+  src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.public.adsenseId}`,
   async: true,
   crossorigin: "anonymous"
 })

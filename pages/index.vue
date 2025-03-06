@@ -91,6 +91,8 @@ useScript({
   async: true,
   crossorigin: "anonymous"
 })
+
+
 const consent = useCookie<boolean>('consent')
 
 definePageMeta({ layout: false });
@@ -109,7 +111,8 @@ useSeoMeta({
 })
 
 useHead({
-  title: "Home · minhatabela"
+  title: "Home · minhatabela",
+  link: [{ rel: 'canonical', href: 'https://minhatabela.com' }]
 })
 
 const user = useSupabaseUser()

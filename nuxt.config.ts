@@ -34,7 +34,6 @@ export default defineNuxtConfig({
   routeRules: {
     '/simular': { ssr: false },
     '/': { ssr: true }
-
   },
   app: {
     head: {

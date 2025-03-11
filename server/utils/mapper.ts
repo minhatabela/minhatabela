@@ -24,6 +24,6 @@ export function mapPartidaMT(partida: Jogo): PartidaNormalizada {
     gols_visitante: partida.gols_visitante || undefined,
     visitante: partida.visitante.slug,
     mandante: partida.mandante.slug,
-    sede: partida.sede?.nome_popular || undefined
+    sede: partida.sede?.key || undefined
   }
 }

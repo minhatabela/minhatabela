@@ -117,6 +117,7 @@ export type Database = {
           cidade: string | null
           created_at: string | null
           id: string
+          key: string | null
           nome: string
           nome_popular: string
           updated_at: string | null
@@ -125,6 +126,7 @@ export type Database = {
           cidade?: string | null
           created_at?: string | null
           id?: string
+          key?: string | null
           nome: string
           nome_popular: string
           updated_at?: string | null
@@ -133,6 +135,7 @@ export type Database = {
           cidade?: string | null
           created_at?: string | null
           id?: string
+          key?: string | null
           nome?: string
           nome_popular?: string
           updated_at?: string | null

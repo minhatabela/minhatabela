@@ -17,6 +17,7 @@ export type Database = {
           nome: string
           nome_popular: string | null
           sigla: string | null
+          slug: string | null
           updated_at: string | null
         }
         Insert: {
@@ -26,6 +27,7 @@ export type Database = {
           nome: string
           nome_popular?: string | null
           sigla?: string | null
+          slug?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -35,6 +37,7 @@ export type Database = {
           nome?: string
           nome_popular?: string | null
           sigla?: string | null
+          slug?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -43,11 +46,12 @@ export type Database = {
         Row: {
           created_at: string
           data: string | null
-          finalizado: boolean | null
           gols_mandante: number | null
           gols_visitante: number | null
+          hora: string | null
           id: string
           mandante: string | null
+          numero: number | null
           rodada: number
           sede: string | null
           status: Database["public"]["Enums"]["status"]
@@ -57,11 +61,12 @@ export type Database = {
         Insert: {
           created_at?: string
           data?: string | null
-          finalizado?: boolean | null
           gols_mandante?: number | null
           gols_visitante?: number | null
+          hora?: string | null
           id?: string
           mandante?: string | null
+          numero?: number | null
           rodada: number
           sede?: string | null
           status?: Database["public"]["Enums"]["status"]
@@ -71,11 +76,12 @@ export type Database = {
         Update: {
           created_at?: string
           data?: string | null
-          finalizado?: boolean | null
           gols_mandante?: number | null
           gols_visitante?: number | null
+          hora?: string | null
           id?: string
           mandante?: string | null
+          numero?: number | null
           rodada?: number
           sede?: string | null
           status?: Database["public"]["Enums"]["status"]
@@ -111,6 +117,7 @@ export type Database = {
           cidade: string | null
           created_at: string | null
           id: string
+          key: string | null
           nome: string
           nome_popular: string
           updated_at: string | null
@@ -119,6 +126,7 @@ export type Database = {
           cidade?: string | null
           created_at?: string | null
           id?: string
+          key?: string | null
           nome: string
           nome_popular: string
           updated_at?: string | null
@@ -127,6 +135,7 @@ export type Database = {
           cidade?: string | null
           created_at?: string | null
           id?: string
+          key?: string | null
           nome?: string
           nome_popular?: string
           updated_at?: string | null
@@ -148,7 +157,7 @@ export type Database = {
           gols_mandante?: number | null
           gols_visitante?: number | null
           id?: string
-          partida?: string
+          partida: string
           updated_at?: string | null
           user_id?: string
         }

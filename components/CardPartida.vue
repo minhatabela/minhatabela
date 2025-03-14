@@ -1,13 +1,10 @@
 <template>
-  <UCard class="flex items-center justify-center">
+  <UCard class="flex items-center justify-center ">
     <div class="flex w-full justify-between pb-2">
       <div class="pb-2 flex justify-between gap-2">
-        <span class="text-xs text-slate-400">{{ new Date(partida.data).toLocaleDateString('pt-BR', {
-          day: '2-digit', month: 'short',
-          hour: '2-digit', minute: '2-digit'
-})
-          }}</span>
-        <span class="text-xs text-slate-400">{{ partida.sede.nome_popular }}</span>
+        <span class="text-xs text-slate-400">{{ data }}</span>
+        <span class="text-xs text-slate-400">{{ partida.hora?.substring(0, 5) }}</span>
+        <span class="text-xs text-slate-400">{{ sede }}</span>
       </div>
       <Options v-if="partida.status != 'finalizada'" :partida="partida" />
     </div>
@@ -36,6 +33,7 @@
 </template>
 
 <script lang="ts" setup>
+import { format } from 'date-fns';
 import type { Tables } from '~/types/database.types';
 import { type Jogo } from '~/types/jogo';
 
@@ -47,6 +45,15 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const data = computed(() => {
+  return props.partida.data ? format(new Date(props.partida.data.split("-")), "d MMM") : 'A definir'
+})
+
+
+const sede = computed(() => {
+
+  return props.partida.sede ? props.partida.sede.nome_popular : 'A definir'
+})
 
 const placarVisitante = computed({
   get() {

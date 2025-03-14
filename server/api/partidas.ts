@@ -2,8 +2,13 @@ import { serverSupabaseServiceRole } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   const client = serverSupabaseServiceRole(event)
+  const rodada = getRouterParam(event, 'rodada')
 
-  const { data } = await client.from('partida').select('*, visitante(*), mandante(*), sede(*)').order('data', { ascending: true })
+  let { data } = await client
+    .from('partida')
+    .select('*, visitante(*), mandante(*), sede(*)')
+    .match(rodada ? { rodada } : {})
+    .order('numero')
 
   return data
 })

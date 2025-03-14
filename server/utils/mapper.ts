@@ -9,7 +9,7 @@ export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
     gols_mandante: partida.mandante.gols || undefined,
     gols_visitante: partida.visitante.gols || undefined,
     sede: partida.local === " -  - " ? undefined : partida.local,
-    data: partida.data === "A Definir" ? undefined : partida.data,
+    data: partida.data === "A Definir" ? undefined : partida.data.trim(),
     hora: partida.hora || undefined
   }
 }
@@ -18,8 +18,8 @@ export function mapPartidaMT(partida: Jogo): PartidaNormalizada {
   return {
     numero: partida.numero || undefined,
     rodada: partida.rodada,
-    data: partida.data || undefined,
-    hora: partida.hora || undefined,
+    data: new Date(partida.data?.split("-")).toLocaleDateString('pt-BR') || undefined,
+    hora: partida.hora?.substr(0, 5) || undefined,
     gols_mandante: partida.gols_mandante || undefined,
     gols_visitante: partida.gols_visitante || undefined,
     visitante: partida.visitante.slug,

@@ -108,6 +108,9 @@ useSeoMeta({
   ogUrl: 'https://minhatabela.com',
   ogImage: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
   ogImageUrl: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Simule a tabela do Brasileirão Betano 2025 com o minhatabela',
+  twitterImage: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png'
 })
 
 useHead({

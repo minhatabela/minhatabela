@@ -33,11 +33,12 @@ export default defineNuxtConfig({
   ssr: true,
   routeRules: {
     '/simular': { ssr: false },
-    '/': { ssr: true }
+    '/': { ssr: true },
+    '/admin/consistencia': { ssr: false },
   },
   app: {
     head: {
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: "./favicon.svg" }]
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: "https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//logo.svg" }]
     }
   }
 })

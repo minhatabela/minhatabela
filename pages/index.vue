@@ -99,19 +99,22 @@ definePageMeta({ layout: false });
 import * as pkg from '../package.json';
 
 useSeoMeta({
-  title: 'Home · minhatabela',
-  description: 'Simule a tabela do Brasileirão Betano 2025 rodada a rodada.',
+  title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
+  description: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
   colorScheme: 'dark light',
   applicationName: 'minhatabela',
-  ogTitle: 'Home · minhatabela',
-  ogDescription: 'Simule a tabela do Brasileirão Betano 2025 rodada a rodada.',
+  ogTitle: 'Simule o Brasileirão 2025 agora no minhatabela',
+  ogDescription: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
   ogUrl: 'https://minhatabela.com',
   ogImage: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
   ogImageUrl: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
+  twitterImage: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//ogImage.png'
 })
 
 useHead({
-  title: "Home · minhatabela",
+  title: "Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela",
   link: [{ rel: 'canonical', href: 'https://minhatabela.com' }]
 })
 

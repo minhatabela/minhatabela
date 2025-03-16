@@ -99,7 +99,7 @@ definePageMeta({ layout: false });
 import * as pkg from '../package.json';
 
 useSeoMeta({
-  title: 'Home · minhatabela',
+  title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
   description: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
   colorScheme: 'dark light',
   applicationName: 'minhatabela',

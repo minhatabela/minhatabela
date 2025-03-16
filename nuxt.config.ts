@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: "@/public/favicon.svg" }]
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: "https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//logo.svg" }]
     }
   }
 })

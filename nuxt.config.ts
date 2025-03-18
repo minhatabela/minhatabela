@@ -12,7 +12,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     "nuxt-lodash",
-    '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@nuxt/fonts',
     'nuxt-gtag',

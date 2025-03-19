@@ -1,6 +1,6 @@
 <template>
 
-  <Title>Consistencia Admin </Title>
+  <Title> Consistencia Admin </Title>
 
   <section class="px-4 flex flex-col gap-12">
     <article>
@@ -20,7 +20,7 @@
     </main>
 
   </section>
-  <USlideover ref="slideover" v-model:open="opened" class="rounded-lg">
+  <USlideover v-model:open="opened" class="rounded-lg">
 
     <template #header>
       <div class="flex flex-col w-full gap-4">
@@ -73,8 +73,6 @@ const toast = useToast()
 
 const partida = ref(undefined)
 const opened = ref(false)
-const slideover = ref()
-onClickOutside(slideover, () => opened.value = false)
 
 const dadoOficial = ref({
   data: undefined,
@@ -136,9 +134,9 @@ async function aceitarCorrecao() {
 }
 
 const index = {
-  'CREATE': 0,
-  'REMOVE': 1,
-  'CHANGE': 2,
+  'CREATE': '0',
+  'REMOVE': '1',
+  'CHANGE': '2',
 }
 
 const reverseIndex = {

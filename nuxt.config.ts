@@ -25,7 +25,6 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@nuxthub/core',
     '@nuxt/icon',
-    '@nuxt/scripts',
     '@nuxtjs/seo',
     'nuxt-og-image'
   ],

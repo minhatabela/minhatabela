@@ -53,7 +53,7 @@ export const useTabela = () => {
         label: 'GC',
         key: 'gols_contra'
       },
-    ])
+    ]).map((coluna, index) => Object.assign(coluna, { id: index }))
 
   })
 

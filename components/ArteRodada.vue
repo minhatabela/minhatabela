@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 const arte = ref()
-defineExpose(arte)
+defineExpose(toValue(arte))
 const props = defineProps({ rodada: { type: Number, required: true } })
 
 const { partidas } = useApi()

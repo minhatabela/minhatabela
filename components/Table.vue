@@ -1,18 +1,17 @@
 <template>
   <UCard>
-    <UTable :columns="columns" :rows="tabela">
-      <template #posicao-data="{ row }">
-        <UBadge :color="badgeColor(tabela.indexOf(row) + 1)" :ui="{ rounded: 'rounded-full' }"
-          :label="tabela.indexOf(row) + 1" />
+    <UTable :columns="columns" :data="tabela">
+      <template #0-cell="{ row }">
+        <UBadge :color="badgeColor(row.index)" class="rounded-full"> {{ row.index + 1 }} </UBadge>
       </template>
-      <template #equipe-data="{ row }">
+      <template #1-cell="{ row }">
         <div class="flex gap-2 items-center">
-          <img style="width: 20px;" :src="row.clube_url" alt="">
-          <span class="font-bold">{{ row.equipe }}</span>
+          <img style="width: 20px;" :src="row.original.clube_url" alt="">
+          <span class="font-bold">{{ row.original.equipe }}</span>
         </div>
       </template>
-      <template #pontos-data="{ row }">
-        <span class="font-bold">{{ row.pontos }}</span>
+      <template #2-cell="{ row }">
+        <span class="font-bold">{{ row.original.pontos }}</span>
       </template>
     </UTable>
   </UCard>
@@ -21,8 +20,7 @@
 <script lang="ts" setup>
 
 import { type TableColumn, type TableRow } from '#ui/types';
-import { badgeColor } from '../utils/tabela';
-
+import { badgeColor } from '~/utils/tabela';
 interface Props {
   columns: TableColumn[]
   tabela: TableRow[]

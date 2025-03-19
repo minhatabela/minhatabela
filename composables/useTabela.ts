@@ -10,20 +10,20 @@ export const useTabela = () => {
 
     const columnsMobile = [
       {
-        label: '#',
-        key: 'posicao'
+        header: '#',
+        accessorKey: 'posicao'
       }, {
-        label: 'Clube',
-        key: 'equipe'
+        header: 'Clube',
+        accessorKey: 'equipe'
       }, {
-        label: 'PTS',
-        key: 'pontos'
+        header: 'PTS',
+        accessorKey: 'pontos'
       }, {
-        label: 'P',
-        key: 'partidas'
+        header: 'P',
+        accessorKey: 'partidas'
       }, {
-        label: 'SG',
-        key: 'diferenca_gols'
+        header: 'SG',
+        accessorKey: 'diferenca_gols'
       }
     ]
 
@@ -33,27 +33,27 @@ export const useTabela = () => {
 
     return columnsMobile.concat([
       {
-        label: 'V',
-        key: 'vitorias'
+        header: 'V',
+        accessorKey: 'vitorias'
       },
       {
-        label: 'E',
-        key: 'empates'
+        header: 'E',
+        accessorKey: 'empates'
       },
       {
-        label: 'D',
-        key: 'derrotas'
+        header: 'D',
+        accessorKey: 'derrotas'
       },
 
       {
-        label: 'GP',
-        key: 'gols_pro'
+        header: 'GP',
+        accessorKey: 'gols_pro'
       },
       {
-        label: 'GC',
-        key: 'gols_contra'
+        header: 'GC',
+        accessorKey: 'gols_contra'
       },
-    ]).map((coluna, index) => Object.assign(coluna, { id: index }))
+    ]).map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
 
   })
 

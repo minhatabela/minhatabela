@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+onMounted(() => {
+  execute()
+})
+
 const config = useRuntimeConfig()
 
 useScript({
@@ -14,7 +18,7 @@ useHead({
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_navegavel, syncing, simulacao, execute, simulacoes } = useSimulador()
+const { jogosRodada, rodada_navegavel, syncing, simulacao, execute } = useSimulador()
 
 const arte = ref()
 
@@ -25,10 +29,7 @@ const empty = computed(() => {
   return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
-onMounted(async () => {
-  // await getAllSimulacoes()
-  execute()
-})
+
 </script>
 
 <template>

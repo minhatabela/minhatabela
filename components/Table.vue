@@ -2,7 +2,7 @@
   <UCard>
     <UTable :columns="columns" :data="tabela">
       <template #0-cell="{ row }">
-        <UBadge :color="badgeColor(row.index)" class="rounded-full"> {{ row.index + 1 }} </UBadge>
+        <UBadge :color="badgeColor(row.index + 1)" class="rounded-full"> {{ row.index + 1 }} </UBadge>
       </template>
       <template #1-cell="{ row }">
         <div class="flex gap-2 items-center">

@@ -25,8 +25,8 @@
             rodada e veja
             as chances do seu time do coração de alcançar um dos mais desejados títulos nacionais.
           </p>
-          <UButton to="/simular" trailing size="lg" icon="material-symbols:arrow-forward-rounded" class="w-fit mt-4"
-            color="fuchsia" variant="outline" :ui="{ rounded: 'rounded-full' }">Simular agora</UButton>
+          <UButton to="/simular" trailing size="lg" icon="material-symbols:arrow-forward-rounded"
+            class="w-fit mt-4 rounded-full" color="primary" variant="outline">Simular agora</UButton>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
           <UCard>

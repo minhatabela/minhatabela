@@ -10,7 +10,7 @@
           concorda.</p>
       </div>
       <div class="flex w-full justify-end">
-        <UButton @click="consent = true">Saquei!</UButton>
+        <UButton color="neutral" @click="consent = true">Saquei!</UButton>
       </div>
     </div>
   </Ucard>

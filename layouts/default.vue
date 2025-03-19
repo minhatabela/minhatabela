@@ -15,7 +15,7 @@ const user = useSupabaseUser()
           <UBadge :ui="{ rounded: 'rounded-full' }" class="absolute ml-1" variant="subtle" color="violet"
             label="beta" />
         </h1>
-        <UButton v-if="!user" color="purple" @click="login">entrar</UButton>
+        <UButton v-if="!user" color="primary" @click="login">entrar</UButton>
         <UserDisplay v-else />
       </div>
     </div>

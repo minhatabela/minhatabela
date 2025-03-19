@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex justify-end w-full">
-      <UButton size="xs" variant="ghost" color="purple" :label="toggleLabel"
+      <UButton size="xs" variant="ghost" color="primary" :label="toggleLabel"
         :icon="enabled ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'" @click="toggle()" />
     </div>
     <div class="relative">

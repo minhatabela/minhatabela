@@ -50,7 +50,7 @@ const empty = computed(() => {
         <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400"
           :class="{ 'animate-spin  text-black dark:text-white': syncing }" />
         <UButton :disabled="empty" @click="componentToPng(arte, rodada_navegavel)" size="xs" variant="ghost"
-          color="purple" icon="i-ic-round-download" label="baixar simulação da rodada" />
+          color="primary" icon="i-ic-round-download" label="baixar simulação da rodada" />
       </div>
       <div class="flex w-full items-center justify-between">
         <button :disabled="rodada_navegavel === 1" @click="rodada_navegavel = Number(rodada_navegavel) - 1">

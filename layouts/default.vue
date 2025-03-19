@@ -12,8 +12,7 @@ const user = useSupabaseUser()
         <h1
           class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
           minhatabela
-          <UBadge :ui="{ rounded: 'rounded-full' }" class="absolute ml-1" variant="subtle" color="violet"
-            label="beta" />
+          <UBadge class="absolute ml-1 rounded-full" variant="subtle" color="primary" label="beta" />
         </h1>
         <UButton v-if="!user" color="primary" @click="login">entrar</UButton>
         <UserDisplay v-else />

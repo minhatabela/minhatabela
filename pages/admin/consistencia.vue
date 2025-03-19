@@ -20,19 +20,21 @@
     </main>
 
   </section>
-  <USlideover v-model="opened" class="rounded-lg">
-    <UCard class="h-full" v-if="objetoPartida">
-      <template #header>
-        <UBadge color="neutral" class="mb-2">Partida 1</UBadge>
-        <h3 class="text-xl text-bold">Corrigir dados da partida</h3>
-        <div class="flex items-center justify-center gap-4 mt-10">
-          <img class="h-16 w-16" :src="objetoPartida.mandante.escudo" :alt="objetoPartida.mandante.nome_popular">
-          x
-          <img class="h-16 w-16" :src="objetoPartida.visitante.escudo" :alt="objetoPartida.visitante.nome_popular">
-        </div>
-      </template>
+  <USlideover ref="slideover" v-model:open="opened" class="rounded-lg">
 
-      <p>Data e hora</p>
+    <template #header>
+      <div class="flex flex-col w-full gap-4">
+        <UBadge color="neutral" class="mb-2 w-fit">Partida {{ objetoPartida?.numero }}</UBadge>
+        <h3 class="text-xl text-bold">Corrigir dados da partida</h3>
+        <div class="flex items-center justify-center w-full gap-4 mt-10">
+          <img class="h-16 w-16" :src="objetoPartida?.mandante.escudo" :alt="objetoPartida?.mandante.nome_popular">
+          x
+          <img class="h-16 w-16" :src="objetoPartida?.visitante.escudo" :alt="objetoPartida?.visitante.nome_popular">
+        </div>
+      </div>
+    </template>
+    <template #body>
+      <p>Novas data e hora</p>
       <div class="flex gap-4">
         <UPopover v-if="dadoOficial.data" :popper="{ placement: 'bottom-start' }">
           <UButton icon="i-heroicons-calendar-days-20-solid" :label="format(dadoOficial.data, 'd MMM, yyy')" />
@@ -47,12 +49,12 @@
           </template>
         </UPopover>
       </div>
-      <template #footer>
-        <div class="flex justify-end">
-          <UButton @click="aceitarCorrecao">Corrigir</UButton>
-        </div>
-      </template>
-    </UCard>
+    </template>
+    <template #footer>
+      <div class="flex justify-end">
+        <UButton @click="aceitarCorrecao">Corrigir</UButton>
+      </div>
+    </template>
   </USlideover>
 </template>
 
@@ -71,6 +73,8 @@ const toast = useToast()
 
 const partida = ref(undefined)
 const opened = ref(false)
+const slideover = ref()
+onClickOutside(slideover, () => opened.value = false)
 
 const dadoOficial = ref({
   data: undefined,
@@ -108,7 +112,7 @@ async function aceitarCorrecao() {
   const { data, error } = await client.from('partida').update({
     data: dadoOficial.value.data?.toISOString(),
     hora: format(dadoOficial.value.hora, "HH:mm")
-  }).eq('id', objetoPartida.value.id)
+  }).eq('id', objetoPartida?.value.id)
 
   if (error) {
     toast.add({

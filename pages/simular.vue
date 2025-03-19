@@ -74,6 +74,7 @@ onMounted(async () => {
 </template>
 
 <style>
+@reference "~/public/main.css";
 html,
 body {
   font-family: 'DM Sans', sans-serif;

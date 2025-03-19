@@ -15,7 +15,7 @@
           @setNumeroPartida="partida = $event" />
       </div>
       <div class="flex justify-center">
-        <UPagination v-model="rodada" :page-count="1" :total="6" />
+        <UPagination v-model:page="rodada" :total="380" />
       </div>
     </main>
 

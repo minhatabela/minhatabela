@@ -23,7 +23,7 @@
   <USlideover v-model="opened" class="rounded-lg">
     <UCard class="h-full" v-if="objetoPartida">
       <template #header>
-        <UBadge color="gray" class="mb-2">Partida 1</UBadge>
+        <UBadge color="neutral" class="mb-2">Partida 1</UBadge>
         <h3 class="text-xl text-bold">Corrigir dados da partida</h3>
         <div class="flex items-center justify-center gap-4 mt-10">
           <img class="h-16 w-16" :src="objetoPartida.mandante.escudo" :alt="objetoPartida.mandante.nome_popular">
@@ -36,13 +36,13 @@
       <div class="flex gap-4">
         <UPopover v-if="dadoOficial.data" :popper="{ placement: 'bottom-start' }">
           <UButton icon="i-heroicons-calendar-days-20-solid" :label="format(dadoOficial.data, 'd MMM, yyy')" />
-          <template #panel="{ close }">
+          <template #content="{ close }">
             <DatePicker v-model="dadoOficial.data" is-required @close="close" />
           </template>
         </UPopover>
         <UPopover v-if="dadoOficial.hora" :popper="{ placement: 'bottom-start' }">
           <UButton icon="i-heroicons-clock" :label="format(dadoOficial.hora, 'HH:mm')" />
-          <template #panel="{ close }">
+          <template #content="{ close }">
             <DatePicker mode="time" v-model="dadoOficial.data" is-required @close="close" />
           </template>
         </UPopover>
@@ -115,7 +115,7 @@ async function aceitarCorrecao() {
       title: "Deu ruim!",
       description: "Moiô ao tentar atualizar partida :(",
       icon: "i-ic-baseline-thumb-down",
-      color: "red"
+      color: "error"
     })
 
   } else {
@@ -123,7 +123,7 @@ async function aceitarCorrecao() {
       title: "Boa!",
       description: "Partida atualizada com sucesso!",
       icon: "i-ic-baseline-thumb-up",
-      color: 'green'
+      color: 'success'
     })
     refresh()
     opened.value = false

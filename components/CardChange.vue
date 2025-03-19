@@ -2,22 +2,22 @@
   <UCard>
     <div class="flex flex-col gap-3">
       <div class="flex justify-between">
-        <UBadge size="xs" color="gray" class="mb-2">Partida {{ partida }}</UBadge>
+        <UBadge size="xs" color="neutral" class="mb-2">Partida {{ partida }}</UBadge>
       </div>
       <div class="flex gap-1 items-center justify-start" v-for="_item in item">
         <p class="text-base"> <strong>{{ _item.path[1] }}</strong> mudou </p>
         <UTooltip text="minhatabela">
-          <UBadge variant="subtle" size="md" color="gray">{{ _item.oldValue || 'null' }}</UBadge>
+          <UBadge variant="subtle" size="md" color="neutral">{{ _item.oldValue || 'null' }}</UBadge>
         </UTooltip>
         <Icon name="i-basil-arrow-right-solid" size="1.5rem" />
         <UTooltip text="Oficial">
-          <UBadge color="orange" size="md" variant="subtle"> {{ _item.value || 'null' }}
+          <UBadge color="warning" size="md" variant="subtle"> {{ _item.value || 'null' }}
           </UBadge>
         </UTooltip>
       </div>
     </div>
     <div class="flex justify-end">
-      <UButton @click="emit('setNumeroPartida', partida)" size="sm" color="primary" variant="ghost" class="mt-4">
+      <UButton @click="emit('setNumeroPartida', partida)" size="sm" color="info" variant="ghost" class="mt-4">
         Corrigir</UButton>
     </div>
   </UCard>

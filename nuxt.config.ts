@@ -8,7 +8,13 @@ export default defineNuxtConfig({
     }
   },
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    }
+  },
   css: ['~/public/main.css'],
   modules: [
     '@nuxt/ui',
@@ -19,7 +25,9 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@nuxthub/core',
     '@nuxt/icon',
-    '@nuxt/scripts'
+    '@nuxt/scripts',
+    '@nuxtjs/seo',
+    'nuxt-og-image'
   ],
   supabase: {
     redirect: false

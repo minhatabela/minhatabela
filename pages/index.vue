@@ -69,9 +69,11 @@
       </div>
     </section>
 
-    <Teleport to="body">
-      <CookieConsentBanner v-if="!consent" />
-    </Teleport>
+    <ClientOnly>
+      <Teleport to="body">
+        <CookieConsentBanner v-if="!consent" />
+      </Teleport>
+    </ClientOnly>
 
 
     <footer class="text text-slate-300 flex justify-center py-6">

@@ -28,38 +28,38 @@
             class="w-fit mt-4 rounded-full" color="primary" variant="outline">Simular agora</UButton>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               📈 Visualize a classificação
             </h4>
             <p class="text-slate-400">Veja a tabela atualizada e como ela comporta com suas simulações</p>
           </UCard>
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               ✏️ Simule a rodada
             </h4>
             <p class="text-slate-400">Simule rodada a rodada do campeonato, desde a rodada 1</p>
           </UCard>
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               🚢 Navegue pelas rodadas
             </h4>
             <p class="text-slate-400"> Veja quais foram os resultados das rodadas anteriores e os confrontos que estão
               por vir</p>
           </UCard>
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               📃 Salve suas simulações
             </h4>
             <p class="text-slate-400"> Suas simulações são salvas localmente, entre para salvar na nuvem</p>
           </UCard>
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               🙈 Oculte a tabela
             </h4>
             <p class="text-slate-400"> Com emoção: esconda a tebela enquanto simula</p>
           </UCard>
-          <UCard>
+          <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">
               ⬇️ Baixe a rodada simulada
             </h4>

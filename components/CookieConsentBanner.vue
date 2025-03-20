@@ -1,5 +1,6 @@
 <template>
-  <UCard class="fixed right-0 bottom-0  w-full flex justify-center items-center lg:max-w-sm lg:right-4 lg:bottom-4   ">
+  <UCard variant="subtle"
+    class="fixed right-0 bottom-0  w-full flex justify-center items-center lg:max-w-sm lg:right-4 lg:bottom-4   ">
     <div class="flex items-center flex-col w-full gap-4">
       <div class="flex justify-start w-full">
         <img class="h-10 w-10" :src="LogoCookie" />

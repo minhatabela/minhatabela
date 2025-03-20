@@ -1,5 +1,5 @@
 <template>
-  <UCard>
+  <UCard variant="subtle">
     <UTable :columns="columns" :data="tabela">
       <template #0-cell="{ row }">
         <UBadge :color="badgeColor(row.index + 1)" class="rounded-full"> {{ row.index + 1 }} </UBadge>

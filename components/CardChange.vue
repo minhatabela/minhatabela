@@ -1,5 +1,5 @@
 <template>
-  <UCard>
+  <UCard variant="subtle">
     <div class="flex flex-col gap-3">
       <div class="flex justify-between">
         <UBadge size="xs" color="neutral" class="mb-2">Partida {{ partida }}</UBadge>

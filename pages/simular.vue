@@ -1,12 +1,16 @@
 <script setup lang="ts">
 
+onMounted(() => {
+  execute()
+})
+
 const config = useRuntimeConfig()
 
-useScript({
-  src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.public.adsenseId}`,
-  async: true,
-  crossorigin: "anonymous"
-})
+// useScript({
+//   src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.public.adsenseId}`,
+//   async: true,
+//   crossorigin: "anonymous"
+// })
 
 useHead({
   title: "Simulando · minhatabela"
@@ -14,7 +18,7 @@ useHead({
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
-const { jogosRodada, rodada_navegavel, syncing, simulacao, execute, simulacoes } = useSimulador()
+const { jogosRodada, rodada_navegavel, syncing, simulacao, execute } = useSimulador()
 
 const arte = ref()
 
@@ -25,10 +29,7 @@ const empty = computed(() => {
   return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
-onMounted(async () => {
-  // await getAllSimulacoes()
-  execute()
-})
+
 </script>
 
 <template>
@@ -49,7 +50,7 @@ onMounted(async () => {
         <UIcon name="i-ion-sync" class="w-4 h-4 text-green-400"
           :class="{ 'animate-spin  text-black dark:text-white': syncing }" />
         <UButton :disabled="empty" @click="componentToPng(arte, rodada_navegavel)" size="xs" variant="ghost"
-          color="purple" icon="i-ic-round-download" label="baixar simulação da rodada" />
+          color="primary" icon="i-ic-round-download" label="baixar simulação da rodada" />
       </div>
       <div class="flex w-full items-center justify-between">
         <button :disabled="rodada_navegavel === 1" @click="rodada_navegavel = Number(rodada_navegavel) - 1">
@@ -74,6 +75,7 @@ onMounted(async () => {
 </template>
 
 <style>
+@reference "~/public/main.css";
 html,
 body {
   font-family: 'DM Sans', sans-serif;

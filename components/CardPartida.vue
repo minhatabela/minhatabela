@@ -1,5 +1,5 @@
 <template>
-  <UCard class="flex items-center justify-center ">
+  <UCard variant="subtle" class="flex items-center justify-center">
     <div class="flex w-full justify-between pb-2">
       <div class="pb-2 flex justify-between gap-2">
         <span class="text-xs text-slate-400">{{ data }}</span>

@@ -62,7 +62,7 @@ export const useSimulador = () => {
       const { error } = await client.from('simulacao').delete().eq('partida', partidaId)
 
       if (error) {
-        toast.add({ description: 'Erro ao deletar simulação', color: 'red' })
+        toast.add({ description: 'Erro ao deletar simulação', color: 'error' })
       }
     }
     syncing.value = false;
@@ -75,7 +75,7 @@ export const useSimulador = () => {
 
     const { error } = await client.from('simulacao').insert(simulacoes)
     if (!error) {
-      toast.add({ description: "Simulações foram sincronizadas", color: 'green' })
+      toast.add({ description: "Simulações foram sincronizadas", color: 'success' })
     }
   }
 
@@ -94,7 +94,7 @@ export const useSimulador = () => {
         simulacao.value.get(simulada.partida).id = data[0].id
       }
       if (error) {
-        toast.add({ description: 'Erro ao salvar simulação', color: 'red' })
+        toast.add({ description: 'Erro ao salvar simulação', color: 'error' })
       }
       syncing.value = false
     }

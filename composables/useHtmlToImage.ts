@@ -13,9 +13,10 @@ export const useHtmlToImage = () => {
       }
     })
       .then(function (dataUrl) {
-        download(dataUrl, 'minhatabela rodada');
+        download(dataUrl, `minhatabela rodada ${rodada}`);
       }).catch(function (error) {
-        toast.add({ title: `Erro ao baixar simulação da rodada ${rodada}`, color: 'red' })
+        console.error(error)
+        toast.add({ title: `Erro ao baixar simulação da rodada ${rodada}`, color: 'error' })
       })
       ;
   }

@@ -5,8 +5,8 @@
       <span class="hidden lg:inline-block">{{ user.user_metadata.name }}</span>
     </div>
 
-    <template #panel>
-      <UButton @click="logout" variant="link" color="purple" icon="i-solar-logout-broken">sair</UButton>
+    <template #content>
+      <UButton @click="logout" variant="link" color="neutral" icon="i-solar-logout-broken">sair</UButton>
     </template>
   </UPopover>
 </template>

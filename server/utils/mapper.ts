@@ -1,4 +1,4 @@
-import { Jogo, PartidaCBF, PartidaNormalizada } from '~/types/jogo'
+import { Partida, PartidaCBF, PartidaNormalizada } from '~/types/partida'
 
 export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
   return {
@@ -14,7 +14,7 @@ export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
   }
 }
 
-export function mapPartidaMT(partida: Jogo): PartidaNormalizada {
+export function mapPartidaMT(partida: Partida): PartidaNormalizada {
   return {
     numero: partida.numero || undefined,
     rodada: partida.rodada,

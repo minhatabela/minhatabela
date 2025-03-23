@@ -35,12 +35,12 @@
 <script lang="ts" setup>
 import { format } from 'date-fns';
 import type { Tables } from '~/types/database.types';
-import { type Jogo } from '~/types/jogo';
+import { type Partida } from '~/types/partida';
 
 const { simulacao, salvarSimulacao } = useSimulador()
 
 interface Props {
-  partida: Jogo
+  partida: Partida
 }
 
 const props = defineProps<Props>()

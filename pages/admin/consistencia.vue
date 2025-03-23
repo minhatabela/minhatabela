@@ -59,13 +59,12 @@
 </template>
 
 <script lang="ts" setup>
-
+import { type Partida } from '~/types/partida'
 definePageMeta({
   middleware: ['auth']
 })
 
 import { format } from 'date-fns'
-import type { Jogo } from '~/types/jogo'
 const client = useSupabaseClient()
 const toast = useToast()
 
@@ -103,7 +102,7 @@ watch(opened, (value) => {
 })
 
 const objetoPartida = computed(() => {
-  return partidas?.value?.find((ptd: Jogo) => ptd.numero === Number(partida.value))
+  return partidas?.value?.find((ptd: Partida) => ptd.numero === Number(partida.value))
 })
 
 async function aceitarCorrecao() {

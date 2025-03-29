@@ -1,6 +1,8 @@
 import { type Tables } from "~/types/database.types";
 export type Partida = Omit<Tables<'partida'>, 'visitante' | 'mandante'> & { mandante: Tables<'clube'>, visitante: Tables<'clube'>, sede: Tables<'sede'> }
 
+export interface IPartida extends Partida { }
+
 export interface ClubeCBF {
   nome: string,
   gols?: number,

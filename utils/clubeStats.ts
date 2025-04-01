@@ -1,19 +1,18 @@
-import { type Clube } from "~/types/clube";
+import { type IClube } from "~/types/clube";
 import { type IClubeStats } from "~/types/clubeStats.d";
 import { type Partida } from "~/types/partida";
 
 export class ClubeStats {
-  clube: Clube
+  clube: IClube
   partidas: Partida[]
 
-  constructor(clube: Clube, partidas: Partida[]) {
+  constructor(clube: IClube, partidas: Partida[]) {
     this.clube = clube
     this.partidas = partidas.filter(partida => partida.mandante.id === clube.id || partida.visitante.id === clube.id)
   }
 
   public vitorias() {
-    return this.partidas
-      .filter(partida => isDefined(partida.gols_mandante) && isDefined(partida.gols_visitante))
+    return this.partidasComResultado()
       .filter(partida => {
         if (partida.mandante.id === this.clube.id) return Number(partida.gols_mandante) > Number(partida.gols_visitante)
         else return Number(partida.gols_visitante) > Number(partida.gols_mandante)
@@ -21,7 +20,7 @@ export class ClubeStats {
   }
 
   public derrotas() {
-    return this.partidas
+    return this.partidasComResultado()
       .filter(partida => {
         if (partida.mandante.id === this.clube.id) return Number(partida.gols_mandante) < Number(partida.gols_visitante)
         else return Number(partida.gols_visitante) < Number(partida.gols_mandante)
@@ -29,10 +28,8 @@ export class ClubeStats {
   }
 
   public empates() {
-    return this.partidas
-      .filter(partida => {
-        return (isDefined(partida.gols_mandante) && isDefined(partida.gols_visitante)) && partida.gols_mandante === partida.gols_visitante //&& jogo.status !== 'nao_iniciada' as Enums<'status'>
-      })
+    return this.partidasComResultado()
+      .filter(partida => partida.gols_mandante === partida.gols_visitante)
   }
 
   public pontos() {
@@ -83,7 +80,7 @@ export class ClubeStats {
       empates: this.empates().length,
       derrotas: this.derrotas().length,
       pontos: this.pontos(),
-      partidas: this.partidas.length,
+      partidas: this.partidasComResultado().length,
       golsDif: this.golsDif()
     }
   }

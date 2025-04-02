@@ -1,0 +1,22 @@
+export const NOME_CLUBES = [
+  'Corinthians',
+  'Mirassol',
+  'Santos',
+  'São Paulo',
+  'Palmeiras',
+  'Red Bull Bragantino',
+  'Atlético Mineiro',
+  'Cruzeiro',
+  'Bahia',
+  'Ceará',
+  'Sport',
+  'Fortaleza',
+  'Vitória',
+  'Botafogo',
+  'Flamengo',
+  'Fluminense',
+  'Vasco',
+  'Grêmio',
+  'Internacional',
+  'Juventude'
+];

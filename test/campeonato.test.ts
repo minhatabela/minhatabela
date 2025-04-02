@@ -1,23 +1,28 @@
 import { describe, expect, test } from 'vitest'
-import type { Clube } from '~/types/clube'
-import type { Partida } from '~/types/partida'
+import { CampeonatoGenerator } from '~/models/CampeonatoGenerator'
 import { Campeonato } from '~/utils/campeonato'
-import clubes from './mocks/clubes.json'
-import partidas from './mocks/partidas.json'
 
 describe('Campeonato', () => {
 
   function setup() {
-    const clubesCampeonato = clubes as Clube[]
-    const partidasCampeonato = partidas as Partida[]
-    const campeonato = new Campeonato(partidasCampeonato, clubesCampeonato)
-    return { campeonato, clubesCampeonato }
+
+    const results = [
+      [8, 4],
+      [5, 3],
+      [4, 1], //Resultados Real Elite
+    ]
+
+    const campeonatoGenerator = new CampeonatoGenerator({ nomeClubes: ['Real Elite', 'G3X FC', 'Capim FC', 'Dendele'] });
+    const partidas = campeonatoGenerator.gerarPartidas({ results });
+
+    const campeonato = new Campeonato(partidas, campeonatoGenerator.clubes)
+    return { campeonato }
   }
 
   test('getClassificacao', () => {
     const { campeonato } = setup()
 
-    const lider = campeonato.getClassificacao().find(stat => stat.clube === 'Internacional')
+    const lider = campeonato.getClassificacao().find(stat => stat.clube === 'Real Elite')
     expect(campeonato.getClassificacao()[0]).toEqual(lider)
   })
 })

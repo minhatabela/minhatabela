@@ -51,7 +51,7 @@ describe('ClubeStats', () => {
 
     const campeonatoGenerator = new CampeonatoGenerator()
     const clubesCampeonato = campeonatoGenerator.gererarClubes()
-    const partidasCampeonato = campeonatoGenerator.gerarPartidas({ clube: 'Corinthians', results })
+    const partidasCampeonato = campeonatoGenerator.gerarPartidas({ results })
     const clube = clubesCampeonato[0]
 
     const clubeStats = new ClubeStats(clube, partidasCampeonato)

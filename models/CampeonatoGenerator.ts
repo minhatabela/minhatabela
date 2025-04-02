@@ -1,46 +1,37 @@
 import type { IClube } from "~/types/clube";
 import type { IPartida } from "~/types/partida";
+import { NOME_CLUBES } from "../constants/nomeClubes";
 import { Clube } from "./Clube";
 import { Partida } from "./Partida";
 
-interface CampeonatoGeneratorOptions {
-  clube: string
-  results: number[][]
+interface GerarPartidasOptions {
+  clube?: string | undefined
+  results: number[][] | undefined
 }
 
-const nomeClubes = [
-  'Corinthians',
-  'Mirassol',
-  'Santos',
-  'São Paulo',
-  'Palmeiras',
-  'Red Bull Bragantino',
-  'Atlético Mineiro',
-  'Cruzeiro',
-  'Bahia',
-  'Ceará',
-  'Sport',
-  'Fortaleza',
-  'Vitória',
-  'Botafogo',
-  'Flamengo',
-  'Fluminense',
-  'Vasco',
-  'Grêmio',
-  'Internacional',
-  'Juventude'
-];
+interface ICampeonatoGenerator {
+  nomeClubes?: string[]
+}
+
+const defaultCampeonatoGenerator = {
+  nomeClubes: NOME_CLUBES
+}
 
 export class CampeonatoGenerator {
   clubes: IClube[] = [];
   partidas: IPartida[] = [];
+  nomesClubes: string[] = NOME_CLUBES
+
+  constructor({ nomeClubes }: ICampeonatoGenerator = defaultCampeonatoGenerator) {
+    this.nomesClubes = nomeClubes || NOME_CLUBES
+  }
 
   gererarClubes(): IClube[] {
-    this.clubes = nomeClubes.map((nome) => new Clube({ nome_popular: nome, id: crypto.randomUUID() }))
+    this.clubes = this.nomesClubes.map((nome) => new Clube({ nome_popular: nome, id: crypto.randomUUID() }))
     return this.clubes
   }
 
-  gerarPartidas(options: CampeonatoGeneratorOptions | undefined = undefined): IPartida[] {
+  gerarPartidas(options: GerarPartidasOptions | undefined = undefined): IPartida[] {
     this.partidas = []
 
     if (!this.clubes.length) {
@@ -62,25 +53,19 @@ export class CampeonatoGenerator {
       }
     }
 
-    if (options && !nomeClubes.includes(options.clube)) {
+    if (options?.clube && !this.clubes.map(clube => clube.nome_popular).includes(options.clube)) {
       throw new Error('Clube não encontrado')
     }
 
-    if (options && options.results.length !== (this.partidas.length / 10)) {
-      throw new Error('Quantidade de resultados inválida')
-    }
-
-    if (options) {
-      this.partidas.forEach((partida, index) => {
-        if (partida.mandante.nome_popular === options.clube) {
-          partida.gols_mandante = options.results[index][0]
-          partida.gols_visitante = options.results[index][1]
-        }
-
-        if (partida.visitante.nome_popular === options.clube) {
-          partida.gols_mandante = options.results[index][1]
-          partida.gols_visitante = options.results[index][0]
-        }
+    if (options?.results) {
+      options.results.forEach(([mandante, visitante], index) => {
+        if ((index + 1) % 2 === 0) { //casa
+          this.partidas[index].gols_mandante = visitante
+          this.partidas[index].gols_visitante = mandante
+        } else { //fora
+          this.partidas[index].gols_mandante = mandante
+          this.partidas[index].gols_visitante = visitante
+        }  
       })
     }
 

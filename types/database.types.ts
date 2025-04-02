@@ -14,7 +14,7 @@ export type Database = {
           created_at: string | null
           escudo: string | null
           id: string
-          nome: string
+          nome: string | null
           nome_popular: string | null
           sigla: string | null
           slug: string | null
@@ -24,7 +24,7 @@ export type Database = {
           created_at?: string | null
           escudo?: string | null
           id?: string
-          nome: string
+          nome?: string | null
           nome_popular?: string | null
           sigla?: string | null
           slug?: string | null
@@ -34,7 +34,7 @@ export type Database = {
           created_at?: string | null
           escudo?: string | null
           id?: string
-          nome?: string
+          nome?: string | null
           nome_popular?: string | null
           sigla?: string | null
           slug?: string | null
@@ -54,7 +54,7 @@ export type Database = {
           numero: number | null
           rodada: number
           sede: string | null
-          status: Database["public"]["Enums"]["status"]
+          status: Database["public"]["Enums"]["status"] | null
           updated_at: string | null
           visitante: string | null
         }
@@ -69,7 +69,7 @@ export type Database = {
           numero?: number | null
           rodada: number
           sede?: string | null
-          status?: Database["public"]["Enums"]["status"]
+          status?: Database["public"]["Enums"]["status"] | null
           updated_at?: string | null
           visitante?: string | null
         }
@@ -84,7 +84,7 @@ export type Database = {
           numero?: number | null
           rodada?: number
           sede?: string | null
-          status?: Database["public"]["Enums"]["status"]
+          status?: Database["public"]["Enums"]["status"] | null
           updated_at?: string | null
           visitante?: string | null
         }
@@ -118,7 +118,7 @@ export type Database = {
           created_at: string | null
           id: string
           key: string | null
-          nome: string
+          nome: string | null
           nome_popular: string
           updated_at: string | null
         }
@@ -127,7 +127,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           key?: string | null
-          nome: string
+          nome?: string | null
           nome_popular: string
           updated_at?: string | null
         }
@@ -136,7 +136,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           key?: string | null
-          nome?: string
+          nome?: string | null
           nome_popular?: string
           updated_at?: string | null
         }

@@ -26,7 +26,8 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxt/icon',
     '@nuxtjs/seo',
-    'nuxt-og-image'
+    'nuxt-og-image',
+    '@nuxt/test-utils/module'
   ],
   supabase: {
     redirect: false

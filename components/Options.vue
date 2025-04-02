@@ -45,7 +45,7 @@
 
 <script lang="ts" setup>
 
-import { type Jogo } from '../types/jogo';
+import { type Partida } from '../types/partida';
 
 const { simulacao, salvarSimulacao, removerSimulacao } = useSimulador()
 
@@ -56,7 +56,7 @@ const open = ref(false)
 onClickOutside(popover, () => open.value = false)
 
 interface Props {
-  partida: Jogo
+  partida: Partida
 }
 const props = defineProps<Props>()
 

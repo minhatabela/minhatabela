@@ -1,7 +1,8 @@
-import { type Clube } from "~/types/clube"
+import { type IClube } from "~/types/clube"
+import { type IPartida } from "~/types/partida"
 
-const { data: partidas } = useAsyncData('partidas', () => $fetch<Clube[]>('/api/partidas'), { default: () => [] })
-const { data: clubes } = useAsyncData('clubes', () => $fetch('/api/clubes'), { default: () => [] })
+const { data: partidas } = useAsyncData('partidas', () => $fetch<IPartida[]>('/api/partidas'), { default: () => [] })
+const { data: clubes } = useAsyncData('clubes', () => $fetch<IClube[]>('/api/clubes'), { default: () => [] })
 
 
 

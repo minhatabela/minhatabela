@@ -163,6 +163,13 @@ watch(status, () => {
     if (group.value.CREATE) tabIndex.value = index.CREATE
     else if (group.value.REMOVE) tabIndex.value = index.REMOVE
     else tabIndex.value = index.CHANGE
+  } else if (status.value === 'error') {
+    toast.add({
+      title: "Deu ruim!",
+      description: "Moiô ao tentar buscar consistência :(",
+      icon: "i-ic-baseline-thumb-down",
+      color: "error"
+    })
   }
 })
 

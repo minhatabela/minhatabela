@@ -6,13 +6,12 @@ onMounted(() => {
 })
 
 useHead({
-  title: "Simulando · minhatabela"
+  title: "Simulando"
 })
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela } = useTabela()
 const { jogosRodada, rodada_navegavel, syncing, simulacao, execute } = useSimulador()
-// watch(_rodada_atual, (value) => rodada_navegavel.value = value.data)
 
 const arte = ref()
 

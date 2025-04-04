@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Rodada inválida' })
   }
 
-  const { data } = await client.from('partida').select('numero, hora, rodada, data, visitante:visitante(slug), mandante:mandante(slug), sede:sede(key)',).eq('rodada', rodada).order('numero')
+  const { data } = await client.from('partida').select('numero, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(slug), mandante:mandante(slug), sede:sede(key)',).eq('rodada', rodada).order('numero')
 
   try {
     response = await $fetch(`http://www.cbf.com.br/api/proxy?path=/jogos/campeonato/12606/rodada/${rodada}/fase`, {

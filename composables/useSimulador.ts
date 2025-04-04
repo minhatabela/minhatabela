@@ -4,14 +4,24 @@ import { filtraJogosRodada } from "../utils/tabela"
 const { partidas } = useApi()
 const toast = useToast()
 
-const rodada_atual = 1
 
 const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao'>>([]))
 const syncing = ref(false)
 
 export const useSimulador = () => {
+  const rodada = ref<number | undefined>(undefined)
 
-  const rodada_navegavel = ref(rodada_atual)
+  const rodada_navegavel = computed({
+    get() {
+      return rodada.value || useOrderBy(partidas.value.filter(partida => !isDefined(partida.gols_mandante) && !isDefined(partida.gols_visitante)), (o) => o.data)[0]?.rodada
+    },
+    set(v) {
+      rodada.value = v
+    }
+  })
+
+  // const { data: _rodada_atual, execute: getRodadaAtual } = useLazyAsyncData('rodada_atual', () => $fetch('/api/rodadaAtual'), { immediate: false })
+
 
   const { data: simulacoes, execute, refresh, status } = useLazyAsyncData('simulacoes', async () => {
     const client = useSupabaseClient()
@@ -108,7 +118,6 @@ export const useSimulador = () => {
     rodada_navegavel,
     salvarSimulacao,
     syncing,
-    // getAllSimulacoes,
     execute,
     simulacoes
   }

@@ -1,7 +1,11 @@
+import { TableViewEnum } from "~/types/TableView.enum"
 import { calculaStatsEquipe } from "~/utils/tabela"
 
 const { partidas, clubes } = useApi()
 const { simulacao } = useSimulador()
+
+const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
+
 
 export const useTabela = () => {
 
@@ -59,7 +63,7 @@ export const useTabela = () => {
 
 
   const statsByEquipe = computed(() => {
-    return clubes.value?.map((clube) => calculaStatsEquipe(partidas.value || [], clube, simulacao.value))
+    return clubes.value?.map((clube) => calculaStatsEquipe(partidas.value || [], clube, simulacao.value, tableView.value))
   })
 
   const tabela = computed(() => {
@@ -69,6 +73,7 @@ export const useTabela = () => {
   return {
     columns,
     tabela,
-    clubes
+    clubes,
+    tableView
   }
 }

@@ -1,6 +1,7 @@
 import type { Clube } from "~/types/clube";
 import { type Enums } from "~/types/database.types";
 import { type Partida } from "~/types/partida";
+import { TableViewEnum } from "~/types/TableView.enum";
 
 export function somaGolsProMandante(jogos: Partida[], equipeId: string | number) {
   return jogos
@@ -72,16 +73,25 @@ function filtraJogosEquipe(jogos: Partida[], equipeId: number | string): Partida
   return [...jogos.filter(contemEquipe)]
 }
 
-export function calculaStatsEquipe(jogos: Partida[], clube: Clube, simulador: Map<string, Partida> = new Map([])) {
+export function calculaStatsEquipe(jogos: Partida[], clube: Clube, simulador: Map<string, Partida> = new Map([]), tableView: TableViewEnum = TableViewEnum.OFICIAL) {
   //TODO adicionar filtro por simulador
-  const jogos_equipe_finalizado = filtraJogosEquipe(jogos, clube.id).filter(jogo => jogo.status === 'finalizada' as Enums<'status'>)
+  const jogos_equipe_finalizado = filtraJogosEquipe(jogos, clube.id).filter(({gols_mandante, gols_visitante}) => isDefined(gols_mandante) && isDefined(gols_visitante))
   const jogos_equipe_nao_iniciado = filtraJogosEquipe(jogos, clube.id).filter(jogo => jogo.status !== 'finalizada' as Enums<'status'>)
 
-  const jogos_equipe_simulado = jogos_equipe_nao_iniciado
+  const jogos_equipe_simulado = filtraJogosEquipe(jogos, clube.id)
     .filter(partida => simulador.has(partida.id))
     .map(partida => Object.assign({ ...partida }, { ...simulador.get(partida.id), status: 'simulada' }))
 
-  const jogos_equipe: Partida[] = [...jogos_equipe_finalizado, ...jogos_equipe_simulado]
+    const idsPartidasFinalizadas = jogos_equipe_finalizado.map(partida => partida.id)
+
+    const tableViewPartidas = {
+      [TableViewEnum.OFICIAL]: jogos_equipe_finalizado,
+      [TableViewEnum.SIMULADA]: jogos_equipe_simulado,
+      [TableViewEnum.OFICIAL_SIMULADA]: jogos_equipe_finalizado.concat(jogos_equipe_simulado.filter(partida => !idsPartidasFinalizadas.includes(partida.partida))),
+
+    }
+
+  const jogos_equipe: Partida[] = tableViewPartidas[tableView]
 
   const vitorias = filtraVitorias(jogos_equipe, clube.id)
 

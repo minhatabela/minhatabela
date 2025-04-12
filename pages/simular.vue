@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TableViewEnum } from '~/types/TableView.enum'
+
 
 onMounted(() => {
   // getRodadaAtual()
@@ -9,8 +11,14 @@ useHead({
   title: "Simulando"
 })
 
+const tableViewOptions = [
+  { label: "Oficial Simulada", value: TableViewEnum.OFICIAL_SIMULADA },
+  { label: "Simulada", value: TableViewEnum.SIMULADA },
+  {label: "Oficial", value: TableViewEnum.OFICIAL}
+]
+
 const { componentToPng } = useHtmlToImage()
-const { columns, tabela } = useTabela()
+const { columns, tabela, tableView } = useTabela()
 const { jogosRodada, rodada_navegavel, syncing, simulacao, execute } = useSimulador()
 
 const arte = ref()
@@ -22,6 +30,8 @@ const empty = computed(() => {
   return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
+const [sensitive, toggle] = useToggle()
+
 
 </script>
 
@@ -32,9 +42,21 @@ const empty = computed(() => {
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
     <div class="w-full">
 
-      <ToggleSensitive v-if="tabela.length" label="tabela">
-        <Table :columns="columns" :tabela="tabela" />
-      </ToggleSensitive>
+      
+      <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center gap-2">
+        <USelect :items="tableViewOptions" v-model="tableView"/>
+        <UTooltip>
+            <UIcon name="i-lucide-circle-help" class="size-4 text-gray-600" mode="svg"  />
+          <template #content>
+             oi
+          </template>
+        </UTooltip>
+      </div>
+        <UButton size="xs" variant="ghost" color="primary" :label="`${sensitive ? 'ver' : 'ocultar'} tabela`"
+        :icon="sensitive ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'" @click="toggle()" />
+      </div>
+        <Table v-if="tabela.length" :columns="columns" :tabela="tabela" :sensitive="sensitive" />
       <USkeleton v-else class="w-full h-full" />
 
     </div>

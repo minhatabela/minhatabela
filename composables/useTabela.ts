@@ -28,7 +28,8 @@ export const useTabela = () => {
       }, {
         header: 'SG',
         accessorKey: 'diferenca_gols'
-      }
+      },
+      
     ]
 
     if (width.value < 768) {
@@ -57,6 +58,10 @@ export const useTabela = () => {
         header: 'GC',
         accessorKey: 'gols_contra'
       },
+      {
+        header: '%',
+        accessorKey: 'aproveitamento',
+      }
     ]).map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
 
   })

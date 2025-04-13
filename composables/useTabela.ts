@@ -57,6 +57,10 @@ export const useTabela = () => {
         header: 'GC',
         accessorKey: 'gols_contra'
       },
+      {
+        header: '%',
+        accessorKey: 'aproveitamento',
+      },
     ]).map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
 
   })

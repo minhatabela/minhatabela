@@ -108,6 +108,7 @@ export function calculaStatsEquipe(jogos: Partida[], clube: Clube, simulador: Ma
     equipe: clube.nome_popular,
     partidas: jogos_equipe.length,
     clube_url: clube.escudo,
+    aproveitamento: Math.floor((vitorias.length * 3 + empates.length) / (jogos_equipe.length * 3) * 100),
   }
 
 }

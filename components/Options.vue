@@ -1,11 +1,7 @@
 <template>
   <div>
-    <UPopover ref="popover" :open="open" :dismissible="true">
-
-
-      <Icon name="mage:dots" class="cursor-pointer" @click="open = true" />
-
-
+    <UPopover mode="hover">
+        <Icon name="mage:dots" class="cursor-pointer"  />
       <template #content>
         <div class="flex flex-col">
           <span @click="atribuirVitoriaSimplesMandante"
@@ -49,11 +45,7 @@ import { type Partida } from '../types/partida';
 
 const { simulacao, salvarSimulacao, removerSimulacao } = useSimulador()
 
-const popover = ref()
 const confirm = ref(false)
-const open = ref(false)
-
-onClickOutside(popover, () => open.value = false)
 
 interface Props {
   partida: Partida
@@ -67,8 +59,6 @@ async function atribuirVitoriaSimplesMandante() {
     gols_mandante: 1,
     gols_visitante: 0
   });
-
-  open.value = false
 }
 
 async function atribuirVitoriaSimplesVisitante() {
@@ -78,9 +68,6 @@ async function atribuirVitoriaSimplesVisitante() {
     gols_mandante: 0,
     gols_visitante: 1
   });
-
-  open.value = false
-
 }
 
 async function decretarEmpateSimples() {
@@ -90,15 +77,11 @@ async function decretarEmpateSimples() {
     gols_mandante: 0,
     gols_visitante: 0
   });
-
-  open.value = false
-
 }
 
 async function limparSimulacao(partidaId: string) {
   await removerSimulacao(partidaId)
   confirm.value = false
-  open.value = false
 }
 
 

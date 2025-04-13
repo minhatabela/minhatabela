@@ -14,8 +14,23 @@ useHead({
 const tableViewOptions = [
   { label: "Oficial Simulada", value: TableViewEnum.OFICIAL_SIMULADA },
   { label: "Simulada", value: TableViewEnum.SIMULADA },
-  {label: "Oficial", value: TableViewEnum.OFICIAL}
+  { label: "Oficial", value: TableViewEnum.OFICIAL }
 ]
+
+const tableViewLabel = computed(() => {
+  const option = tableViewOptions.find(o => o.value === tableView.value)
+  return option ? option.label : ''
+})
+
+const tableViewDescription = computed(() => {
+  const descriptions = {
+    [TableViewEnum.OFICIAL_SIMULADA]: "A classificação Oficial-Simulada mescla dados oficiais do campeonatos com a sua simulação, ou seja, resultados de partidas que já se encerraram juntam com os resultados de suas simulações.",
+    [TableViewEnum.SIMULADA]: "A classificação Simulada considera apenas os resultados de suas simulações",
+    [TableViewEnum.OFICIAL]: "A classificação Oficial considera dados oficiais do campeonato",
+  }
+
+  return descriptions[tableView.value] || ''
+})
 
 const { componentToPng } = useHtmlToImage()
 const { columns, tabela, tableView } = useTabela()
@@ -42,21 +57,13 @@ const [sensitive, toggle] = useToggle()
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
     <div class="w-full">
 
-      
+
       <div class="flex justify-between items-center mb-4">
-      <div class="flex items-center gap-2">
-        <USelect :items="tableViewOptions" v-model="tableView"/>
-        <UTooltip>
-            <UIcon name="i-lucide-circle-help" class="size-4 text-gray-600" mode="svg"  />
-          <template #content>
-             oi
-          </template>
-        </UTooltip>
-      </div>
+        <USelect :items="tableViewOptions" v-model="tableView" />
         <UButton size="xs" variant="ghost" color="primary" :label="`${sensitive ? 'ver' : 'ocultar'} tabela`"
-        :icon="sensitive ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'" @click="toggle()" />
+          :icon="sensitive ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'" @click="toggle()" />
       </div>
-        <Table v-if="tabela.length" :columns="columns" :tabela="tabela" :sensitive="sensitive" />
+      <Table v-if="tabela.length" :columns="columns" :tabela="tabela" :sensitive="sensitive" />
       <USkeleton v-else class="w-full h-full" />
 
     </div>
@@ -91,6 +98,7 @@ const [sensitive, toggle] = useToggle()
 
 <style>
 @reference "~/public/main.css";
+
 html,
 body {
   font-family: 'DM Sans', sans-serif;

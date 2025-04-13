@@ -34,6 +34,7 @@
 
 <script lang="ts" setup>
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import type { Tables } from '~/types/database.types';
 import { type Partida } from '~/types/partida';
 
@@ -46,7 +47,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const data = computed(() => {
-  return props.partida.data ? format(new Date(props.partida.data.split("-")), "d MMM") : 'A definir'
+  return props.partida.data ? format(new Date(props.partida.data.split("-")), "d MMM", { locale: ptBR }) : 'A definir'
 })
 
 

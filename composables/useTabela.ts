@@ -10,9 +10,8 @@ const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
 export const useTabela = () => {
 
   const columns = computed(() => {
-    const { width } = useWindowSize()
 
-    const columnsMobile = [
+    return [
       {
         header: '#',
         accessorKey: 'posicao'
@@ -28,14 +27,7 @@ export const useTabela = () => {
       }, {
         header: 'SG',
         accessorKey: 'diferenca_gols'
-      }
-    ]
-
-    if (width.value < 768) {
-      return columnsMobile
-    }
-
-    return columnsMobile.concat([
+      },
       {
         header: 'V',
         accessorKey: 'vitorias'
@@ -61,7 +53,7 @@ export const useTabela = () => {
         header: '%',
         accessorKey: 'aproveitamento',
       },
-    ]).map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
+    ].map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
 
   })
 

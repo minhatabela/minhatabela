@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { type Partida } from '../types/partida';
 const { simulacao, salvarSimulacao, removerSimulacao } = useSimulador()
-
+const { $posthog } = useNuxtApp()
 
 interface Props {
   partida: Partida
@@ -52,6 +52,7 @@ const props = defineProps<Props>()
 const confirm = ref(false)
 
 async function atribuirVitoriaSimplesMandante() {
+  if($posthog) $posthog().capture('simulador:simular-atalho')
   await salvarSimulacao({
     id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
@@ -61,6 +62,7 @@ async function atribuirVitoriaSimplesMandante() {
 }
 
 async function atribuirVitoriaSimplesVisitante() {
+  if($posthog) $posthog().capture('simulador:simular-atalho')
   await salvarSimulacao({
     id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
@@ -70,6 +72,7 @@ async function atribuirVitoriaSimplesVisitante() {
 }
 
 async function decretarEmpateSimples() {
+  if($posthog) $posthog().capture('simulador:simular-atalho')
   await salvarSimulacao({
     id: simulacao.value.get(props.partida.id)?.id || undefined,
     partida: props.partida.id,
@@ -79,6 +82,7 @@ async function decretarEmpateSimples() {
 }
 
 async function limparSimulacao(partidaId: string) {
+  if($posthog) $posthog().capture('simulador:limpar-simulacao')
   await removerSimulacao(partidaId)
   confirm.value = false
 }

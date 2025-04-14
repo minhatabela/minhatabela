@@ -8,6 +8,11 @@ const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
 
 
 export const useTabela = () => {
+  const { $posthog } = useNuxtApp()
+
+  watch(tableView, (newValue) => {
+    if ($posthog) $posthog().capture('classificacao:tabela-view', { tabela_view: newValue })
+  })
 
   const columns = computed(() => {
 

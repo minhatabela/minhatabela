@@ -9,6 +9,7 @@ const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao
 const syncing = ref(false)
 
 export const useSimulador = () => {
+  const { $posthog } = useNuxtApp()
   const rodada = ref<number | undefined>(undefined)
 
   const rodada_navegavel = computed({
@@ -108,7 +109,9 @@ export const useSimulador = () => {
       }
       syncing.value = false
     }
+    if ($posthog) $posthog().capture('simulador:manual', { simulada })
   }
+
 
   return {
     jogosRodada,

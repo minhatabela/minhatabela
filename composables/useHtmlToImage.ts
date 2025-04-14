@@ -2,6 +2,7 @@ import download from 'downloadjs';
 import { toPng } from "html-to-image";
 
 export const useHtmlToImage = () => {
+  const { $posthog } = useNuxtApp()
 
   const toast = useToast()
 
@@ -14,6 +15,7 @@ export const useHtmlToImage = () => {
     })
       .then(function (dataUrl) {
         download(dataUrl, `minhatabela rodada ${rodada}`);
+        if($posthog) $posthog().capture('baixar-arte-rodada', { rodada })
       }).catch(function (error) {
         console.error(error)
         toast.add({ title: `Erro ao baixar simulação da rodada ${rodada}`, color: 'error' })

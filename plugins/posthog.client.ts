@@ -1,6 +1,8 @@
 import { defineNuxtPlugin } from '#app';
 import posthog from 'posthog-js';
+
 export default defineNuxtPlugin(nuxtApp => {
+  const user = useSupabaseUser()
   const runtimeConfig = useRuntimeConfig();
   const posthogClient = posthog.init(runtimeConfig.public.posthogPublicKey, {
     api_host: runtimeConfig.public.posthogHost,
@@ -10,6 +12,14 @@ export default defineNuxtPlugin(nuxtApp => {
       if (import.meta.env.MODE === 'development') posthog.debug();
     }
   })
+
+  //identify the user
+  if (user.value) {
+    posthogClient.identify(user.value.id, {
+      email: user.value.email,
+      name: user.value.user_metadata.full_name,
+    })
+  }
 
   // Make sure that pageviews are captured with each route change
   const router = useRouter();

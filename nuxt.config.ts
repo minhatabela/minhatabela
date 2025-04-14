@@ -35,8 +35,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       adsenseId: process.env.GOOGLE_ADSENSE_ID,
-      posthogPublicKey: process.env.POSTHOG_PKEY, //'phc_axet3qmre8XqR9bUSbPaVGhhtt2xL4B4rgq4X63PwNs',
-      posthogHost: process.env.POSTHOG_HOST //'https://us.i.posthog.com'
+      posthogPublicKey: process.env.POSTHOG_PKEY,
+      posthogHost: process.env.POSTHOG_HOST
     }
   },
   pages: true,

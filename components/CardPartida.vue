@@ -14,13 +14,13 @@
         <img class="w-7" :src="partida.mandante.escudo" alt="">
       </UTooltip>
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="placarMandante = Number($event.target.value)" :model-value="placarMandante" />
+        @blur="placarMandante = Number(Math.abs($event.target.value))" :model-value="placarMandante" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_mandante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_mandante }}</span>
       </UTooltip>
       X
       <UInput v-if="partida.status !== 'finalizada'" size="xl" type="number" :max="9" :min="0"
-        @blur="placarVisitante = Number($event.target.value)" :model-value="placarVisitante" />
+        @blur="placarVisitante = Number(Math.abs($event.target.value))" :model-value="placarVisitante" />
       <UTooltip v-else :text="simulacao.get(partida.id) ? simulacao.get(partida.id).gols_visitante : undefined">
         <span class="text-3xl px-4 w-20 text-center">{{ partida.gols_visitante }}</span>
       </UTooltip>
@@ -34,6 +34,7 @@
 
 <script lang="ts" setup>
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import type { Tables } from '~/types/database.types';
 import { type Partida } from '~/types/partida';
 
@@ -46,7 +47,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const data = computed(() => {
-  return props.partida.data ? format(new Date(props.partida.data.split("-")), "d MMM") : 'A definir'
+  return props.partida.data ? format(new Date(props.partida.data.split("-")), "d MMM", { locale: ptBR }) : 'A definir'
 })
 
 

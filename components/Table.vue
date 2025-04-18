@@ -1,5 +1,5 @@
 <template>
-  <UCard variant="subtle">
+  <UCard variant="subtle" class="relative">
     <UTable :columns="columns" :data="tabela">
       <template #0-cell="{ row }">
         <UBadge :color="badgeColor(row.index + 1)" class="rounded-full"> {{ row.index + 1 }} </UBadge>
@@ -14,6 +14,7 @@
         <span class="font-bold">{{ row.original.pontos }}</span>
       </template>
     </UTable>
+    <HiddenContent :enabled="sensitive" />
   </UCard>
 </template>
 
@@ -23,10 +24,11 @@ import { type TableColumn, type TableRow } from '#ui/types';
 import { badgeColor } from '~/utils/tabela';
 interface Props {
   columns: TableColumn[]
-  tabela: TableRow[]
+  tabela: TableRow[],
+  sensitive?: boolean
 }
 
-defineProps<Props>()
+const {sensitive = false } = defineProps<Props>()
 </script>
 
 <style></style>

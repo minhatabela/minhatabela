@@ -1,14 +1,22 @@
+import { TableViewEnum } from "~/types/TableView.enum"
 import { calculaStatsEquipe } from "~/utils/tabela"
 
 const { partidas, clubes } = useApi()
 const { simulacao } = useSimulador()
 
+const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
+
+
 export const useTabela = () => {
+  const { $posthog } = useNuxtApp()
+
+  watch(tableView, (newValue) => {
+    if ($posthog) $posthog().capture('classificacao:tabela-view', { tabela_view: newValue })
+  })
 
   const columns = computed(() => {
-    const { width } = useWindowSize()
 
-    const columnsMobile = [
+    return [
       {
         header: '#',
         accessorKey: 'posicao'
@@ -24,14 +32,7 @@ export const useTabela = () => {
       }, {
         header: 'SG',
         accessorKey: 'diferenca_gols'
-      }
-    ]
-
-    if (width.value < 768) {
-      return columnsMobile
-    }
-
-    return columnsMobile.concat([
+      },
       {
         header: 'V',
         accessorKey: 'vitorias'
@@ -53,13 +54,17 @@ export const useTabela = () => {
         header: 'GC',
         accessorKey: 'gols_contra'
       },
-    ]).map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
+      {
+        header: '%',
+        accessorKey: 'aproveitamento',
+      },
+    ].map((coluna, index) => Object.assign(coluna, { id: index.toString() }))
 
   })
 
 
   const statsByEquipe = computed(() => {
-    return clubes.value?.map((clube) => calculaStatsEquipe(partidas.value || [], clube, simulacao.value))
+    return clubes.value?.map((clube) => calculaStatsEquipe(partidas.value || [], clube, simulacao.value, tableView.value))
   })
 
   const tabela = computed(() => {
@@ -69,6 +74,7 @@ export const useTabela = () => {
   return {
     columns,
     tabela,
-    clubes
+    clubes,
+    tableView
   }
 }

@@ -9,6 +9,7 @@ const simulacao = useLocalStorage('simulador', new Map<string, Tables<'simulacao
 const syncing = ref(false)
 
 export const useSimulador = () => {
+  const { $posthog } = useNuxtApp()
   const rodada = ref<number | undefined>(undefined)
 
   const rodada_navegavel = computed({
@@ -57,7 +58,7 @@ export const useSimulador = () => {
   })
 
   const jogosRodada = computed(() => {
-    return filtraJogosRodada(partidas.value || [], rodada_navegavel.value)
+    return useOrderBy(filtraJogosRodada(partidas.value || [], rodada_navegavel.value), (o) => isDefined(o.data) && isDefined(o.hora) ? new Date(o?.data || 0).setHours(...o?.hora?.split(':')) : 0)
   })
 
 
@@ -108,7 +109,9 @@ export const useSimulador = () => {
       }
       syncing.value = false
     }
+    if ($posthog) $posthog().capture('simulador:manual', { simulada })
   }
+
 
   return {
     jogosRodada,

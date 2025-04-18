@@ -1,0 +1,5 @@
+export enum TableViewEnum {
+  OFICIAL = 'OFICIAL',
+  SIMULADA = 'SIMULADA',
+  OFICIAL_SIMULADA = 'OFICIAL_SIMULADA'
+}

@@ -58,7 +58,7 @@ export const useSimulador = () => {
   })
 
   const jogosRodada = computed(() => {
-    return useOrderBy(filtraJogosRodada(partidas.value || [], rodada_navegavel.value), (o) => new Date(o?.data || 0).setHours(...o.hora?.split(':') || 0))
+    return useOrderBy(filtraJogosRodada(partidas.value || [], rodada_navegavel.value), (o) => isDefined(o.data) && isDefined(o.hora) ? new Date(o?.data || 0).setHours(...o?.hora?.split(':')) : 0)
   })
 
 

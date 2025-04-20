@@ -11,8 +11,11 @@
       <h2 class="text-xl font-semibold pb-2">Rodada {{ rodada }}</h2>
       <UTabs :items="items" v-model="tabIndex" />
       <div class="grid grid-cols-3 gap-4 my-6">
-        <CardChange v-for="item in Object.keys(groupByPartida)" :key="item" :item="groupByPartida[item]"
+        <div v-if="tabIndex === index.CHANGE">
+          <CardChange v-for="item in Object.keys(groupByPartida)" :key="item" :item="groupByPartida[item]"
           @setNumeroPartida="partida = $event" />
+        </div>
+          <CardCreate v-else v-for="item in Object.keys(groupByPartida)" :key="item" :item="groupByPartida[item]" @setNumeroPartida="partidaCriar = groupByPartida[item][0].value; partida=$event"/>
       </div>
       <div class="flex justify-center">
         <UPagination v-model:page="rodada" :total="380" />
@@ -20,42 +23,9 @@
     </main>
 
   </section>
-  <USlideover v-model:open="opened" class="rounded-lg">
 
-    <template #header>
-      <div class="flex flex-col w-full gap-4">
-        <UBadge color="neutral" class="mb-2 w-fit">Partida {{ objetoPartida?.numero }}</UBadge>
-        <h3 class="text-xl text-bold">Corrigir dados da partida</h3>
-        <div class="flex items-center justify-center w-full gap-4 mt-10">
-          <img class="h-16 w-16" :src="objetoPartida?.mandante.escudo" :alt="objetoPartida?.mandante.nome_popular">
-          x
-          <img class="h-16 w-16" :src="objetoPartida?.visitante.escudo" :alt="objetoPartida?.visitante.nome_popular">
-        </div>
-      </div>
-    </template>
-    <template #body>
-      <p>Novas data e hora</p>
-      <div class="flex gap-4">
-        <UPopover v-if="dadoOficial.data" :popper="{ placement: 'bottom-start' }">
-          <UButton icon="i-heroicons-calendar-days-20-solid" :label="format(dadoOficial.data, 'd MMM, yyy')" />
-          <template #content="{ close }">
-            <DatePicker v-model="dadoOficial.data" is-required @close="close" />
-          </template>
-        </UPopover>
-        <UPopover v-if="dadoOficial.hora" :popper="{ placement: 'bottom-start' }">
-          <UButton icon="i-heroicons-clock" :label="format(dadoOficial.hora, 'HH:mm')" />
-          <template #content="{ close }">
-            <DatePicker mode="time" v-model="dadoOficial.data" is-required @close="close" />
-          </template>
-        </UPopover>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-end">
-        <UButton @click="aceitarCorrecao">Corrigir</UButton>
-      </div>
-    </template>
-  </USlideover>
+    <FormCorrigirPartida v-if="objetoPartida && tabIndex === index.CHANGE" @corrigir="aceitarCorrecao" :objetoPartida="objetoPartida" :dadoOficial="dadoOficial" v-model:opened="opened" />
+    <FormCriarPartida v-else-if="tabIndex === index.CREATE" @refresh="refresh()" v-model:opened="opened" :partida="partidaCriar"/>
 </template>
 
 <script lang="ts" setup>
@@ -71,6 +41,7 @@ const toast = useToast()
 
 
 const partida = ref(undefined)
+const partidaCriar = ref()
 const opened = ref(false)
 
 const dadoOficial = ref({
@@ -79,7 +50,7 @@ const dadoOficial = ref({
 })
 
 watch(partida, (value) => {
-  if (value) {
+  if (value && tabIndex.value === index.CHANGE) {
     opened.value = true
 
 
@@ -90,7 +61,11 @@ watch(partida, (value) => {
     dadoOficial.value.hora = hora
 
 
-  } else {
+  } 
+  else if (value && tabIndex.value === index.CREATE) {
+    opened.value = true
+  }
+  else {
     opened.value = false
   }
 })
@@ -139,9 +114,9 @@ const index = {
 }
 
 const reverseIndex = {
-  0: 'CREATE',
-  1: 'REMOVE',
-  2: 'CHANGE',
+  '0': 'CREATE',
+  '1': 'REMOVE',
+  '2': 'CHANGE',
 }
 
 const selectedType = computed(() => {
@@ -150,7 +125,7 @@ const selectedType = computed(() => {
 
 
 
-const tabIndex = ref(0)
+const tabIndex = ref('0')
 const rodada = ref(1)
 
 const urlPartida = computed(() => `/api/partidas?rodada=${rodada.value}`)

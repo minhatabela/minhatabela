@@ -121,7 +121,7 @@ async function criarPartida() {
   if (error) {
     toast.add({ description: error.message, color: 'error' })
   } else {
-    toast.add({ description: 'Partida criada com sucesso', color: 'success' })
+    toast.add({ title: "Base atualizada com sucesso!", icon: "i-simple-line-icons-check", description: 'Partida criada com sucesso', color: 'success' })
     opened.value = false
     emit('refresh')
   }

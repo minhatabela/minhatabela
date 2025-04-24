@@ -1,3 +1,4 @@
+import { DifferenceChange } from 'microdiff'
 import { IPartida, PartidaCBF, PartidaNormalizada } from '~/types/partida'
 
 export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
@@ -15,7 +16,6 @@ export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
 }
 
 export function mapPartidaMT(partida: IPartida): PartidaNormalizada {
-  console.log("🚀 ~ mapPartidaMT ~ partida:", partida)
   return {
     numero: partida.numero || undefined,
     rodada: partida.rodada,
@@ -23,8 +23,12 @@ export function mapPartidaMT(partida: IPartida): PartidaNormalizada {
     hora: partida.hora?.substr(0, 5) || undefined,
     gols_mandante: Number(partida.gols_mandante) || undefined,
     gols_visitante: Number(partida.gols_visitante) || undefined,
-    visitante: partida.visitante.slug,
-    mandante: partida.mandante.slug,
+    visitante: partida.visitante.slug || '',
+    mandante: partida.mandante.slug || '',
     sede: partida.sede?.key || undefined
   }
+}
+
+export function diffToObject(diff: DifferenceChange[]) {
+ return Object.fromEntries(diff.map(item => [item.path, item.value]))
 }

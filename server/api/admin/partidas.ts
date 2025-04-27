@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const { data: partidasMinhaTabela } = await client
     .from('partida')
-    .select('numero, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(slug), mandante:mandante(slug), sede:sede(key)')
+    .select('numero, status, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(*), mandante:mandante(*), sede:sede(*)')
     .order('numero')
 
     let response = {}
@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 500, statusMessage: 'Erro ao buscar dados da CBF' })
     }
 
-    const minhatabela = partidasMinhaTabela?.map(mapPartidaMT)
     const cbf = orderBy(response['jogos'], (o) => Number(o.num_jogo)).map(mapPartidaCBF)
 
     const partidas = partidasMinhaTabela?.map((partida, index) => {

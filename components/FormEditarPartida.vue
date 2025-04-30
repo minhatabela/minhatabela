@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { type PartidaConsistencia } from '~/types/partida';
+import { type CamposInconsistentes, type PartidaConsistencia } from '~/types/partida';
 import type { ISede } from '~/types/sede';
 
 interface FormEditarPartidaProps {
@@ -43,9 +43,9 @@ const hasIconsistentSedeInDB = computed(() => {
 
 const { execute: cerateSede, status } = useAsyncData('createSede', async () => {
 
-  const [nome_popular, cidade, estado] = props.partida.inconsistencias.sede!.split('-')
+  const [nome_popular, cidade] = props.partida.inconsistencias.sede!.split('-')
 
-  const { error, data }  = await useSupabaseClient().from('sede').insert({
+  const { error, data } = await useSupabaseClient().from('sede').insert({
     nome_popular: nome_popular.trim(),
     cidade: cidade.trim(),
     key: props.partida.inconsistencias.sede,
@@ -60,11 +60,11 @@ const { execute: cerateSede, status } = useAsyncData('createSede', async () => {
     })
   }
 
-  
-  return data
-  
 
-}, {immediate: false})
+  return data
+
+
+}, { immediate: false })
 
 const toast = useToast()
 watch(status, (newStatus) => {
@@ -72,6 +72,87 @@ watch(status, (newStatus) => {
     refreshSedes()
   }
 })
+
+function useCamposParidas() {
+  const partidaAuxiliar = ref<CamposInconsistentes>({
+    gols_mandante: undefined,
+    gols_visitante: undefined,
+    data: undefined,
+    hora: undefined,
+    sede: undefined
+  })
+
+  const data = computed({
+    get() {
+      return partidaAuxiliar.value?.data || props.partida.data
+    },
+    set(value: string) {
+      partidaAuxiliar.value!.data = value
+    }
+  })
+
+  const hora = computed({
+    get() {
+      return partidaAuxiliar.value?.hora || props.partida.hora
+    },
+    set(value: string) {
+      partidaAuxiliar.value!.hora = value
+    }
+  })
+
+  const golsMandante = computed({
+    get() {
+      return partidaAuxiliar.value?.gols_mandante || props.partida.gols_mandante
+    },
+    set(value: number) {
+      partidaAuxiliar.value!.gols_mandante = value
+    }
+  })
+
+  const golsVisitante = computed({
+    get() {
+      return partidaAuxiliar.value?.gols_visitante || props.partida.gols_visitante
+    },
+    set(value: number) {
+      partidaAuxiliar.value!.gols_visitante = value
+    }
+  })
+
+  const sede = computed({
+    get() {
+      return partidaAuxiliar.value?.sede || props.partida.sede.id
+    },
+    set(value: string) {
+      partidaAuxiliar.value!.sede = value
+    }
+  })
+
+  return {
+    partidaAuxiliar,
+    sede,
+    golsMandante,
+    golsVisitante,
+    data,
+    hora
+  }
+}
+
+const { partidaAuxiliar, sede, golsMandante, golsVisitante, data, hora } = useCamposParidas()
+
+function acceptOficialScoreboard() {
+  partidaAuxiliar.value!.gols_mandante = props.partida.inconsistencias.gols_mandante
+  partidaAuxiliar.value!.gols_visitante = props.partida.inconsistencias.gols_visitante
+}
+
+function acceptOficialSede() {
+  const sedeOficialId = sedes.value.find(sede => sede.key === props.partida.inconsistencias.sede)!.id
+  partidaAuxiliar.value!.sede = sedeOficialId
+}
+
+function acceptOficialDateTime() {
+  partidaAuxiliar.value!.data = props.partida.inconsistencias.data
+  partidaAuxiliar.value!.hora = props.partida.inconsistencias.hora
+}
 
 </script>
 
@@ -100,37 +181,37 @@ watch(status, (newStatus) => {
         <div class="flex flex-col gap-4">
           <div class="flex gap-2 items-center justify-between text-2xl">
             <h2 class="text-2xl">Gols</h2>
-            <UBadge v-if="hasInconsistentGoals" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
+            <UBadge v-if="hasInconsistentGoals" @click="acceptOficialScoreboard" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
               variant="subtle"
               :label="`Resultado oficial: ${Number(partida.inconsistencias.gols_mandante)} x ${Number(partida.inconsistencias.gols_visitante)}`" />
           </div>
           <div class="flex gap-4">
             <label class="flex flex-col gap-2 w-full">
               Gols mandante
-              <UInput v-model="partida.gols_mandante" type="number" />
+              <UInput v-model="golsMandante" type="number" />
             </label>
             <label class="flex flex-col gap-2 w-full text-end">
               Gols visitante
-              <UInput v-model="partida.gols_visitante" type="number" />
+              <UInput v-model="golsVisitante" type="number" />
             </label>
           </div>
         </div>
         <div class="flex gap-2 items-center justify-between text-2xl">
           <h2 class="text-2xl">Sede</h2>
-          <UBadge v-if="hasInconsistentSede && !hasIconsistentSedeInDB" trailingIcon="i-lucide-plus"
-          @click="cerateSede"
-            class="rounded-full cursor-pointer" :class="{'animate-pulse': status === 'pending'}" color="info" variant="subtle" :label="`Criar sede ${partida.inconsistencias.sede}`" />
-          <UBadge v-else-if="hasInconsistentSede && hasIconsistentSedeInDB" trailingIcon="i-lucide-replace"
+          <UBadge v-if="hasInconsistentSede && !hasIconsistentSedeInDB" trailingIcon="i-lucide-plus" @click="cerateSede"
+            class="rounded-full cursor-pointer" :class="{ 'animate-pulse': status === 'pending' }" color="info"
+            variant="subtle" :label="`Criar sede ${partida.inconsistencias.sede}`" />
+          <UBadge v-else-if="hasInconsistentSede && hasIconsistentSedeInDB" @click="acceptOficialSede" trailingIcon="i-lucide-replace"
             class="rounded-full cursor-pointer" color="warning" variant="subtle"
             :label="`Sede oficial: ${partida.inconsistencias.sede}`" />
         </div>
         <label class="flex flex-col gap-2 w-full">
           Sede
-          <USelect v-model="partida.sede.id" :items="sedesDrodpwn" placeholder="Selecione a sede" />
+          <USelect v-model="sede" :items="sedesDrodpwn" placeholder="Selecione a sede" />
         </label>
         <div class="flex gap-2 items-center justify-between text-2xl">
           <h2>Data e hora</h2>
-          <UBadge v-if="hasInconsistentDateTime" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
+          <UBadge v-if="hasInconsistentDateTime" @click="acceptOficialDateTime" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
             variant="subtle"
             :label="`Date e hora oficiais: ${partida.inconsistencias.data} ${partida.inconsistencias.hora}`" />
 
@@ -138,11 +219,11 @@ watch(status, (newStatus) => {
         <div class="flex gap-4">
           <label class="flex flex-col gap-2 w-3/2">
             Data
-            <UInput v-model="partida.data" type="date" placeholder="Selecione a data" />
+            <UInput v-model="data" type="date" placeholder="Selecione a data" />
           </label>
           <label class="flex flex-col gap-2">
             Hora
-            <UInput v-model="partida.hora" type="time" placeholder="Selecione a data" />
+            <UInput v-model="hora" type="time" placeholder="Selecione a data" />
           </label>
         </div>
       </div>

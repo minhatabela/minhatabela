@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { type CamposInconsistentes, type PartidaConsistencia } from '~/types/partida';
 import type { ISede } from '~/types/sede';
 
@@ -15,6 +14,7 @@ const opened = defineModel('opened', {
   type: Boolean,
   default: false
 })
+
 
 const sedesDrodpwn = computed(() => {
   return sedes.value.map((sede: ISede) => {
@@ -127,6 +127,8 @@ function useCamposParidas() {
     }
   })
 
+
+
   return {
     partidaAuxiliar,
     sede,
@@ -154,6 +156,29 @@ function acceptOficialDateTime() {
   partidaAuxiliar.value!.hora = props.partida.inconsistencias.hora
 }
 
+const { error, execute: acceptChanges, status: statusChanges } = useAsyncData(
+  'changes',
+  async () => await useSupabaseClient()
+  .from('partida')
+  .update( partidaAuxiliar.value )
+  .eq('id', props.partida.id),
+  {
+    immediate: false
+  }
+)
+
+const emit = defineEmits(['refresh'])
+watch(statusChanges, (value) => {
+  if (value === 'success') { 
+    toast.add({ description: 'Sucesso ao atualizar partida', color: 'success' })
+    opened.value = false
+    emit('refresh')
+  } else if(value === 'error') {
+    toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
+  }
+
+})
+
 </script>
 
 <template>
@@ -163,6 +188,10 @@ function acceptOficialDateTime() {
     </template>
 
     <template #body>
+      <div class="flex gap-2 justify-end py-4">
+        <UBadge :label="`Partida ${partida.numero}`" variant="subtle" class="rounded-full" color="neutral" />
+        <UBadge :label="`Rodada ${partida.rodada}`" variant="subtle" class="rounded-full" color="neutral" />
+      </div>
       <div class="flex flex-col gap-4">
         <div>
           <h2 class="text-2xl mb-3">Clubes</h2>
@@ -181,9 +210,9 @@ function acceptOficialDateTime() {
         <div class="flex flex-col gap-4">
           <div class="flex gap-2 items-center justify-between text-2xl">
             <h2 class="text-2xl">Gols</h2>
-            <UBadge v-if="hasInconsistentGoals" @click="acceptOficialScoreboard" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
-              variant="subtle"
-              :label="`Resultado oficial: ${Number(partida.inconsistencias.gols_mandante)} x ${Number(partida.inconsistencias.gols_visitante)}`" />
+            <UBadge v-if="hasInconsistentGoals" @click="acceptOficialScoreboard" trailingIcon="i-lucide-replace"
+              class="rounded-full" color="warning" variant="subtle"
+              :label="`Resultado oficial: ${Number(partida.inconsistencias.gols_mandante) || '-'} x ${Number(partida.inconsistencias.gols_visitante) || '-'}`" />
           </div>
           <div class="flex gap-4">
             <label class="flex flex-col gap-2 w-full">
@@ -201,8 +230,8 @@ function acceptOficialDateTime() {
           <UBadge v-if="hasInconsistentSede && !hasIconsistentSedeInDB" trailingIcon="i-lucide-plus" @click="cerateSede"
             class="rounded-full cursor-pointer" :class="{ 'animate-pulse': status === 'pending' }" color="info"
             variant="subtle" :label="`Criar sede ${partida.inconsistencias.sede}`" />
-          <UBadge v-else-if="hasInconsistentSede && hasIconsistentSedeInDB" @click="acceptOficialSede" trailingIcon="i-lucide-replace"
-            class="rounded-full cursor-pointer" color="warning" variant="subtle"
+          <UBadge v-else-if="hasInconsistentSede && hasIconsistentSedeInDB" @click="acceptOficialSede"
+            trailingIcon="i-lucide-replace" class="rounded-full cursor-pointer" color="warning" variant="subtle"
             :label="`Sede oficial: ${partida.inconsistencias.sede}`" />
         </div>
         <label class="flex flex-col gap-2 w-full">
@@ -211,8 +240,8 @@ function acceptOficialDateTime() {
         </label>
         <div class="flex gap-2 items-center justify-between text-2xl">
           <h2>Data e hora</h2>
-          <UBadge v-if="hasInconsistentDateTime" @click="acceptOficialDateTime" trailingIcon="i-lucide-replace" class="rounded-full" color="warning"
-            variant="subtle"
+          <UBadge v-if="hasInconsistentDateTime" @click="acceptOficialDateTime" trailingIcon="i-lucide-replace"
+            class="rounded-full" color="warning" variant="subtle"
             :label="`Date e hora oficiais: ${partida.inconsistencias.data} ${partida.inconsistencias.hora}`" />
 
         </div>
@@ -231,7 +260,12 @@ function acceptOficialDateTime() {
     </template>
 
     <template #footer>
-      <UButton variant="ghost" @click="opened = false">Fechar</UButton>
+      <div class="flex justify-between w-full">
+        <UButton variant="ghost" @click="opened = false">Fechar</UButton>
+        <UButton variant="solid" :disabled="Object.values(partidaAuxiliar).filter(f => f).length === 0"
+          :loading="statusChanges === 'pending'" @click="acceptChanges()">Aceitar mudanças
+        </UButton>
+      </div>
     </template>
   </USlideover>
 </template>

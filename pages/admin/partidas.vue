@@ -27,7 +27,7 @@
       </template>
     </UTable>
   </UCard>
-  <FormEditarPartida :partida="pickedPartida" v-model:opened="opened" />
+  <FormEditarPartida :partida="pickedPartida" @refresh="refresh" v-model:opened="opened" />
 </template>
 
 <script lang="ts" setup>
@@ -43,7 +43,7 @@ const pickedPartida = ref()
 
 const opened = ref(false)
 
-const { data, status } = useLazyAsyncData('partidas', () => $fetch('/api/admin/partidas'))
+const { data, status, refresh } = useLazyAsyncData('partidas', () => $fetch('/api/admin/partidas'))
 
 const colunas: TableColumn<IPartida>[] = [
   { header: '', accessorKey: 'inconsistencias' },

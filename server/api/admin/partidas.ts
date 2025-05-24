@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const { data: partidasMinhaTabela } = await client
     .from('partida')
-    .select('numero, status, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(*), mandante:mandante(*), sede:sede(*)')
+    .select('id, numero, status, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(*), mandante:mandante(*), sede:sede(*)')
     .order('numero')
 
     let response = {}
@@ -30,5 +30,5 @@ export default defineEventHandler(async (event) => {
        }
     })
   
-  return partidas
+  return orderBy(partidas, (o) => Object.values(o.inconsistencias).length > 0, ['desc'])
 })

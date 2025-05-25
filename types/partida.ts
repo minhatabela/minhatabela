@@ -51,3 +51,16 @@ export interface PartidaSimulada {
   id: string
   partida: string
 }
+
+export type PartidaCriar = {
+  sede?: ISede
+  mandante: IClube
+  visitante: IClube
+  data?: string
+  hora?: string
+  numero: number
+  rodada: number
+  gols_mandante?: number
+  gols_visitante?: number
+}
+

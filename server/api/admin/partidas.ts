@@ -1,6 +1,7 @@
 import { serverSupabaseClient } from '#supabase/server'
 import orderBy from 'lodash/orderBy'
 import diff, { DifferenceChange } from 'microdiff'
+import { PartidaCriar } from '~/types/partida'
 import { diffToObject, mapPartidaCBF, mapPartidaMT } from '../../utils/mapper'
 
 
@@ -10,6 +11,14 @@ export default defineEventHandler(async (event) => {
     .from('partida')
     .select('id, numero, status, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(*), mandante:mandante(*), sede:sede(*)')
     .order('numero')
+
+  const { data: clubes } = await client
+  .from('clube')
+  .select('*') 
+
+  const { data: sedes } = await client
+  .from('sede')
+  .select('*')
 
   const numerosPartidas = partidasMinhaTabela?.map(partida => partida.numero)
 
@@ -24,7 +33,16 @@ export default defineEventHandler(async (event) => {
 
     const cbf = orderBy(response['jogos'], (o) => Number(o.num_jogo)).map(mapPartidaCBF)
 
-    const partidasParaCriar = cbf.filter(partida => !numerosPartidas?.includes(Number(partida.numero)))
+    const partidasParaCriar = cbf
+    .filter(partida => !numerosPartidas?.includes(Number(partida.numero)))
+    .map<PartidaCriar>(partida => {
+      return {
+        ...partida,
+        mandante: clubes?.find(clube => clube.slug === partida.mandante),
+        visitante: clubes?.find(clube => clube.slug === partida.visitante),
+        sede: sedes?.find(sede => sede.key === partida.sede)
+      }
+    })
 
     const partidas = partidasMinhaTabela?.map((partida, index) => {
        const partidaDiff = diff(mapPartidaMT(partida), cbf[index])

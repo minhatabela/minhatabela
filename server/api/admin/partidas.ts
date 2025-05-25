@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
     .select('id, numero, status, hora, rodada, data, gols_mandante, gols_visitante, visitante:visitante(*), mandante:mandante(*), sede:sede(*)')
     .order('numero')
 
+  const numerosPartidas = partidasMinhaTabela?.map(partida => partida.numero)
+
     let response = {}
     try {
       response = await $fetch<{jogos: object[]}>(`http://www.cbf.com.br/api/proxy?path=/jogos/campeonato/12606`, {
@@ -22,6 +24,8 @@ export default defineEventHandler(async (event) => {
 
     const cbf = orderBy(response['jogos'], (o) => Number(o.num_jogo)).map(mapPartidaCBF)
 
+    const partidasParaCriar = cbf.filter(partida => !numerosPartidas?.includes(Number(partida.numero)))
+
     const partidas = partidasMinhaTabela?.map((partida, index) => {
        const partidaDiff = diff(mapPartidaMT(partida), cbf[index])
        return {
@@ -30,5 +34,5 @@ export default defineEventHandler(async (event) => {
        }
     })
   
-  return orderBy(partidas, (o) => Object.values(o.inconsistencias).length > 0, ['desc'])
+  return { partidas: orderBy(partidas, (o) => Object.values(o.inconsistencias).length > 0, ['desc']), partidasParaCriar }
 })

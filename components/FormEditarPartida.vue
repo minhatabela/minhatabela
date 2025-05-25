@@ -79,7 +79,8 @@ function useCamposParidas() {
     gols_visitante: undefined,
     data: undefined,
     hora: undefined,
-    sede: undefined
+    sede: undefined,
+    status: undefined
   })
 
   const data = computed({
@@ -179,6 +180,22 @@ watch(statusChanges, (value) => {
 
 })
 
+const statusPartida = {
+  finalizada: { label: 'Finalizada', color: 'success', icon: 'i-lucide-check-circle' },
+  nao_iniciada: { label: 'Não iniciada', color: 'neutral', icon: 'i-lucide-pause' },
+}
+
+onUnmounted(() => {
+  partidaAuxiliar.value =  {
+    gols_mandante: undefined,
+    gols_visitante: undefined,
+    data: undefined,
+    hora: undefined,
+    sede: undefined,
+    status: undefined
+  }
+})
+
 </script>
 
 <template>
@@ -191,6 +208,8 @@ watch(statusChanges, (value) => {
       <div class="flex gap-2 justify-end py-4">
         <UBadge :label="`Partida ${partida.numero}`" variant="subtle" class="rounded-full" color="neutral" />
         <UBadge :label="`Rodada ${partida.rodada}`" variant="subtle" class="rounded-full" color="neutral" />
+        <UBadge :label="statusPartida[partida.status].label" class="rounded-full" variant="subtle" :icon="statusPartida[partida.status].icon" :color="statusPartida[partida.status].color"
+          />
       </div>
       <div class="flex flex-col gap-4">
         <div>
@@ -260,11 +279,14 @@ watch(statusChanges, (value) => {
     </template>
 
     <template #footer>
-      <div class="flex justify-between w-full">
-        <UButton variant="ghost" @click="opened = false">Fechar</UButton>
-        <UButton variant="solid" :disabled="Object.values(partidaAuxiliar).filter(f => f).length === 0"
-          :loading="statusChanges === 'pending'" @click="acceptChanges()">Aceitar mudanças
-        </UButton>
+      <div class="flex flex-col w-full items-center gap-4">
+        <UButton v-if="partida.status != 'finalizada'" class="w-full justify-center" variant="ghost" color="secondary" :disabled="!isDefined(partidaAuxiliar.gols_mandante) || !isDefined(partidaAuxiliar.gols_visitante)" @click="partidaAuxiliar.status = 'finalizada'">Finalizar partida</UButton>
+        <div class="flex justify-between w-full gap-4">
+          <UButton class="justify-center w-1/2" color="neutral" variant="outline" @click="opened = false">Fechar</UButton>
+          <UButton class="justify-center w-1/2" variant="solid" :disabled="Object.values(partidaAuxiliar).filter(f => f).length === 0"
+            :loading="statusChanges === 'pending'" @click="acceptChanges()">Aceitar mudanças
+          </UButton>
+        </div>
       </div>
     </template>
   </USlideover>

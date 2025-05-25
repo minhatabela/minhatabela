@@ -1,6 +1,6 @@
 <template>
   <UCard variant="subtle">
-    <UTable :loading="status !== 'success'" :data="data" :columns="colunas">
+    <UTable :loading="status !== 'success'" :data="data?.partidas" :columns="colunas">
       <template #mandante_nome_popular-cell="{ getValue, row }">
         <UBadge class="rounded-full" variant="subtle" color="neutral" size="lg"
           :avatar="{ src: row.original.mandante.escudo }">{{

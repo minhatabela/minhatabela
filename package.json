@@ -11,14 +11,14 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@nuxt/fonts": "^0.10.3",
-    "@nuxt/icon": "^1.10.3",
-    "@nuxt/ui": "^3.0.0",
-    "@nuxthub/core": "^0.8.10",
+    "@nuxt/fonts": "^0.11.4",
+    "@nuxt/icon": "^1.13.0",
+    "@nuxt/ui": "^3.1.2",
+    "@nuxthub/core": "^0.8.27",
     "@nuxtjs/seo": "^3.0.3",
     "@nuxtjs/supabase": "^1.5.1",
     "@unhead/vue": "^2.0.0-rc.13",
-    "@vueuse/nuxt": "^13.0.0",
+    "@vueuse/nuxt": "^13.2.0",
     "date-fns": "^4.1.0",
     "downloadjs": "^1.4.7",
     "html-to-image": "^1.11.11",
@@ -26,7 +26,7 @@
     "microdiff": "^1.5.0",
     "nuxt": "^3.17.4",
     "nuxt-gtag": "^3.0.2",
-    "posthog-js": "^1.235.6",
+    "posthog-js": "^1.246.0",
     "v-calendar": "^3.1.2",
     "vue": "latest",
     "vue-router": "latest"
@@ -34,14 +34,14 @@
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.44",
     "@iconify-json/material-symbols": "^1.2.21",
-    "@nuxt/test-utils": "^3.17.2",
+    "@nuxt/test-utils": "^3.19.1",
     "@types/downloadjs": "^1.4.6",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^17.4.7",
     "nuxt-lodash": "^2.5.3",
     "playwright-core": "^1.51.1",
-    "vitest": "^3.0.9",
-    "wrangler": "^4.2.0"
+    "vitest": "^3.1.4",
+    "wrangler": "^4.16.1"
   },
   "version": "1.1.0"
 }

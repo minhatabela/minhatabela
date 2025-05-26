@@ -129,7 +129,7 @@ const pickedPartida = ref()
 
 const opened = ref(false)
 
-const { data, status, refresh } = useLazyAsyncData('partidas', () => $fetch('/api/admin/partidas'))
+const { data, status, refresh } = useLazyAsyncData('partidas-admin', () => $fetch('/api/admin/partidas'))
 
 const colunasNovasPartidas: TableColumn<PartidaCriar>[] = [
   { header: '#', accessorKey: 'numero' },

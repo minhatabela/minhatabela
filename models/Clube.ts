@@ -1,4 +1,4 @@
-import { type IClube } from "~/types/clube";
+import { type IClube } from "../types/clube";
 
 const defaultClube = {
   escudo: null,

@@ -1,6 +1,6 @@
-import type { IClube } from "~/types/clube";
-import type { IPartida } from "~/types/partida";
 import { NOME_CLUBES } from "../constants/nomeClubes";
+import type { IClube } from "../types/clube";
+import type { IPartida } from "../types/partida";
 import { Clube } from "./Clube";
 import { Partida } from "./Partida";
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { CampeonatoGenerator } from '~/models/CampeonatoGenerator'
 import { Campeonato } from '~/utils/campeonato'
+import { CampeonatoGenerator } from '../models/CampeonatoGenerator'
 
 describe('Campeonato', () => {
 

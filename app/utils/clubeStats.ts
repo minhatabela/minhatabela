@@ -1,6 +1,6 @@
-import { type IClube } from "../../types/clube";
-import { type IClubeStats } from "../../types/clubeStats.d";
-import { type Partida } from "../../types/partida";
+import { type IClube } from '../../types/clube'
+import { type IClubeStats } from '../../types/clubeStats.d'
+import { type Partida } from '../../types/partida'
 
 export class ClubeStats {
   clube: IClube
@@ -8,28 +8,31 @@ export class ClubeStats {
 
   constructor(clube: IClube, partidas: Partida[]) {
     this.clube = clube
-    this.partidas = partidas.filter(partida => partida.mandante.id === clube.id || partida.visitante.id === clube.id)
+    this.partidas = partidas.filter(
+      partida => partida.mandante.id === clube.id || partida.visitante.id === clube.id
+    )
   }
 
   public vitorias() {
-    return this.partidasComResultado()
-      .filter(partida => {
-        if (partida.mandante.id === this.clube.id) return Number(partida.gols_mandante) > Number(partida.gols_visitante)
-        else return Number(partida.gols_visitante) > Number(partida.gols_mandante)
-      })
+    return this.partidasComResultado().filter(partida => {
+      if (partida.mandante.id === this.clube.id)
+        return Number(partida.gols_mandante) > Number(partida.gols_visitante)
+      else return Number(partida.gols_visitante) > Number(partida.gols_mandante)
+    })
   }
 
   public derrotas() {
-    return this.partidasComResultado()
-      .filter(partida => {
-        if (partida.mandante.id === this.clube.id) return Number(partida.gols_mandante) < Number(partida.gols_visitante)
-        else return Number(partida.gols_visitante) < Number(partida.gols_mandante)
-      })
+    return this.partidasComResultado().filter(partida => {
+      if (partida.mandante.id === this.clube.id)
+        return Number(partida.gols_mandante) < Number(partida.gols_visitante)
+      else return Number(partida.gols_visitante) < Number(partida.gols_mandante)
+    })
   }
 
   public empates() {
-    return this.partidasComResultado()
-      .filter(partida => partida.gols_mandante === partida.gols_visitante)
+    return this.partidasComResultado().filter(
+      partida => partida.gols_mandante === partida.gols_visitante
+    )
   }
 
   public pontos() {
@@ -45,21 +48,25 @@ export class ClubeStats {
   }
 
   public golsPro() {
-    return this.partidasMandante()
-      .map(partida => Number(partida.gols_mandante))
-      .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0) +
+    return (
+      this.partidasMandante()
+        .map(partida => Number(partida.gols_mandante))
+        .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0) +
       this.partidasVisitante()
         .map(partida => Number(partida.gols_visitante))
         .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
+    )
   }
 
   public golsContra() {
-    return this.partidasMandante()
-      .map(partida => Number(partida.gols_visitante))
-      .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0) +
+    return (
+      this.partidasMandante()
+        .map(partida => Number(partida.gols_visitante))
+        .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0) +
       this.partidasVisitante()
         .map(partida => Number(partida.gols_mandante))
         .reduce((placar_atual, placar_prox) => placar_atual + placar_prox, 0)
+    )
   }
 
   public golsDif() {
@@ -67,7 +74,9 @@ export class ClubeStats {
   }
 
   public partidasComResultado() {
-    return this.partidas.filter(partida => isDefined(partida.gols_mandante) && isDefined(partida.gols_visitante))
+    return this.partidas.filter(
+      partida => isDefined(partida.gols_mandante) && isDefined(partida.gols_visitante)
+    )
   }
 
   public stats(): IClubeStats {

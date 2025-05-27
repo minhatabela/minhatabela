@@ -19,4 +19,4 @@ export const NOME_CLUBES = [
   'Grêmio',
   'Internacional',
   'Juventude'
-];
+]

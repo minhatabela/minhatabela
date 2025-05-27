@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { format } from 'date-fns';
-import type { IClube } from '~/types/clube';
-import { type PartidaNormalizada } from '~/types/partida';
-import type { ISede } from '~/types/sede';
+import { format } from 'date-fns'
+import type { IClube } from '~/types/clube'
+import { type PartidaNormalizada } from '~/types/partida'
+import type { ISede } from '~/types/sede'
 const opened = defineModel('opened', {
   type: Boolean,
   default: false
@@ -86,7 +86,6 @@ const dataPartida = ref()
 const data = computed({
   get() {
     return format(new Date(props.partida.data?.split('/').reverse()), 'yyyy-MM-dd')
-
   },
   set(value: string) {
     dataPartida.value = value
@@ -107,13 +106,13 @@ const toast = useToast()
 
 async function criarPartida() {
   const partida = {
-    numero:  Number(numeroPartida.value) || numero.value,
+    numero: Number(numeroPartida.value) || numero.value,
     mandante: mandanteId.value || mandante.value,
     visitante: visitanteId.value || visitante.value,
     rodada: rodadaPartida.value || rodada.value,
     sede: sedeId.value || sede.value,
     data: dataPartida.value || data.value,
-    hora: horaPartida.value || hora.value,
+    hora: horaPartida.value || hora.value
   }
 
   const { error } = await useSupabaseClient().from('partida').insert([partida])
@@ -121,51 +120,81 @@ async function criarPartida() {
   if (error) {
     toast.add({ description: error.message, color: 'error' })
   } else {
-    toast.add({ title: "Base atualizada com sucesso!", icon: "i-simple-line-icons-check", description: 'Partida criada com sucesso', color: 'success' })
+    toast.add({
+      title: 'Base atualizada com sucesso!',
+      icon: 'i-simple-line-icons-check',
+      description: 'Partida criada com sucesso',
+      color: 'success'
+    })
     opened.value = false
     emit('refresh')
   }
 }
-
 </script>
 
 <template>
-  <USlideover v-model:open="opened" class="rounded-lg">
+  <USlideover
+    v-model:open="opened"
+    class="rounded-lg"
+  >
     <template #header>
       <div class="flex flex-col w-full gap-4">
-        <h1 color="neutral" class="mb-2 w-fit">Criar Partida</h1>
+        <h1
+          color="neutral"
+          class="mb-2 w-fit"
+        >
+          Criar Partida
+        </h1>
         <h3 class="text-xl text-bold">Criar nova partida</h3>
       </div>
     </template>
     <template #body>
-        <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4">
         <div class="flex gap-4 justify-between items-end">
           <label class="flex flex-col gap-2 w-full">
             mandante
-            <USelect v-model="mandante" :items="clubesDropdown" placeholder="Selecione o clube mandante" />
+            <USelect
+              v-model="mandante"
+              :items="clubesDropdown"
+              placeholder="Selecione o clube mandante"
+            />
           </label>
           x
           <label class="flex flex-col gap-2 w-full">
             visitante
-            <USelect v-model="visitante" :items="clubesDropdown" placeholder="Selecione o clube visitante" />
+            <USelect
+              v-model="visitante"
+              :items="clubesDropdown"
+              placeholder="Selecione o clube visitante"
+            />
           </label>
         </div>
         <label class="flex flex-col gap-2 w-full">
           sede
-          <USelect v-model="sede" :items="sedesDrodpwn" placeholder="Selecione a sede" />
+          <USelect
+            v-model="sede"
+            :items="sedesDrodpwn"
+            placeholder="Selecione a sede"
+          />
         </label>
         <label class="flex flex-col gap-2 w-full">
           número
-          <UInput v-model="numero" disabled />
+          <UInput
+            v-model="numero"
+            disabled
+          />
         </label>
         <label class="flex flex-col gap-2 w-full">
           rodada
-          <UInput v-model="rodada"  disabled />
+          <UInput
+            v-model="rodada"
+            disabled
+          />
         </label>
         <div class="flex gap-4 justify-between items-end">
           <label class="flex flex-col gap-2 w-full">
             data
-            <UInput v-model="data"  />
+            <UInput v-model="data" />
           </label>
           <label class="flex flex-col gap-2 w-full">
             hora
@@ -176,7 +205,10 @@ async function criarPartida() {
     </template>
     <template #footer>
       <div>
-        <UButton @click="criarPartida" label="Criar partida na base do minhatabela" />
+        <UButton
+          @click="criarPartida"
+          label="Criar partida na base do minhatabela"
+        />
       </div>
     </template>
   </USlideover>

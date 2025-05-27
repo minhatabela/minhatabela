@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   css: ['../public/main.css'],
   modules: [
     '@nuxt/ui',
-    "nuxt-lodash",
+    'nuxt-lodash',
     '@vueuse/nuxt',
     '@nuxt/fonts',
     'nuxt-gtag',
@@ -30,7 +30,8 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxtjs/seo',
     'nuxt-og-image',
-    '@nuxt/test-utils/module'
+    '@nuxt/test-utils/module',
+    '@nuxt/eslint'
   ],
   supabase: {
     redirect: false
@@ -48,11 +49,17 @@ export default defineNuxtConfig({
     '/simular': { ssr: false },
     '/': { ssr: true },
     '/admin/consistencia': { ssr: false },
-    '/admin/partidas': { ssr: false },
+    '/admin/partidas': { ssr: false }
   },
   app: {
     head: {
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: "https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//logo.svg" }]
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: 'https://atsavbpgqgsvxwlzvrwy.supabase.co/storage/v1/object/public/seo//logo.svg'
+        }
+      ]
     }
   }
 })

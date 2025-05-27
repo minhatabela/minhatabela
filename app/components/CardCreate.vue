@@ -2,15 +2,29 @@
   <UCard variant="subtle">
     <div class="flex flex-col gap-3">
       <div class="flex justify-between">
-        <UBadge size="xs" color="neutral" class="mb-2">Partida {{ partida }}</UBadge>
+        <UBadge
+          size="xs"
+          color="neutral"
+          class="mb-2"
+          >Partida {{ partida }}</UBadge
+        >
       </div>
       <div class="flex items-center justify-center w-full gap-2">
-        <p>{{ item[0].value.mandante }}</p> x <p>{{ item[0].value.visitante }}</p>
+        <p>{{ item[0].value.mandante }}</p>
+        x
+        <p>{{ item[0].value.visitante }}</p>
       </div>
     </div>
     <div class="flex justify-end">
-      <UButton @click="emit('setNumeroPartida', partida)" size="sm" color="info" variant="ghost" class="mt-4">
-        Criar</UButton>
+      <UButton
+        @click="emit('setNumeroPartida', partida)"
+        size="sm"
+        color="info"
+        variant="ghost"
+        class="mt-4"
+      >
+        Criar</UButton
+      >
     </div>
   </UCard>
 </template>
@@ -28,7 +42,7 @@ interface Value {
 
 interface Item {
   numero: string[]
-  type: "CHANGE" | "REMOVE" | "DELETE",
+  type: 'CHANGE' | 'REMOVE' | 'DELETE'
   value: Value
   oldValue: string
 }

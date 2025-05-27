@@ -1,12 +1,19 @@
 <template>
   <div class="w-screen h-screen flex flex-col items-center">
-    <nav class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm">
+    <nav
+      class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm"
+    >
       <div class="max-w-7xl w-full justify-between items-center flex">
         <h1
-          class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold">
+          class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold"
+        >
           minhatabela
-          <UBadge class="absolute ml-1 rounded-full" variant="subtle" color="primary" label="beta" />
-
+          <UBadge
+            class="absolute ml-1 rounded-full"
+            variant="subtle"
+            color="primary"
+            label="beta"
+          />
         </h1>
       </div>
     </nav>
@@ -14,56 +21,56 @@
       <div class="px-4">
         <div class="flex flex-col gap-4">
           <h4
-            class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
+            class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold"
+          >
             minhatabela
           </h4>
-          <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">Simule a classificação do
-            Brasileirão
-            rodada
-            a
-            rodada e veja
-            as chances do seu time do coração de alcançar um dos mais desejados títulos nacionais.
+          <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">
+            Simule a classificação do Brasileirão rodada a rodada e veja as chances do seu time do
+            coração de alcançar um dos mais desejados títulos nacionais.
           </p>
-          <UButton to="/simular" trailing size="lg" icon="material-symbols:arrow-forward-rounded"
-            class="w-fit mt-4 rounded-full" color="primary" variant="outline">Simular agora</UButton>
+          <UButton
+            to="/simular"
+            trailing
+            size="lg"
+            icon="material-symbols:arrow-forward-rounded"
+            class="w-fit mt-4 rounded-full"
+            color="primary"
+            variant="outline"
+            >Simular agora</UButton
+          >
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 py-8">
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              📈 Visualize a classificação
-            </h4>
-            <p class="text-slate-400">Veja a tabela atualizada e como ela comporta com suas simulações</p>
+            <h4 class="text-semibold text-lg py-2">📈 Visualize a classificação</h4>
+            <p class="text-slate-400">
+              Veja a tabela atualizada e como ela comporta com suas simulações
+            </p>
           </UCard>
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              ✏️ Simule a rodada
-            </h4>
+            <h4 class="text-semibold text-lg py-2">✏️ Simule a rodada</h4>
             <p class="text-slate-400">Simule rodada a rodada do campeonato, desde a rodada 1</p>
           </UCard>
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              🚢 Navegue pelas rodadas
-            </h4>
-            <p class="text-slate-400"> Veja quais foram os resultados das rodadas anteriores e os confrontos que estão
-              por vir</p>
+            <h4 class="text-semibold text-lg py-2">🚢 Navegue pelas rodadas</h4>
+            <p class="text-slate-400">
+              Veja quais foram os resultados das rodadas anteriores e os confrontos que estão por
+              vir
+            </p>
           </UCard>
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              📃 Salve suas simulações
-            </h4>
-            <p class="text-slate-400"> Suas simulações são salvas localmente, entre para salvar na nuvem</p>
+            <h4 class="text-semibold text-lg py-2">📃 Salve suas simulações</h4>
+            <p class="text-slate-400">
+              Suas simulações são salvas localmente, entre para salvar na nuvem
+            </p>
           </UCard>
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              🙈 Oculte a tabela
-            </h4>
-            <p class="text-slate-400"> Com emoção: esconda a tebela enquanto simula</p>
+            <h4 class="text-semibold text-lg py-2">🙈 Oculte a tabela</h4>
+            <p class="text-slate-400">Com emoção: esconda a tebela enquanto simula</p>
           </UCard>
           <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">
-              ⬇️ Baixe a rodada simulada
-            </h4>
-            <p class="text-slate-400"> Faça download dos resultados simulados da rodada</p>
+            <h4 class="text-semibold text-lg py-2">⬇️ Baixe a rodada simulada</h4>
+            <p class="text-slate-400">Faça download dos resultados simulados da rodada</p>
           </UCard>
         </div>
       </div>
@@ -75,20 +82,25 @@
       </Teleport>
     </ClientOnly>
 
-
     <footer class="text text-slate-300 flex justify-center py-6">
-      minhatabela {{ new Date().getFullYear() }} | <a href="https://alexislopes.com.br" target="_blank" class="ml-2">
-        alexislopes </a> <span class="ml-1"> | {{ pkg.version }} </span></footer>
-
+      minhatabela {{ new Date().getFullYear() }} |
+      <a
+        href="https://alexislopes.com.br"
+        target="_blank"
+        class="ml-2"
+      >
+        alexislopes
+      </a>
+      <span class="ml-1"> | {{ pkg.version }} </span>
+    </footer>
   </div>
 </template>
 
 <script lang="ts" setup>
-
 const consent = useCookie<boolean>('consent')
 
-definePageMeta({ layout: false });
-import * as pkg from '../package.json';
+definePageMeta({ layout: false })
+import * as pkg from '../package.json'
 
 useSeoMeta({
   title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
@@ -106,7 +118,7 @@ useSeoMeta({
 })
 
 useHead({
-  title: "Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela",
+  title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',
   link: [{ rel: 'canonical', href: 'https://minhatabela.com' }]
 })
 
@@ -115,8 +127,6 @@ const user = useSupabaseUser()
 if (user.value) {
   navigateTo('/simular')
 }
-
-
 </script>
 <style>
 html,

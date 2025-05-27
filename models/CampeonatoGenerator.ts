@@ -1,8 +1,8 @@
-import { NOME_CLUBES } from "../constants/nomeClubes";
-import type { IClube } from "../types/clube";
-import type { IPartida } from "../types/partida";
-import { Clube } from "./Clube";
-import { Partida } from "./Partida";
+import { NOME_CLUBES } from '../constants/nomeClubes'
+import type { IClube } from '../types/clube'
+import type { IPartida } from '../types/partida'
+import { Clube } from './Clube'
+import { Partida } from './Partida'
 
 interface GerarPartidasOptions {
   clube?: string | undefined
@@ -18,8 +18,8 @@ const defaultCampeonatoGenerator = {
 }
 
 export class CampeonatoGenerator {
-  clubes: IClube[] = [];
-  partidas: IPartida[] = [];
+  clubes: IClube[] = []
+  partidas: IPartida[] = []
   nomesClubes: string[] = NOME_CLUBES
 
   constructor({ nomeClubes }: ICampeonatoGenerator = defaultCampeonatoGenerator) {
@@ -27,7 +27,9 @@ export class CampeonatoGenerator {
   }
 
   gererarClubes(): IClube[] {
-    this.clubes = this.nomesClubes.map((nome) => new Clube({ nome_popular: nome, id: crypto.randomUUID() }))
+    this.clubes = this.nomesClubes.map(
+      nome => new Clube({ nome_popular: nome, id: crypto.randomUUID() })
+    )
     return this.clubes
   }
 
@@ -41,15 +43,24 @@ export class CampeonatoGenerator {
     // Gerar partidas de turno e returno
     for (let i = 0; i < this.clubes.length; i++) {
       for (let j = i + 1; j < this.clubes.length; j++) {
-
-        const turno = new Partida({ mandante: this.clubes[i], visitante: this.clubes[j], gols_mandante: Math.floor(Math.random() * 3), gols_visitante: Math.floor(Math.random() * 3) })
-        const returno = new Partida({ mandante: this.clubes[j], visitante: this.clubes[i], gols_mandante: Math.floor(Math.random() * 3), gols_visitante: Math.floor(Math.random() * 3) })
+        const turno = new Partida({
+          mandante: this.clubes[i],
+          visitante: this.clubes[j],
+          gols_mandante: Math.floor(Math.random() * 3),
+          gols_visitante: Math.floor(Math.random() * 3)
+        })
+        const returno = new Partida({
+          mandante: this.clubes[j],
+          visitante: this.clubes[i],
+          gols_mandante: Math.floor(Math.random() * 3),
+          gols_visitante: Math.floor(Math.random() * 3)
+        })
 
         // Turno
-        this.partidas.push(turno);
+        this.partidas.push(turno)
 
         // Returno
-        this.partidas.push(returno);
+        this.partidas.push(returno)
       }
     }
 
@@ -59,16 +70,18 @@ export class CampeonatoGenerator {
 
     if (options?.results) {
       options.results.forEach(([mandante, visitante], index) => {
-        if ((index + 1) % 2 === 0) { //casa
+        if ((index + 1) % 2 === 0) {
+          //casa
           this.partidas[index].gols_mandante = visitante
           this.partidas[index].gols_visitante = mandante
-        } else { //fora
+        } else {
+          //fora
           this.partidas[index].gols_mandante = mandante
           this.partidas[index].gols_visitante = visitante
-        }  
+        }
       })
     }
 
-    return this.partidas;
+    return this.partidas
   }
 }

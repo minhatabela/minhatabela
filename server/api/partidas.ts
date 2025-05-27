@@ -1,6 +1,6 @@
 import { serverSupabaseServiceRole } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const rodada = getRouterParam(event, 'rodada')
 

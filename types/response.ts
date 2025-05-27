@@ -1,4 +1,3 @@
-
 export interface Response {
   equipes: object
   jogos: object

@@ -1,10 +1,7 @@
 const toast = useToast()
 const supabase = useSupabaseClient()
 
-
-
 export const useAuth = () => {
-
   const { simulacao } = useSimulador()
 
   async function login() {
@@ -12,7 +9,6 @@ export const useAuth = () => {
     if (error) {
       toast.add({ title: 'Erro ao realizar o login', color: 'error' })
     }
-
   }
 
   async function logout() {

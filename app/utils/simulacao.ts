@@ -1,8 +1,9 @@
-import type { Tables } from "../../types/database.types";
+import type { Tables } from '../../types/database.types'
 
-
-export function simularPartida(simulacao: Partial<Tables<'simulacao'>>, simulador: Ref<Map<string, Tables<'simulacao'>>>) {
-
+export function simularPartida(
+  simulacao: Partial<Tables<'simulacao'>>,
+  simulador: Ref<Map<string, Tables<'simulacao'>>>
+) {
   const partidaSimulada = toValue(simulador).get(simulacao.partida!)
 
   if (simulacao.gols_mandante === undefined && simulacao.gols_visitante === undefined) {

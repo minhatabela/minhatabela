@@ -3,17 +3,17 @@ import { Campeonato } from '~/utils/campeonato'
 import { CampeonatoGenerator } from '../models/CampeonatoGenerator'
 
 describe('Campeonato', () => {
-
   function setup() {
-
     const results = [
       [8, 4],
       [5, 3],
-      [4, 1], //Resultados Real Elite
+      [4, 1] //Resultados Real Elite
     ]
 
-    const campeonatoGenerator = new CampeonatoGenerator({ nomeClubes: ['Real Elite', 'G3X FC', 'Capim FC', 'Dendele'] });
-    const partidas = campeonatoGenerator.gerarPartidas({ results });
+    const campeonatoGenerator = new CampeonatoGenerator({
+      nomeClubes: ['Real Elite', 'G3X FC', 'Capim FC', 'Dendele']
+    })
+    const partidas = campeonatoGenerator.gerarPartidas({ results })
 
     const campeonato = new Campeonato(partidas, campeonatoGenerator.clubes)
     return { campeonato }

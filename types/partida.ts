@@ -1,9 +1,12 @@
-import { type Enums, type Tables } from "../types/database.types";
-import { type IClube } from "./clube";
-import { type ISede } from "./sede";
-export type Partida = Omit<Tables<'partida'>, 'visitante' | 'mandante' | 'sede' | 'created_at' | 'updated_at'> & { mandante: IClube, visitante: IClube, sede: ISede }
+import { type Enums, type Tables } from '../types/database.types'
+import { type IClube } from './clube'
+import { type ISede } from './sede'
+export type Partida = Omit<
+  Tables<'partida'>,
+  'visitante' | 'mandante' | 'sede' | 'created_at' | 'updated_at'
+> & { mandante: IClube; visitante: IClube; sede: ISede }
 
-export interface IPartida extends Partida { }
+export interface IPartida extends Partida {}
 
 export interface CamposInconsistentes {
   gols_mandante?: number
@@ -19,17 +22,17 @@ export interface PartidaConsistencia extends IPartida {
 }
 
 export interface ClubeCBF {
-  nome: string,
-  gols?: number,
+  nome: string
+  gols?: number
 }
 
 export interface PartidaCBF {
-  num_jogo: string,
-  rodada: string,
-  mandante: ClubeCBF,
-  visitante: ClubeCBF,
-  local: string,
-  data: string,
+  num_jogo: string
+  rodada: string
+  mandante: ClubeCBF
+  visitante: ClubeCBF
+  local: string
+  data: string
   hora: string
 }
 
@@ -63,4 +66,3 @@ export type PartidaCriar = {
   gols_mandante?: number
   gols_visitante?: number
 }
-

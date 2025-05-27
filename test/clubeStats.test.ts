@@ -3,9 +3,7 @@ import { ClubeStats } from '~/utils/clubeStats'
 import { CampeonatoGenerator } from '../models/CampeonatoGenerator'
 
 describe('ClubeStats', () => {
-
   function setup() {
-
     const results = [
       [2, 1],
       [1, 0],
@@ -57,7 +55,6 @@ describe('ClubeStats', () => {
     const clubeStats = new ClubeStats(clube, partidasCampeonato)
     return { clube, clubeStats }
   }
-
 
   test('should filter partidas by clube', () => {
     const { clubeStats } = setup()
@@ -129,5 +126,4 @@ describe('ClubeStats', () => {
       escudo: clube?.escudo || ''
     })
   })
-
 })

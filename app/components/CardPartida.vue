@@ -35,8 +35,8 @@
 <script lang="ts" setup>
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import type { Tables } from '~/types/database.types';
-import { type Partida } from '~/types/partida';
+import type { Tables } from '../../types/database.types';
+import { type Partida } from '../../types/partida';
 
 const { simulacao, salvarSimulacao } = useSimulador()
 

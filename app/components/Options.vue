@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Partida } from '../types/partida';
+import { type Partida } from '../../types/partida';
 const { simulacao, salvarSimulacao, removerSimulacao } = useSimulador()
 const { $posthog } = useNuxtApp()
 

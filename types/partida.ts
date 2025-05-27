@@ -1,4 +1,4 @@
-import { type Enums, type Tables } from "~/types/database.types";
+import { type Enums, type Tables } from "../types/database.types";
 import { type IClube } from "./clube";
 import { type ISede } from "./sede";
 export type Partida = Omit<Tables<'partida'>, 'visitante' | 'mandante' | 'sede' | 'created_at' | 'updated_at'> & { mandante: IClube, visitante: IClube, sede: ISede }

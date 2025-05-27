@@ -1,6 +1,6 @@
-import type { IClube } from "~/types/clube";
-import { type IPartida } from "~/types/partida";
-import { type ISede } from "~/types/sede";
+import type { IClube } from "../types/clube";
+import { type IPartida } from "../types/partida";
+import { type ISede } from "../types/sede";
 import { Clube } from "./Clube";
 import { Sede } from "./Sede";
 

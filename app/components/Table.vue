@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 
 import { type TableColumn, type TableRow } from '#ui/types';
-import { badgeColor } from '~/utils/tabela';
+import { badgeColor } from '../utils/tabela';
 interface Props {
   columns: TableColumn[]
   tabela: TableRow[],

@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  future: {
+    compatibilityVersion: 4
+  },
   nitro: {
     esbuild: {
       options: {
@@ -15,7 +18,7 @@ export default defineNuxtConfig({
       enabled: true
     }
   },
-  css: ['~/public/main.css'],
+  css: ['../public/main.css'],
   modules: [
     '@nuxt/ui',
     "nuxt-lodash",

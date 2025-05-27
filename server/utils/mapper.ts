@@ -1,5 +1,5 @@
 import { DifferenceChange } from 'microdiff'
-import { IPartida, PartidaCBF, PartidaNormalizada } from '~/types/partida'
+import { IPartida, PartidaCBF, PartidaNormalizada } from '../../types/partida'
 
 export function mapPartidaCBF(partida: PartidaCBF): PartidaNormalizada {
   return {

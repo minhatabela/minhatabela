@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type CamposInconsistentes, type PartidaConsistencia } from '~/types/partida';
-import type { ISede } from '~/types/sede';
+import { type CamposInconsistentes, type PartidaConsistencia } from '../../types/partida';
+import type { ISede } from '../../types/sede';
 
 interface FormEditarPartidaProps {
   partida: PartidaConsistencia,

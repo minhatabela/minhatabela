@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import LogoCookie from '@/public/logo-cookie.svg';
+import LogoCookie from '../../public/logo-cookie.svg';
 
 const { gtag } = useGtag()
 const consent = useCookie<boolean>('consent', { expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)) })

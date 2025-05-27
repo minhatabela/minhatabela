@@ -1,4 +1,4 @@
-import type { Tables } from "~/types/database.types"
+import type { Tables } from "../../types/database.types"
 import { simularPartida } from '../utils/simulacao'
 import { filtraJogosRodada } from "../utils/tabela"
 const { partidas } = useApi()
@@ -37,7 +37,7 @@ export const useSimulador = () => {
   watch(status, async (value) => {
     if (value === 'success' && useSupabaseUser().value) {
       const simulacoesIdsLocal = Array.from(simulacao.value.keys())
-      const simulacoesIdsNuvem = simulacoes.value.map(sim => sim.partida)
+      const simulacoesIdsNuvem = simulacoes.value!.map(sim => sim.partida)
       const diff = simulacoesIdsLocal.filter(f => !simulacoesIdsNuvem.includes(f))
 
       const sims = diff.map(m => {

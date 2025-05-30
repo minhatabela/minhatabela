@@ -8,22 +8,13 @@
       :data="tabela"
     >
       <template #0-cell="{ row }">
-        <UBadge
-          :color="badgeColor(row.index + 1)"
-          class="rounded-full"
-        >
-          {{ row.index + 1 }}
-        </UBadge>
+        <PositionBadge :position="new Position(row.index + 1)" />
       </template>
       <template #1-cell="{ row }">
-        <div class="flex gap-2 items-center">
-          <img
-            style="width: 20px"
-            :src="row.original.clube_url"
-            alt=""
-          />
-          <span class="font-bold">{{ row.original.equipe }}</span>
-        </div>
+        <TeamCell
+          :emblem="row.original.clube_url"
+          :team="row.original.equipe"
+        />
       </template>
       <template #2-cell="{ row }">
         <span class="font-bold">{{ row.original.pontos }}</span>
@@ -35,7 +26,8 @@
 
 <script lang="ts" setup>
 import { type TableColumn, type TableRow } from '#ui/types'
-import { badgeColor } from '../utils/tabela'
+import { Position } from '../values/Position'
+import PositionBadge from './PositionBadge.vue'
 interface Props {
   columns: TableColumn[]
   tabela: TableRow[]

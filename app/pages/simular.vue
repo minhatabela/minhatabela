@@ -18,7 +18,6 @@ const empty = computed(() => {
 
   return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
-
 </script>
 
 <template>
@@ -29,7 +28,7 @@ const empty = computed(() => {
     />
   </div>
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
-  <StandingsView />
+    <StandingsView />
     <div class="flex w-full flex-col gap-4">
       <div class="flex justify-between items-center">
         <UIcon

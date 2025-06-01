@@ -13,13 +13,22 @@ const { sensitive = false } = defineProps<Props>()
 </script>
 
 <template>
-  <UCard variant="subtle" class="relative">
-    <UTable :columns="columns" :data="tabela">
+  <UCard
+    variant="subtle"
+    class="relative"
+  >
+    <UTable
+      :columns="columns"
+      :data="tabela"
+    >
       <template #0-cell="{ row }">
         <PositionBadge :position="new Position(row.index + 1)" />
       </template>
       <template #1-cell="{ row }">
-        <TeamCell :emblem="row.original.clube_url" :team="row.original.equipe"/>
+        <TeamCell
+          :emblem="row.original.clube_url"
+          :team="row.original.equipe"
+        />
       </template>
       <template #2-cell="{ row }">
         <span class="font-bold text-highlighted">{{ row.original.pontos }}</span>

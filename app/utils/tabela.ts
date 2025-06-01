@@ -1,7 +1,7 @@
+import { TableViewEnum } from '~~/layers/standings/enums/TableView.enum'
 import type { Clube } from '../../types/clube'
 import { type Enums } from '../../types/database.types'
 import { type Partida } from '../../types/partida'
-import { TableViewEnum } from '../../types/TableView.enum'
 
 export function somaGolsProMandante(jogos: Partida[], equipeId: string | number) {
   return jogos

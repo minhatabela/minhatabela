@@ -1,5 +1,5 @@
-import { TableViewEnum } from '../../types/TableView.enum'
-import { calculaStatsEquipe } from '../utils/tabela'
+import { TableViewEnum } from '~~/layers/standings/enums/TableView.enum'
+import { calculaStatsEquipe } from '../../../app/utils/tabela'
 
 const { partidas, clubes } = useApi()
 const { simulacao } = useSimulador()

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { TableViewEnum } from '../../types/TableView.enum'
-
 onMounted(() => {
-  // getRodadaAtual()
   execute()
 })
 
@@ -10,31 +7,7 @@ useHead({
   title: 'Simulando'
 })
 
-const tableViewOptions = [
-  { label: 'Oficial Simulada', value: TableViewEnum.OFICIAL_SIMULADA },
-  { label: 'Simulada', value: TableViewEnum.SIMULADA },
-  { label: 'Oficial', value: TableViewEnum.OFICIAL }
-]
-
-const tableViewLabel = computed(() => {
-  const option = tableViewOptions.find(o => o.value === tableView.value)
-  return option ? option.label : ''
-})
-
-const tableViewDescription = computed(() => {
-  const descriptions = {
-    [TableViewEnum.OFICIAL_SIMULADA]:
-      'A classificação Oficial-Simulada mescla dados oficiais do campeonatos com a sua simulação, ou seja, resultados de partidas que já se encerraram juntam com os resultados de suas simulações.',
-    [TableViewEnum.SIMULADA]:
-      'A classificação Simulada considera apenas os resultados de suas simulações',
-    [TableViewEnum.OFICIAL]: 'A classificação Oficial considera dados oficiais do campeonato'
-  }
-
-  return descriptions[tableView.value] || ''
-})
-
 const { componentToPng } = useHtmlToImage()
-const { columns, tabela, tableView } = useTabela()
 const { jogosRodada, rodada_navegavel, syncing, simulacao, execute } = useSimulador()
 
 const arte = ref()
@@ -46,7 +19,6 @@ const empty = computed(() => {
   return !jogosRodadaIds.some(partidaId => idsSimulacao.includes(partidaId))
 })
 
-const [sensitive, toggle] = useToggle()
 </script>
 
 <template>
@@ -57,32 +29,7 @@ const [sensitive, toggle] = useToggle()
     />
   </div>
   <div class="flex flex-col xl:flex-row gap-16 lg:px-0 px-8 justify-between">
-    <div class="w-full">
-      <div class="flex justify-between items-center mb-4">
-        <USelect
-          :items="tableViewOptions"
-          v-model="tableView"
-        />
-        <UButton
-          size="xs"
-          variant="ghost"
-          color="primary"
-          :label="`${sensitive ? 'ver' : 'ocultar'} tabela`"
-          :icon="sensitive ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'"
-          @click="toggle()"
-        />
-      </div>
-      <Table
-        v-if="tabela.length"
-        :columns="columns"
-        :tabela="tabela"
-        :sensitive="sensitive"
-      />
-      <USkeleton
-        v-else
-        class="w-full h-full"
-      />
-    </div>
+  <StandingsView />
     <div class="flex w-full flex-col gap-4">
       <div class="flex justify-between items-center">
         <UIcon

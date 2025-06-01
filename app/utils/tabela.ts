@@ -1,6 +1,6 @@
 import { TableViewEnum } from '~~/layers/standings/enums/TableView.enum'
-import type { Clube } from '../../types/clube'
-import { type Enums } from '../../types/database.types'
+import type { IClube } from '../../types/clube'
+import { type Enums, type Tables } from '../../types/database.types'
 import { type Partida } from '../../types/partida'
 
 export function somaGolsProMandante(jogos: Partida[], equipeId: string | number) {
@@ -83,8 +83,8 @@ function filtraJogosEquipe(jogos: Partida[], equipeId: number | string): Partida
 
 export function calculaStatsEquipe(
   jogos: Partida[],
-  clube: Clube,
-  simulador: Map<string, Partida> = new Map([]),
+  clube: IClube,
+  simulador: Map<string, Tables<'simulacao'>> = new Map([]),
   tableView: TableViewEnum = TableViewEnum.OFICIAL
 ) {
   //TODO adicionar filtro por simulador
@@ -107,7 +107,7 @@ export function calculaStatsEquipe(
     [TableViewEnum.OFICIAL]: jogos_equipe_finalizado,
     [TableViewEnum.SIMULADA]: jogos_equipe_simulado,
     [TableViewEnum.OFICIAL_SIMULADA]: jogos_equipe_finalizado.concat(
-      jogos_equipe_simulado.filter(partida => !idsPartidasFinalizadas.includes(partida.partida))
+      jogos_equipe_simulado.filter(partida => !idsPartidasFinalizadas.includes(partida.partida!))
     )
   }
 

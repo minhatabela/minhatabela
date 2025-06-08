@@ -1,15 +1,16 @@
-import type { Match } from "~~/layers/shared/entities/Match";
-import type { Team } from "~~/layers/shared/entities/Team";
-import type { TableHeader } from "../dtos/TableHeader.dto";
-import type { ITeamStats } from "../interfaces/ITeamStats.interface";
+import type { Match } from '~~/layers/shared/entities/Match'
+import type { Team } from '~~/layers/shared/entities/Team'
+import type { TableHeader } from '../dtos/TableHeader.dto'
+import type { ITeamStats } from '../interfaces/ITeamStats.interface'
 
 export class TeamStats implements ITeamStats {
   constructor(
     private readonly team: Team,
     private readonly matches: Match[]
   ) {
-    this.matches = this.matches
-      .filter(match => match.homeTeam.id === this.teamId || match.awayTeam.id === this.teamId)
+    this.matches = this.matches.filter(
+      match => match.homeTeam.id === this.teamId || match.awayTeam.id === this.teamId
+    )
   }
 
   get teamId() {
@@ -21,9 +22,7 @@ export class TeamStats implements ITeamStats {
   }
 
   get perf(): number {
-    return Math.floor(
-      (this.points / (this.matchesCount * 3)) * 100
-    )
+    return Math.floor((this.points / (this.matchesCount * 3)) * 100)
   }
 
   private validMatches(): Match[] {
@@ -54,7 +53,6 @@ export class TeamStats implements ITeamStats {
     return away! + home!
   }
 
-
   get conGoals(): number {
     const away = this.awayMatches()
       .map(match => match.homeGoals)
@@ -68,21 +66,17 @@ export class TeamStats implements ITeamStats {
   }
 
   get wins(): number {
-    const homeWins = this.homeMatches()
-      .filter(match => match.homeGoals! > match.awayGoals!)
+    const homeWins = this.homeMatches().filter(match => match.homeGoals! > match.awayGoals!)
 
-    const awayWins = this.awayMatches()
-      .filter(match => match.awayGoals! > match.homeGoals!)
+    const awayWins = this.awayMatches().filter(match => match.awayGoals! > match.homeGoals!)
 
     return awayWins.length + homeWins.length
   }
 
   get losses(): number {
-    const homeLosses = this.homeMatches()
-      .filter(match => match.homeGoals! < match.awayGoals!)
+    const homeLosses = this.homeMatches().filter(match => match.homeGoals! < match.awayGoals!)
 
-    const awayLosses = this.awayMatches()
-      .filter(match => match.awayGoals! < match.homeGoals!)
+    const awayLosses = this.awayMatches().filter(match => match.awayGoals! < match.homeGoals!)
 
     return homeLosses.length + awayLosses.length
   }
@@ -92,7 +86,7 @@ export class TeamStats implements ITeamStats {
   }
 
   get points(): number {
-    return (this.wins * 3) + this.draws
+    return this.wins * 3 + this.draws
   }
 
   get getTeamStats(): TableHeader {

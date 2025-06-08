@@ -1,7 +1,7 @@
 export class Team {
   constructor(
-    private id: string,
-    private name: string,
-    private emblem: string
+    readonly id: string,
+    readonly name: string,
+    readonly emblem: string
   ) {}
 }

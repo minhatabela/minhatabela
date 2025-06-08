@@ -7,15 +7,15 @@ import type { Vanue } from './Vanue'
 
 export class Match {
   constructor(
-    private id: string,
-    private round: Round,
-    private number: MatchNumber,
-    private date: MatchDate,
-    private hour: MatchTime,
-    private vanue?: Vanue,
-    private homeTeam?: Team,
-    private awayTeam?: Team,
-    private homeGoals?: number,
-    private awayGoals?: number
+    readonly id: string,
+    readonly round: Round,
+    readonly number: MatchNumber,
+    readonly date: MatchDate,
+    readonly hour: MatchTime,
+    readonly homeTeam: Team,
+    readonly awayTeam: Team,
+    readonly vanue?: Vanue,
+    readonly homeGoals?: number,
+    readonly awayGoals?: number
   ) {}
 }

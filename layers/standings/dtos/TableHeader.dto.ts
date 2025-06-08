@@ -1,9 +1,9 @@
 export type TableHeader = {
-  homeGoals: number
-  awayGoals: number
+  proGoals: number
+  conGoals: number
   wins: number
   draws: number
-  defeats: number
+  losses: number
   points: number
   diffGoals: number
   team: string

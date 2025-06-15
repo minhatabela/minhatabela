@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PositionColorFactory } from '../factories/PositionColor.factory'
-import type { Position } from '../values/Position'
+import { PositionColorFactory } from '../../domain/factories/PositionColor.factory'
+import type { Position } from '../../domain/values/Position'
 
 const { position } = defineProps<{
   position: Position

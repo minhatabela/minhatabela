@@ -11,7 +11,7 @@ export class Match {
     readonly round: Round,
     readonly number: MatchNumber,
     readonly date: MatchDate,
-    readonly hour: MatchTime,
+    readonly time: MatchTime,
     readonly homeTeam: Team,
     readonly awayTeam: Team,
     readonly vanue?: Vanue,

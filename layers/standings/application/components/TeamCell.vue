@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TeamCell } from '../dtos/TeamCell.dto'
+import type { TeamCell } from '../../domain/dtos/TeamCell.dto'
 
 defineProps<TeamCell>()
 </script>

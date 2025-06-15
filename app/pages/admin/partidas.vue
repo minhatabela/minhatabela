@@ -153,8 +153,6 @@ async function storeMatch(match: PartidaCriar): Promise<void> {
   loadingCreate.value.set(match.numero, true)
 
   const date = match.data ? format(new Date(match.data?.split('/').reverse()), 'yyyy-MM-dd') : null
-  console.log(date)
-  console.log(match.data)
 
   const _match: Tables<'partida'> = {
     mandante: match.mandante.id,

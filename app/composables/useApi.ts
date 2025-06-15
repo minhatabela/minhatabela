@@ -1,5 +1,5 @@
+import type { IPartida } from '~~/types/partida'
 import { type IClube } from '../../types/clube'
-import { type IPartida } from '../../types/partida'
 import type { ISede } from '../../types/sede'
 
 const { data: partidas } = useAsyncData('partidas', () => $fetch<IPartida[]>('/api/partidas'), {
@@ -15,5 +15,10 @@ const { data: sedes, refresh: refreshSedes } = useAsyncData(
 )
 
 export const useApi = () => {
-  return { partidas, clubes, sedes, refreshSedes }
+  return {
+    partidas,
+    clubes,
+    sedes,
+    refreshSedes
+  }
 }

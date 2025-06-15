@@ -1,2 +1,4 @@
 console.log('extending standings layer')
-export default defineNuxtConfig({})
+export default defineNuxtConfig({
+  components: ['./application/components']
+})

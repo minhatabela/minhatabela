@@ -1,4 +1,4 @@
-import { TableViewEnum } from '~~/layers/standings/enums/TableView.enum'
+import { TableViewEnum } from '~~/layers/standings/domain/enums/TableView.enum'
 import type { IClube } from '../../types/clube'
 import { type Enums, type Tables } from '../../types/database.types'
 import { type Partida } from '../../types/partida'

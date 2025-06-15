@@ -1,6 +1,6 @@
 import type { Match } from '~~/layers/shared/entities/Match'
 import type { Team } from '~~/layers/shared/entities/Team'
-import type { TableHeader } from '../dtos/TableHeader.dto'
+import type { StandingPositon } from '../dtos/StandingPosition.dto'
 import type { ITeamStats } from '../interfaces/ITeamStats.interface'
 
 export class TeamStats implements ITeamStats {
@@ -89,8 +89,8 @@ export class TeamStats implements ITeamStats {
     return this.wins * 3 + this.draws
   }
 
-  get getTeamStats(): TableHeader {
-    return {
+  get getTeamStats(): StandingPositon {
+    const stats = {
       proGoals: this.proGoals,
       conGoals: this.conGoals,
       wins: this.wins,
@@ -103,5 +103,7 @@ export class TeamStats implements ITeamStats {
       emblem: this.team.emblem,
       perf: this.perf
     }
+
+    return stats
   }
 }

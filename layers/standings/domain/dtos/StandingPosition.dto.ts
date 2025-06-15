@@ -1,4 +1,4 @@
-export type TableHeader = {
+export type StandingPositon = {
   proGoals: number
   conGoals: number
   wins: number

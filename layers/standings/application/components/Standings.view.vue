@@ -15,15 +15,15 @@ const tableViewOptions = [
 
 const [sensitive, toggle] = useToggle()
 
-const { data: matches } = await useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
+const { data: matches } = useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
   transform: response => response?.map(match => new MatchMap().mapTo(match))
 })
 
-const { data: teams } = await useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
+const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })
 
-const standings = computed(() => new Standings(matches.value!, teams.value!).getStandings())
+const standings = computed(() => teams.value && matches.value ? new Standings(matches.value!, teams.value!).getStandings() : [])
 
 const columns = StandignsHeaderFactory.make()
 </script>

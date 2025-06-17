@@ -82,23 +82,32 @@
     "enable": true,
     "custom_scope": false,
     "max_items": 20,
-    "initial_value": "app",
+    "initial_value": "general",
     "options": [
       {
-        "value": "app",
-        "label": "app"
+        "value": "general",
+        "label": "general",
+        "emoji": "🌎"
       },
       {
         "value": "shared",
-        "label": "shared"
+        "label": "shared",
+        "emoji": "🤝"
       },
       {
         "value": "server",
-        "label": "server"
+        "label": "server",
+        "emoji": "☁️"
       },
       {
-        "value": "tools",
-        "label": "tools"
+        "value": "standings",
+        "label": "standings",
+        "emoji": "📅" 
+      },
+      {
+        "value": "predictions",
+        "label": "predictions",
+        "emoji": "🧙‍♂️"
       },
       {
         "value": "",
@@ -119,11 +128,11 @@
     "max_size": 70
   },
   "commit_body": {
-    "enable": true,
+    "enable": false,
     "required": false
   },
   "commit_footer": {
-    "enable": true,
+    "enable": false,
     "initial_value": [],
     "options": ["closes", "trailer", "breaking-change", "deprecated", "custom"]
   },

@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import type { Match } from '~~/layers/shared/entities/Match'
 import { Standings } from '../../domain/entities/Standings'
 import { TableViewEnum } from '../../domain/enums/TableView.enum'
 import { StandignsHeaderFactory } from '../../domain/factories/StandingsHeader.factory'
+import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches.factory'
 import { MatchMap } from '../../infra/mappers/Match.map'
+import { PredictionMap } from '../../infra/mappers/Prediction.map'
 import { TeamMap } from '../../infra/mappers/Team.map'
 
 const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
@@ -16,14 +19,32 @@ const tableViewOptions = [
 const [sensitive, toggle] = useToggle()
 
 const { data: matches } = useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
-  transform: response => response?.map(match => new MatchMap().mapTo(match))
+  transform: response => response?.map(match => new MatchMap().mapTo(match)),
+  default: () => [] as Match[]
 })
 
 const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })
 
-const standings = computed(() => teams.value && matches.value ? new Standings(matches.value!, teams.value!).getStandings() : [])
+const { data: predictions } = useAsyncData(
+  'standings/predictions',
+  () => $fetch('/api/predictions'),
+  {
+    transform: response => response?.map(prediction => new PredictionMap().mapTo(prediction)),
+    default: () => []
+  }
+)
+
+const standingsMatches = computed(() =>
+  StandingsMatchesFactory.make(tableView.value, matches.value!, predictions.value!)
+)
+
+const standings = computed(() =>
+  teams.value && standingsMatches.value
+    ? new Standings(standingsMatches.value!, teams.value!).getStandings()
+    : []
+)
 
 const columns = StandignsHeaderFactory.make()
 </script>

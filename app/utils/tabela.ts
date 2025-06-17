@@ -133,11 +133,3 @@ export function calculaStatsEquipe(
     )
   }
 }
-
-export function badgeColor(position: number) {
-  if (position >= 1 && position <= 6) return 'success' // libertadores
-  if (position >= 7 && position <= 8) return 'warning' // pré libertadores
-  if (position >= 9 && position <= 14) return 'info' // sudamericana
-  if (position >= 15 && position <= 16) return 'neutral'
-  if (position >= 17 && position <= 20) return 'error' // rebaixamento
-}

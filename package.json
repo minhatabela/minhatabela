@@ -41,6 +41,8 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@iconify-json/lucide": "^1.2.44",
     "@iconify-json/material-symbols": "^1.2.21",
     "@nuxt/test-utils": "^3.19.1",

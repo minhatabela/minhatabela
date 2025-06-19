@@ -1,5 +1,8 @@
 {
   "name": "minhatabela",
+  "author": {
+    "name": "Alexis Lopes"
+  },
   "private": true,
   "type": "module",
   "scripts": {

@@ -1,7 +1,7 @@
-import type { Clube } from '../../types/clube'
-import { type Enums } from '../../types/database.types'
+import { TableViewEnum } from '~~/layers/standings/domain/enums/TableView.enum'
+import type { IClube } from '../../types/clube'
+import { type Enums, type Tables } from '../../types/database.types'
 import { type Partida } from '../../types/partida'
-import { TableViewEnum } from '../../types/TableView.enum'
 
 export function somaGolsProMandante(jogos: Partida[], equipeId: string | number) {
   return jogos
@@ -83,8 +83,8 @@ function filtraJogosEquipe(jogos: Partida[], equipeId: number | string): Partida
 
 export function calculaStatsEquipe(
   jogos: Partida[],
-  clube: Clube,
-  simulador: Map<string, Partida> = new Map([]),
+  clube: IClube,
+  simulador: Map<string, Tables<'simulacao'>> = new Map([]),
   tableView: TableViewEnum = TableViewEnum.OFICIAL
 ) {
   //TODO adicionar filtro por simulador
@@ -107,7 +107,7 @@ export function calculaStatsEquipe(
     [TableViewEnum.OFICIAL]: jogos_equipe_finalizado,
     [TableViewEnum.SIMULADA]: jogos_equipe_simulado,
     [TableViewEnum.OFICIAL_SIMULADA]: jogos_equipe_finalizado.concat(
-      jogos_equipe_simulado.filter(partida => !idsPartidasFinalizadas.includes(partida.partida))
+      jogos_equipe_simulado.filter(partida => !idsPartidasFinalizadas.includes(partida.partida!))
     )
   }
 
@@ -132,12 +132,4 @@ export function calculaStatsEquipe(
       ((vitorias.length * 3 + empates.length) / (jogos_equipe.length * 3)) * 100
     )
   }
-}
-
-export function badgeColor(position: number) {
-  if (position >= 1 && position <= 6) return 'success' // libertadores
-  if (position >= 7 && position <= 8) return 'warning' // pré libertadores
-  if (position >= 9 && position <= 14) return 'info' // sudamericana
-  if (position >= 15 && position <= 16) return 'neutral'
-  if (position >= 17 && position <= 20) return 'error' // rebaixamento
 }

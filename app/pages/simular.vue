@@ -46,30 +46,7 @@ const empty = computed(() => {
           label="baixar simulação da rodada"
         />
       </div>
-      <div class="flex w-full items-center justify-between">
-        <button
-          :disabled="rodada_navegavel === 1"
-          @click="rodada_navegavel = Number(rodada_navegavel) - 1"
-        >
-          <UIcon
-            name="uil:angle-left"
-            class="w-5 h-5 cursor-pointer"
-            :class="{ 'opacity-40': rodada_navegavel === 1 }"
-          />
-        </button>
-        <span class="font-semibold uppercase">Rodada {{ rodada_navegavel }}</span>
-        <button
-          type="button"
-          :disabled="rodada_navegavel === 38"
-          @click="rodada_navegavel = Number(rodada_navegavel) + 1"
-        >
-          <UIcon
-            name="uil:angle-right"
-            class="w-5 h-5 cursor-pointer"
-            :class="{ 'opacity-40': rodada_navegavel === 38 }"
-          />
-        </button>
-      </div>
+      <RoundPagination v-model="rodada_navegavel" />
       <div
         v-if="jogosRodada.length"
         class="grid lg:grid-cols-2 gap-4"

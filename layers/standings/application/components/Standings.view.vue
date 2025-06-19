@@ -7,6 +7,7 @@ import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches
 import { MatchMap } from '../../infra/mappers/Match.map'
 import { PredictionMap } from '../../infra/mappers/Prediction.map'
 import { TeamMap } from '../../infra/mappers/Team.map'
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 
 const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
 
@@ -27,14 +28,7 @@ const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clube
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })
 
-const { data: predictions } = useAsyncData(
-  'standings/predictions',
-  () => $fetch('/api/predictions'),
-  {
-    transform: response => response?.map(prediction => new PredictionMap().mapTo(prediction)),
-    default: () => []
-  }
-)
+const predictions = computed(() => usePredictionsStore().predictions)
 
 const standingsMatches = computed(() =>
   StandingsMatchesFactory.make(tableView.value, matches.value!, predictions.value!)

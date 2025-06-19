@@ -1,6 +1,6 @@
-import type { Match } from "~~/layers/shared/entities/Match"
+import type { Match } from '~~/layers/shared/entities/Match'
 
-export const usePredictionsStore =  defineStore('predictions', () => {
+export const usePredictionsStore = defineStore('predictions', () => {
   const predictions = ref<Match[]>()
 
   function setPredictions(_predictions: Match[]) {

@@ -14,7 +14,7 @@ const { jogosRodada, rodada_navegavel, syncing, execute } = useSimulador()
     <RoundPagination v-model="rodada_navegavel" />
     <div
       v-if="jogosRodada.length"
-      class="grid lg:grid-cols-2 gap-4"
+      class="grid grid-cols-2 gap-4 sm:grid-cols-1"
     >
       <CardPartida
         v-for="partida in jogosRodada"

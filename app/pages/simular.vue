@@ -1,7 +1,26 @@
 <script setup lang="ts">
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store';
+import { PredictionMap } from '~~/layers/standings/infra/mappers/Prediction.map';
+
 useHead({
   title: 'Simulando'
 })
+
+const { data: predictions, status } = useAsyncData(
+  'standings/predictions',
+  () => $fetch('/api/predictions'),
+  {
+    transform: response => response?.map(prediction => new PredictionMap().mapTo(prediction)),
+    default: () => []
+  }
+)
+
+watch(status, value => {
+  if(value === 'success') {
+    usePredictionsStore().setPredictions(predictions.value!)
+  }
+})
+
 </script>
 
 <template>

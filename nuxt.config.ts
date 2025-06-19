@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'nuxt-og-image',
     '@nuxt/test-utils/module',
-    '@nuxt/eslint'
+    '@nuxt/eslint',
+    '@pinia/nuxt'
   ],
   supabase: {
     redirect: false

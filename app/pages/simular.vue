@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store';
-import { PredictionMap } from '~~/layers/standings/infra/mappers/Prediction.map';
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
+import { PredictionMap } from '~~/layers/standings/infra/mappers/Prediction.map'
 
 useHead({
   title: 'Simulando'
@@ -16,11 +16,10 @@ const { data: predictions, status } = useAsyncData(
 )
 
 watch(status, value => {
-  if(value === 'success') {
+  if (value === 'success') {
     usePredictionsStore().setPredictions(predictions.value!)
   }
 })
-
 </script>
 
 <template>

@@ -1,4 +1,5 @@
-import { Match } from '~~/layers/shared/entities/Match'
+import { PredictedMatch } from '~~/layers/predictions/domain/entities/PredictedMatch'
+import { UpdateLocalPredictedMatchObserver } from '~~/layers/predictions/domain/observers/UpdateLocalPredictedMatch.observer'
 import { Team } from '~~/layers/shared/entities/Team'
 import { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IMapper } from '~~/layers/shared/ports/IMapper.interface'
@@ -7,10 +8,10 @@ import { MatchNumber } from '~~/layers/shared/values/MatchNumber'
 import { MatchTime } from '~~/layers/shared/values/MatchTime'
 import { Round } from '~~/layers/shared/values/Round'
 
-export class PredictionMap implements IMapper<any, Match> {
-  mapTo(data: any): Match {
+export class PredictionMap implements IMapper<any, PredictedMatch> {
+  mapTo(data: any): PredictedMatch {
     console.log(data)
-    const { partida, gols_mandante, gols_visitante } = data
+    const {id: predictionId, partida, gols_mandante, gols_visitante } = data
 
     const { id, mandante, visitante, rodada, numero, data: date, hora, sede } = partida
 
@@ -19,7 +20,8 @@ export class PredictionMap implements IMapper<any, Match> {
 
     const vanue = sede ? new Vanue(sede.id, sede.nome_popular) : undefined
 
-    return new Match(
+    const predictedMatch = new PredictedMatch(
+      predictionId,
       id,
       new Round(rodada),
       new MatchNumber(numero),
@@ -31,5 +33,9 @@ export class PredictionMap implements IMapper<any, Match> {
       gols_mandante,
       gols_visitante
     )
+
+    predictedMatch.addObserver(new UpdateLocalPredictedMatchObserver())
+
+    return predictedMatch
   }
 }

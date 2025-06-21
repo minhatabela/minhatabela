@@ -16,10 +16,10 @@ const { jogosRodada, rodada_navegavel, syncing, execute } = useSimulador()
       v-if="jogosRodada.length"
       class="grid grid-cols-2 gap-4 sm:grid-cols-1"
     >
-      <CardPartida
+      <MatchCard
         v-for="partida in jogosRodada"
         :key="partida.id"
-        :partida="partida"
+        :match="partida"
       />
     </div>
     <div

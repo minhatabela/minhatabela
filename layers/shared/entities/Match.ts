@@ -17,5 +17,10 @@ export class Match {
     readonly vanue?: Vanue,
     readonly homeGoals?: number,
     readonly awayGoals?: number
-  ) {}
+  ) { }
+
+  get isFinished(): boolean {
+    return isDefined(this.awayGoals) && isDefined(this.homeGoals)
+
+  }
 }

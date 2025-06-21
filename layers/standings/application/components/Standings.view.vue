@@ -5,7 +5,6 @@ import { TableViewEnum } from '../../domain/enums/TableView.enum'
 import { StandignsHeaderFactory } from '../../domain/factories/StandingsHeader.factory'
 import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches.factory'
 import { MatchMap } from '../../infra/mappers/Match.map'
-import { PredictionMap } from '../../infra/mappers/Prediction.map'
 import { TeamMap } from '../../infra/mappers/Team.map'
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 

@@ -3,7 +3,6 @@ import type { PredictedMatch } from '../entities/PredictedMatch'
 import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.interface'
 
 export class UpdateRemotePredictedMatchObserver implements IPredictedMatchObserver {
-
   constructor(private readonly updatePredictedMatchUseCase: UpdatePredictedMatchUseCase) {}
 
   execute(match: PredictedMatch): void {

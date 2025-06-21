@@ -4,7 +4,7 @@ import { PredictedMatch } from '~~/layers/predictions/domain/entities/PredictedM
 export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const user = await serverSupabaseUser(event)
-  const { predictedMatchId, homeGoals, awayGoals } = await readBody(event) as PredictedMatch
+  const { predictedMatchId, homeGoals, awayGoals } = (await readBody(event)) as PredictedMatch
 
   if (user) {
     let { data } = await client

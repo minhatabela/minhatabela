@@ -13,9 +13,14 @@ export const usePredictionsStore = defineStore('predictions', () => {
     prediction?.setScore(match.homeGoals!, match.awayGoals!)
   }
 
+  function getPredictions(): PredictedMatch[] {
+    return Array.from(predictions.value!.values())
+  }
+
   return {
     predictions,
     setPredictions,
-    updatePredictedMatch
+    updatePredictedMatch,
+    getPredictions
   }
 })

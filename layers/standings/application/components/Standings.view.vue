@@ -28,7 +28,7 @@ const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clube
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })
 
-const predictions = computed(() => usePredictionsStore().predictions)
+const predictions = computed(() => usePredictionsStore().getPredictions())
 
 const standingsMatches = computed(() =>
   StandingsMatchesFactory.make(tableView.value, matches.value!, predictions.value!)

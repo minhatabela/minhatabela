@@ -1,4 +1,4 @@
-import type { PredictedMatch } from "../domain/entities/PredictedMatch";
+import type { PredictedMatch } from '../domain/entities/PredictedMatch'
 
 export class UpdatePredictedMatchUseCase {
   async execute(match: PredictedMatch): Promise<void> {

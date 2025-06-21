@@ -9,8 +9,6 @@ export class MatchDate extends Validatable<string> {
   }
 
   get formattedDate() {
-    return this.value
-      ? format(new Date(this.value), 'd MMM', { locale: ptBR })
-      : 'A definir'
+    return this.value ? format(new Date(this.value), 'd MMM', { locale: ptBR }) : 'A definir'
   }
 }

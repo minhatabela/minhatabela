@@ -21,6 +21,14 @@ export const useMatchesStore = defineStore('matches', () => {
     }
   })
 
+  function nextRound() {
+    currentRound.value = currentRound.value! + 1
+  }
+
+  function previousRound() {
+    currentRound.value = currentRound.value! - 1
+  }
+
   function getRoundMatches(): Match[] {
     return matches.value.filter(match => match.round.value === currentRound.value) as Match[]
   }
@@ -29,6 +37,8 @@ export const useMatchesStore = defineStore('matches', () => {
     matches,
     setMatches,
     currentRound,
-    getRoundMatches
+    getRoundMatches,
+    nextRound,
+    previousRound
   }
 })

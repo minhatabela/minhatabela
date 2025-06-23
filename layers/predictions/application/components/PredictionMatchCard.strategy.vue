@@ -86,7 +86,7 @@ function setAwayScore(event: FocusEvent) {
           class="w-7"
           :src="match.homeTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
       <UInput
         size="xl"
@@ -110,7 +110,7 @@ function setAwayScore(event: FocusEvent) {
           class="w-7"
           :src="match.awayTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
     </div>
   </UCard>

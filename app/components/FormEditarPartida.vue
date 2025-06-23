@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { CamposInconsistentes, PartidaConsistencia } from '../../types/partida'
-import type { ISede } from '../../types/sede'
+import type { Vanue } from '~~/layers/shared/entities/Vanue'
 
 interface FormEditarPartidaProps {
-  partida: PartidaConsistencia
+  partida: any
 }
 
 const props = defineProps<FormEditarPartidaProps>()
 
-const { sedes, refreshSedes } = useApi()
+const sedes = ref<Vanue[]>([])
 
 const opened = defineModel('opened', {
   type: Boolean,
@@ -16,9 +15,9 @@ const opened = defineModel('opened', {
 })
 
 const sedesDrodpwn = computed(() => {
-  return sedes.value.map((sede: ISede) => {
+  return sedes.value.map((sede: Vanue) => {
     return {
-      label: sede.nome_popular,
+      label: sede.name,
       value: sede.id
     }
   })
@@ -40,7 +39,7 @@ const hasInconsistentDateTime = computed(() => {
 
 const hasIconsistentSedeInDB = computed(() => {
   return sedes.value.find(
-    (sede: ISede) => sede.key?.toString() === props.partida.inconsistencias.sede?.toString()
+    (sede: Vanue) => sede.name?.toString() === props.partida.inconsistencias.sede?.toString()
   )
 })
 
@@ -70,14 +69,14 @@ const { execute: cerateSede, status } = useAsyncData(
 )
 
 const toast = useToast()
-watch(status, newStatus => {
-  if (newStatus === 'success') {
-    refreshSedes()
-  }
-})
+// watch(status, newStatus => {
+//   if (newStatus === 'success') {
+//     refreshSedes()
+//   }
+// })
 
 function useCamposParidas() {
-  const partidaAuxiliar = ref<CamposInconsistentes>({
+  const partidaAuxiliar = ref({
     gols_mandante: undefined,
     gols_visitante: undefined,
     data: undefined,
@@ -240,7 +239,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.mandante.escudo!"
                 size="lg"
-              />
+              >
               {{ partida.mandante.nome_popular }}
             </div>
             <UIcon
@@ -253,7 +252,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.visitante.escudo!"
                 size="lg"
-              />
+              >
             </div>
           </div>
         </div>

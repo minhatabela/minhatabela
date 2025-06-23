@@ -4,6 +4,14 @@ import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.
 const round = computed(() => useMatchesStore().currentRound)
 
 const roundMatches = computed(() => useMatchesStore().getRoundMatches())
+
+function nextRound() {
+  useMatchesStore().nextRound()
+}
+
+function previousRound() {
+  useMatchesStore().previousRound()
+}
 </script>
 
 <template>
@@ -11,7 +19,11 @@ const roundMatches = computed(() => useMatchesStore().getRoundMatches())
     <div class="flex justify-between items-center">
       <!-- <Syncing :syncing="syncing" /> -->
     </div>
-    <RoundPagination v-model="round" />
+    <RoundPagination
+      :round="round!"
+      @previous="previousRound"
+      @next="nextRound"
+    />
     <div
       v-if="roundMatches.length"
       class="grid grid-cols-2 gap-4 sm:grid-cols-1"

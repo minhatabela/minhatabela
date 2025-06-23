@@ -1,30 +1,32 @@
 <script setup lang="ts">
-const round = defineModel<number>()
+defineProps<{
+  round: number
+}>()
+
+const emit = defineEmits<{
+  (event: 'next' | 'previous'): void
+}>()
 </script>
 
 <template>
   <div class="flex w-full items-center justify-between">
-    <button
+    <UButton
       :disabled="round === 1"
-      @click="round = Number(round) - 1"
-    >
-      <UIcon
-        name="uil:angle-left"
-        class="w-5 h-5 cursor-pointer"
-        :class="{ 'opacity-40': round === 1 }"
-      />
-    </button>
+      icon="uil:angle-left"
+      size="sm"
+      variant="ghost"
+      class="cursor-pointer"
+      @click="emit('previous')"
+    />
     <span class="font-semibold uppercase">Rodada {{ round }}</span>
-    <button
+    <UButton
       type="button"
       :disabled="round === 38"
-      @click="round = Number(round) + 1"
-    >
-      <UIcon
-        name="uil:angle-right"
-        class="w-5 h-5 cursor-pointer"
-        :class="{ 'opacity-40': round === 38 }"
-      />
-    </button>
+      icon="uil:angle-right"
+      size="sm"
+      variant="ghost"
+      class="cursor-pointer"
+      @click="emit('next')"
+    />
   </div>
 </template>

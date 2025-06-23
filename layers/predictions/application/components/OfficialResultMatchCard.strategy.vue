@@ -24,7 +24,7 @@ const { match } = defineProps<{
           class="w-7"
           :src="match.homeTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
       <span class="text-3xl px-4 w-20 text-center">{{ match.homeGoals }}</span>
       X
@@ -34,7 +34,7 @@ const { match } = defineProps<{
           class="w-7"
           :src="match.awayTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
     </div>
   </UCard>

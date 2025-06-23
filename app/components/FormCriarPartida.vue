@@ -13,7 +13,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['refresh'])
 
-const { clubes, sedes } = useApi()
+const clubes = ref<Team[]>([])
+const sedes = ref<Vanue[]>([])
 const clubesDropdown = computed(() => {
   return clubes.value.map((clube: Team) => {
     return {

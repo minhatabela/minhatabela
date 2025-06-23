@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
   // console.log(prediction.toString())
 
   if (user) {
-    let { data } = await client.from('simulacao').upsert([record])
+    const { data } = await client.from('simulacao').upsert([record])
 
     return data
   }

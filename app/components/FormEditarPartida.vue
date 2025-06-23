@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type CamposInconsistentes, type PartidaConsistencia } from '../../types/partida'
+import type { CamposInconsistentes, PartidaConsistencia } from '../../types/partida'
 import type { ISede } from '../../types/sede'
 
 interface FormEditarPartidaProps {
@@ -161,7 +161,6 @@ function acceptOficialDateTime() {
 }
 
 const {
-  error,
   execute: acceptChanges,
   status: statusChanges
 } = useAsyncData(
@@ -244,7 +243,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.mandante.escudo!"
                 size="lg"
-              />
+              >
               {{ partida.mandante.nome_popular }}
             </div>
             <UIcon
@@ -257,7 +256,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.visitante.escudo!"
                 size="lg"
-              />
+              >
             </div>
           </div>
         </div>
@@ -266,12 +265,12 @@ onUnmounted(() => {
             <h2 class="text-2xl">Gols</h2>
             <UBadge
               v-if="hasInconsistentGoals"
-              @click="acceptOficialScoreboard"
-              trailingIcon="i-lucide-replace"
+              trailing-icon="i-lucide-replace"
               class="rounded-full"
               color="warning"
               variant="subtle"
               :label="`Resultado oficial: ${Number(partida.inconsistencias.gols_mandante) || '-'} x ${Number(partida.inconsistencias.gols_visitante) || '-'}`"
+              @click="acceptOficialScoreboard"
             />
           </div>
           <div class="flex gap-4">
@@ -295,22 +294,22 @@ onUnmounted(() => {
           <h2 class="text-2xl">Sede</h2>
           <UBadge
             v-if="hasInconsistentSede && !hasIconsistentSedeInDB"
-            trailingIcon="i-lucide-plus"
-            @click="cerateSede"
+            trailing-icon="i-lucide-plus"
             class="rounded-full cursor-pointer"
             :class="{ 'animate-pulse': status === 'pending' }"
             color="info"
             variant="subtle"
             :label="`Criar sede ${partida.inconsistencias.sede}`"
+            @click="cerateSede"
           />
           <UBadge
             v-else-if="hasInconsistentSede && hasIconsistentSedeInDB"
-            @click="acceptOficialSede"
-            trailingIcon="i-lucide-replace"
+            trailing-icon="i-lucide-replace"
             class="rounded-full cursor-pointer"
             color="warning"
             variant="subtle"
             :label="`Sede oficial: ${partida.inconsistencias.sede}`"
+            @click="acceptOficialSede"
           />
         </div>
         <label class="flex flex-col gap-2 w-full">
@@ -325,12 +324,12 @@ onUnmounted(() => {
           <h2>Data e hora</h2>
           <UBadge
             v-if="hasInconsistentDateTime"
-            @click="acceptOficialDateTime"
-            trailingIcon="i-lucide-replace"
+            trailing-icon="i-lucide-replace"
             class="rounded-full"
             color="warning"
             variant="subtle"
             :label="`Date e hora oficiais: ${partida.inconsistencias.data} ${partida.inconsistencias.hora}`"
+            @click="acceptOficialDateTime"
           />
         </div>
         <div class="flex gap-4">

@@ -56,15 +56,6 @@ const awayGoals = computed({
   }
 })
 
-watch(
-  [homeGoals, awayGoals],
-  ([home, away]) => {
-    if (isDefined(home) && isDefined(away)) {
-    }
-  },
-  { immediate: false }
-)
-
 function setHomeScore(event: FocusEvent) {
   const value = Math.abs(Number((event.target as HTMLInputElement)?.value))
   homeGoals.value = value
@@ -95,15 +86,15 @@ function setAwayScore(event: FocusEvent) {
           class="w-7"
           :src="match.homeTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
       <UInput
         size="xl"
         type="number"
         :max="9"
         :min="0"
-        @blur="setHomeScore"
         :model-value="homeGoals"
+        @blur="setHomeScore"
       />
       X
       <UInput
@@ -111,15 +102,15 @@ function setAwayScore(event: FocusEvent) {
         type="number"
         :max="9"
         :min="0"
-        @blur="setAwayScore"
         :model-value="awayGoals"
+        @blur="setAwayScore"
       />
       <UTooltip :text="match.awayTeam.name">
         <img
           class="w-7"
           :src="match.awayTeam.emblem"
           alt=""
-        />
+        >
       </UTooltip>
     </div>
   </UCard>

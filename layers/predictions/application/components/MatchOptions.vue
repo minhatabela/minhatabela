@@ -7,10 +7,7 @@ const { match } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'assingAwayWin'): void
-  (event: 'assingHomeWin'): void
-  (event: 'declareDraw'): void
-  (event: 'clearPrediction'): void
+  (event: 'assingAwayWin' | 'assingAwayWin' | 'assingHomeWin' | 'declareDraw' | 'clearPrediction'): void
 }>()
 
 const confirm = ref(false)
@@ -39,30 +36,30 @@ function clearPrediction() {
       <template #content>
         <div class="flex flex-col">
           <span
-            @click="emit('assingHomeWin')"
             class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+            @click="emit('assingHomeWin')"
           >
             <img
               class="h-6 w-6"
               :src="match.homeTeam.emblem"
               alt=""
-            />
+            >
             {{ match.homeTeam.name }} vence</span
           >
           <span
-            @click="emit('assingAwayWin')"
             class="px-4 flex gap-2 items-center py-2 hover:dark:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+            @click="emit('assingAwayWin')"
           >
             <img
               class="h-6 w-6"
               :src="match.awayTeam.emblem"
               alt=""
-            />
+            >
             {{ match.awayTeam.name }} vence</span
           >
           <span
-            @click="emit('declareDraw')"
             class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+            @click="emit('declareDraw')"
           >
             <Icon
               size="1.5rem"
@@ -75,9 +72,9 @@ function clearPrediction() {
             class="py-1"
           />
           <span
-            @click="confirm = true"
             v-if="!confirm && predictedMatch"
             class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-red-500"
+            @click="confirm = true"
           >
             <Icon
               size="1.5rem"
@@ -87,9 +84,9 @@ function clearPrediction() {
             Limpar simulação
           </span>
           <span
-            @click="clearPrediction"
             v-if="confirm"
             class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-amber-500"
+            @click="clearPrediction"
           >
             <Icon
               size="1.5rem"

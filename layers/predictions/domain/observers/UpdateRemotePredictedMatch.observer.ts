@@ -1,4 +1,4 @@
-import { UpdatePredictedMatchUseCase } from '../../application/usecases/UpdatePredictedMatchUseCase'
+import type { UpdatePredictedMatchUseCase } from '../../application/usecases/UpdatePredictedMatchUseCase'
 import type { PredictedMatch } from '../entities/PredictedMatch'
 import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.interface'
 

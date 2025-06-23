@@ -10,7 +10,7 @@ defineProps<TeamCell>()
       class="w-6 h-6"
       :src="emblem"
       :alt="team"
-    />
+    >
     <span class="font-bold">{{ team }}</span>
   </div>
 </template>

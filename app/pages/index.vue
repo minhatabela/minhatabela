@@ -97,10 +97,10 @@
 </template>
 
 <script lang="ts" setup>
+import * as pkg from '../package.json'
 const consent = useCookie<boolean>('consent')
 
 definePageMeta({ layout: false })
-import * as pkg from '../package.json'
 
 useSeoMeta({
   title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',

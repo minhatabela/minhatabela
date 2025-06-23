@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { DatePicker as VCalendarDatePicker } from 'v-calendar'
-// @ts-ignore
 import 'v-calendar/dist/style.css'
 import type {
   DatePickerDate,
   DatePickerRangeObject
+  // @ts-expect-error does not have types
 } from 'v-calendar/dist/types/src/use/datePicker'
 
 defineOptions({

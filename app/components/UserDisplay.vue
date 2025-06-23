@@ -15,18 +15,18 @@
       <div class="flex flex-col">
         <UButton
           v-if="user?.user_metadata.role === 'admin'"
-          @click="navigateTo('/admin/consistencia')"
           variant="link"
           color="neutral"
           icon="i-ic-outline-admin-panel-settings"
+          @click="navigateTo('/admin/consistencia')"
           >administrar
         </UButton>
         <USeparator />
         <UButton
-          @click="logout"
           variant="link"
           color="neutral"
           icon="i-solar-logout-broken"
+          @click="logout"
           >sair</UButton
         >
       </div>

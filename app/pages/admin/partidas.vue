@@ -1,4 +1,5 @@
 <template>
+  <div>
   <UTabs
     v-model="view"
     :content="false"
@@ -28,7 +29,7 @@
           />
         </div>
       </template>
-      <template #status-cell="{ getValue, row }">
+      <template #status-cell="{ getValue }">
         <UBadge
           class="rounded-full"
           variant="subtle"
@@ -40,13 +41,13 @@
       </template>
       <template #inconsistencias-cell="{ getValue, row }">
         <UButton
-          @click="setPickedPartida(row.original)"
           class="rounded-full"
           variant="ghost"
           :icon="
             Object.values(getValue()).length ? 'i-lucide-circle-alert' : 'i-lucide-check-circle'
           "
           :class="Object.values(getValue()).length ? 'text-yellow-700' : 'text-green-700'"
+          @click="setPickedPartida(row.original)"
         />
       </template>
       <template #data-cell="{ getValue, row }">
@@ -96,10 +97,11 @@
     </UTable>
   </UCard>
   <FormEditarPartida
+    v-model:opened="opened"
     :partida="pickedPartida"
     @refresh="refresh"
-    v-model:opened="opened"
   />
+  </div>
 </template>
 
 <script lang="ts" setup>

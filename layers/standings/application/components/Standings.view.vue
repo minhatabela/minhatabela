@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { Match } from '~~/layers/shared/entities/Match'
 import { Standings } from '../../domain/entities/Standings'
 import { TableViewEnum } from '../../domain/enums/TableView.enum'
 import { StandignsHeaderFactory } from '../../domain/factories/StandingsHeader.factory'
 import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches.factory'
-import { MatchMap } from '../../infra/mappers/Match.map'
 import { TeamMap } from '../../infra/mappers/Team.map'
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 import { useMatchesStore } from '../stores/Matches.store'
@@ -44,8 +42,8 @@ const columns = StandignsHeaderFactory.make()
   <div class="w-full">
     <div class="flex justify-between items-center mb-4">
       <USelect
-        :items="tableViewOptions"
         v-model="tableView"
+        :items="tableViewOptions"
       />
       <UButton
         size="xs"

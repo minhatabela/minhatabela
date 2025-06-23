@@ -27,9 +27,9 @@ const roundMatches = computed(() => useMatchesStore().getRoundMatches())
       class="grid lg:grid-cols-2 gap-4"
     >
       <USkeleton
-        class="w-full h-24"
         v-for="i in 10"
         :key="i"
+        class="w-full h-24"
       />
     </div>
   </div>

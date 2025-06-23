@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(() => {
   const user = useSupabaseUser()
 
   if (user.value?.user_metadata.role !== 'admin') {

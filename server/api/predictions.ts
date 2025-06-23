@@ -5,7 +5,7 @@ export default defineEventHandler(async event => {
   const user = await serverSupabaseUser(event)
 
   if (user) {
-    let { data } = await client
+    const { data } = await client
       .from('simulacao')
       .select('*, partida(*, mandante(*), visitante(*), sede(*))')
       .eq('user_id', user.id)

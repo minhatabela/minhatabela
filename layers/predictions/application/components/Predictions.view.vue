@@ -4,7 +4,6 @@ import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.
 const round = computed(() => useMatchesStore().currentRound)
 
 const roundMatches = computed(() => useMatchesStore().getRoundMatches())
-
 </script>
 
 <template>

@@ -19,8 +19,6 @@ const tableViewOptions = [
 
 const [sensitive, toggle] = useToggle()
 
-
-
 const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })

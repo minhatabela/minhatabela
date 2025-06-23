@@ -40,15 +40,14 @@
 </template>
 
 <script lang="ts" setup>
-import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store';
-import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store';
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
+import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store'
 
 const arte = ref()
 defineExpose(arte)
 const { round } = defineProps<{
   round: number
 }>()
-
 
 const partidasRodada = computed(() => useMatchesStore().getRoundMatches())
 

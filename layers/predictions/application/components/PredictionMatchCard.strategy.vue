@@ -1,32 +1,37 @@
 <script lang="ts" setup>
 import type { Match } from '~~/layers/shared/entities/Match'
 import { usePredictionsStore } from '../stores/Predictions.store'
-import { PredictedMatch } from '../../domain/entities/PredictedMatch';
-import { UpdateLocalPredictedMatchObserver } from '../../domain/observers/UpdateLocalPredictedMatch.observer';
-import { UpdatePredictedMatchUseCase } from '../usecases/UpdatePredictedMatchUseCase';
-import { UpdateRemotePredictedMatchObserver } from '../../domain/observers/UpdateRemotePredictedMatch.observer';
+import { PredictedMatch } from '../../domain/entities/PredictedMatch'
+import { UpdateLocalPredictedMatchObserver } from '../../domain/observers/UpdateLocalPredictedMatch.observer'
+import { UpdatePredictedMatchUseCase } from '../usecases/UpdatePredictedMatchUseCase'
+import { UpdateRemotePredictedMatchObserver } from '../../domain/observers/UpdateRemotePredictedMatch.observer'
 
 const { match } = defineProps<{
   match: Match
 }>()
 
-const newPrediction = computed(() => new PredictedMatch(
-  match.id,
-  match.round,
-  match.number,
-  match.date,
-  match.time,
-  match.homeTeam,
-  match.awayTeam,
-  match.vanue
-))
+const newPrediction = computed(
+  () =>
+    new PredictedMatch(
+      match.id,
+      match.round,
+      match.number,
+      match.date,
+      match.time,
+      match.homeTeam,
+      match.awayTeam,
+      match.vanue
+    )
+)
 
-newPrediction.value.addObserver(new UpdateLocalPredictedMatchObserver)
+newPrediction.value.addObserver(new UpdateLocalPredictedMatchObserver())
 
 const updatePredictedMatchUseCase = new UpdatePredictedMatchUseCase()
 newPrediction.value.addObserver(new UpdateRemotePredictedMatchObserver(updatePredictedMatchUseCase))
 
-const predictedMatch = computed(() => usePredictionsStore().findPrediction(match.id) || newPrediction.value)
+const predictedMatch = computed(
+  () => usePredictionsStore().findPrediction(match.id) || newPrediction.value
+)
 
 const homeScore = ref<number>()
 const awayScore = ref<number>()
@@ -38,7 +43,6 @@ const homeGoals = computed({
   set(goals: number) {
     homeScore.value = goals
     predictedMatch.value.setScore(goals, awayGoals.value!)
-
   }
 })
 
@@ -49,15 +53,16 @@ const awayGoals = computed({
   set(goals: number) {
     awayScore.value = goals
     predictedMatch.value.setScore(homeGoals.value!, goals)
-
   }
 })
 
-watch([homeGoals, awayGoals], ([home, away]) => {
-  if (isDefined(home) && isDefined(away)) {
-  }
-}, 
-{ immediate: false }
+watch(
+  [homeGoals, awayGoals],
+  ([home, away]) => {
+    if (isDefined(home) && isDefined(away)) {
+    }
+  },
+  { immediate: false }
 )
 
 function setHomeScore(event: FocusEvent) {
@@ -69,11 +74,13 @@ function setAwayScore(event: FocusEvent) {
   const value = Math.abs(Number((event.target as HTMLInputElement)?.value))
   awayGoals.value = value
 }
-
 </script>
 
 <template>
-  <UCard variant="subtle" class="flex items-center justify-center">
+  <UCard
+    variant="subtle"
+    class="flex items-center justify-center"
+  >
     <div class="flex w-full justify-between pb-2">
       <div class="pb-2 flex justify-between gap-2">
         <span class="text-xs text-slate-400">{{ match.date.formattedDate }}</span>
@@ -84,13 +91,35 @@ function setAwayScore(event: FocusEvent) {
     </div>
     <div class="flex gap-4 items-center justify-center mt-3">
       <UTooltip :text="match.homeTeam.name">
-        <img class="w-7" :src="match.homeTeam.emblem" alt="" />
+        <img
+          class="w-7"
+          :src="match.homeTeam.emblem"
+          alt=""
+        />
       </UTooltip>
-      <UInput size="xl" type="number" :max="9" :min="0" @blur="setHomeScore" :model-value="homeGoals" />
+      <UInput
+        size="xl"
+        type="number"
+        :max="9"
+        :min="0"
+        @blur="setHomeScore"
+        :model-value="homeGoals"
+      />
       X
-      <UInput size="xl" type="number" :max="9" :min="0" @blur="setAwayScore" :model-value="awayGoals" />
+      <UInput
+        size="xl"
+        type="number"
+        :max="9"
+        :min="0"
+        @blur="setAwayScore"
+        :model-value="awayGoals"
+      />
       <UTooltip :text="match.awayTeam.name">
-        <img class="w-7" :src="match.awayTeam.emblem" alt="" />
+        <img
+          class="w-7"
+          :src="match.awayTeam.emblem"
+          alt=""
+        />
       </UTooltip>
     </div>
   </UCard>

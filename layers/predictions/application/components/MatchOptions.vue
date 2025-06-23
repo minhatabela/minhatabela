@@ -32,32 +32,69 @@ function clearPrediction() {
 <template>
   <div>
     <UPopover :mode="popoverMode">
-      <Icon name="mage:dots" class="cursor-pointer" />
+      <Icon
+        name="mage:dots"
+        class="cursor-pointer"
+      />
       <template #content>
         <div class="flex flex-col">
-          <span @click="emit('assingHomeWin')"
-            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer">
-            <img class="h-6 w-6" :src="match.homeTeam.emblem" alt="" />
-            {{ match.homeTeam.name }} vence</span>
-          <span @click="emit('assingAwayWin')"
-            class="px-4 flex gap-2 items-center py-2 hover:dark:bg-slate-700 hover:bg-slate-100 cursor-pointer">
-            <img class="h-6 w-6" :src="match.awayTeam.emblem" alt="" />
-            {{ match.awayTeam.name }} vence</span>
-          <span @click="emit('declareDraw')"
-            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer">
-            <Icon size="1.5rem" name="simple-line-icons:minus" />
+          <span
+            @click="emit('assingHomeWin')"
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+          >
+            <img
+              class="h-6 w-6"
+              :src="match.homeTeam.emblem"
+              alt=""
+            />
+            {{ match.homeTeam.name }} vence</span
+          >
+          <span
+            @click="emit('assingAwayWin')"
+            class="px-4 flex gap-2 items-center py-2 hover:dark:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+          >
+            <img
+              class="h-6 w-6"
+              :src="match.awayTeam.emblem"
+              alt=""
+            />
+            {{ match.awayTeam.name }} vence</span
+          >
+          <span
+            @click="emit('declareDraw')"
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer"
+          >
+            <Icon
+              size="1.5rem"
+              name="simple-line-icons:minus"
+            />
             Empate
           </span>
-          <USeparator v-if="predictedMatch" class="py-1" />
-          <span @click="confirm = true" v-if="!confirm && predictedMatch"
-            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-red-500">
-            <Icon size="1.5rem" name="mynaui:trash" />
+          <USeparator
+            v-if="predictedMatch"
+            class="py-1"
+          />
+          <span
+            @click="confirm = true"
+            v-if="!confirm && predictedMatch"
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-red-500"
+          >
+            <Icon
+              size="1.5rem"
+              name="mynaui:trash"
+            />
 
             Limpar simulação
           </span>
-          <span @click="clearPrediction" v-if="confirm"
-            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-amber-500">
-            <Icon size="1.5rem" name="iconamoon:attention-circle-fill" />
+          <span
+            @click="clearPrediction"
+            v-if="confirm"
+            class="px-4 flex gap-2 items-center py-2 dark:hover:bg-slate-700 hover:bg-slate-100 cursor-pointer text-amber-500"
+          >
+            <Icon
+              size="1.5rem"
+              name="iconamoon:attention-circle-fill"
+            />
 
             Confirmar
           </span>

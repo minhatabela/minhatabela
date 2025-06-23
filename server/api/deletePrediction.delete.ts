@@ -7,10 +7,7 @@ export default defineEventHandler(async event => {
   const predictionId = getRouterParam(event, 'predictionId')
 
   if (user) {
-    let { data } = await client
-      .from('simulacao')
-      .delete()
-      .eq('id', predictionId!)
+    let { data } = await client.from('simulacao').delete().eq('id', predictionId!)
 
     return data
   }

@@ -9,7 +9,7 @@ export const usePredictionsStore = defineStore('predictions', () => {
   }
 
   function updatePredictedMatch(match: PredictedMatch) {
-    if(hasMatchPredicted(match.id)) {
+    if (hasMatchPredicted(match.id)) {
       const prediction = findPrediction(match.id)
       prediction!.awayGoals = match.awayGoals
       prediction!.homeGoals = match.homeGoals

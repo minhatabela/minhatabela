@@ -6,6 +6,5 @@ export class UpdateLocalPredictedMatchObserver implements IPredictedMatchObserve
   execute(match: PredictedMatch): void {
     usePredictionsStore().updatePredictedMatch(match)
     console.log('local match update executed')
-
   }
 }

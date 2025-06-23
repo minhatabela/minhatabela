@@ -35,7 +35,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
     this.awayGoals = awayGoals
     this.homeGoals = homeGols
 
-    if(isDefined(this.homeGoals) && isDefined(this.awayGoals)) {
+    if (isDefined(this.homeGoals) && isDefined(this.awayGoals)) {
       this.observers.forEach(observer => observer.execute(this))
     }
   }

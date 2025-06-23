@@ -2,7 +2,6 @@ const toast = useToast()
 const supabase = useSupabaseClient()
 
 export const useAuth = () => {
-
   async function login() {
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' })
     if (error) {

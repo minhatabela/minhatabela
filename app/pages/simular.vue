@@ -24,10 +24,14 @@ watch(predictionsStatus, value => {
   }
 })
 
-const { data: matches, status: matchesStatus } = useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
-  transform: response => response?.map(match => new MatchMap().mapTo(match)),
-  default: () => [] as Match[]
-})
+const { data: matches, status: matchesStatus } = useAsyncData(
+  'standings/matches',
+  () => $fetch('/api/partidas'),
+  {
+    transform: response => response?.map(match => new MatchMap().mapTo(match)),
+    default: () => [] as Match[]
+  }
+)
 
 watch(matchesStatus, value => {
   if (value === 'success') {

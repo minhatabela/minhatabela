@@ -32,7 +32,7 @@ export class PredictionMap implements IMapper<any, PredictedMatch> {
       vanue,
       gols_mandante,
       gols_visitante,
-      predictionId,
+      predictionId
     )
 
     const updatePredictedMatchUseCase = new UpdatePredictedMatchUseCase()

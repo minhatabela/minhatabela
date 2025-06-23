@@ -1,25 +1,26 @@
 <script setup lang="ts">
-onMounted(() => {
-  execute()
-})
+import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store'
 
-const { jogosRodada, rodada_navegavel, syncing, execute } = useSimulador()
+const round = computed(() => useMatchesStore().currentRound)
+
+const roundMatches = computed(() => useMatchesStore().getRoundMatches())
+
 </script>
 
 <template>
   <div class="flex w-full flex-col gap-4">
     <div class="flex justify-between items-center">
-      <Syncing :syncing="syncing" />
+      <!-- <Syncing :syncing="syncing" /> -->
     </div>
-    <RoundPagination v-model="rodada_navegavel" />
+    <RoundPagination v-model="round" />
     <div
-      v-if="jogosRodada.length"
+      v-if="roundMatches.length"
       class="grid grid-cols-2 gap-4 sm:grid-cols-1"
     >
-      <MatchCard
-        v-for="partida in jogosRodada"
-        :key="partida.id"
-        :match="partida"
+      <MatchCardFactory
+        v-for="match in roundMatches"
+        :key="match.id"
+        :match="match"
       />
     </div>
     <div

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
+import type { Match } from '~~/layers/shared/entities/Match'
+import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store'
+import { MatchMap } from '~~/layers/standings/infra/mappers/Match.map'
 import { PredictionMap } from '~~/layers/standings/infra/mappers/Prediction.map'
 
 useHead({
   title: 'Simulando'
 })
 
-const { data: predictions, status } = useAsyncData(
+const { data: predictions, status: predictionsStatus } = useAsyncData(
   'standings/predictions',
   () => $fetch('/api/predictions'),
   {
@@ -15,9 +18,20 @@ const { data: predictions, status } = useAsyncData(
   }
 )
 
-watch(status, value => {
+watch(predictionsStatus, value => {
   if (value === 'success') {
     usePredictionsStore().setPredictions(predictions.value!)
+  }
+})
+
+const { data: matches, status: matchesStatus } = useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
+  transform: response => response?.map(match => new MatchMap().mapTo(match)),
+  default: () => [] as Match[]
+})
+
+watch(matchesStatus, value => {
+  if (value === 'success') {
+    useMatchesStore().setMatches(matches.value!)
   }
 })
 </script>

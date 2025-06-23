@@ -1,7 +1,7 @@
 import { PredictedMatch } from '~~/layers/predictions/domain/entities/PredictedMatch'
 import { UpdateLocalPredictedMatchObserver } from '~~/layers/predictions/domain/observers/UpdateLocalPredictedMatch.observer'
 import { UpdateRemotePredictedMatchObserver } from '~~/layers/predictions/domain/observers/UpdateRemotePredictedMatch.observer'
-import { UpdatePredictedMatchUseCase } from '~~/layers/predictions/usecases/UpdatePredictedMatchUseCase'
+import { UpdatePredictedMatchUseCase } from '~~/layers/predictions/application/usecases/UpdatePredictedMatchUseCase'
 import { Team } from '~~/layers/shared/entities/Team'
 import { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IMapper } from '~~/layers/shared/ports/IMapper.interface'
@@ -12,7 +12,6 @@ import { Round } from '~~/layers/shared/values/Round'
 
 export class PredictionMap implements IMapper<any, PredictedMatch> {
   mapTo(data: any): PredictedMatch {
-    console.log(data)
     const { id: predictionId, partida, gols_mandante, gols_visitante } = data
 
     const { id, mandante, visitante, rodada, numero, data: date, hora, sede } = partida
@@ -23,7 +22,6 @@ export class PredictionMap implements IMapper<any, PredictedMatch> {
     const vanue = sede ? new Vanue(sede.id, sede.nome_popular) : undefined
 
     const predictedMatch = new PredictedMatch(
-      predictionId,
       id,
       new Round(rodada),
       new MatchNumber(numero),
@@ -33,7 +31,8 @@ export class PredictionMap implements IMapper<any, PredictedMatch> {
       new Team(awayTeamId, awayTeamName, awayTeamEmblem),
       vanue,
       gols_mandante,
-      gols_visitante
+      gols_visitante,
+      predictionId,
     )
 
     const updatePredictedMatchUseCase = new UpdatePredictedMatchUseCase()

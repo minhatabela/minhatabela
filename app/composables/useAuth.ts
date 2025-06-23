@@ -2,7 +2,6 @@ const toast = useToast()
 const supabase = useSupabaseClient()
 
 export const useAuth = () => {
-  const { simulacao } = useSimulador()
 
   async function login() {
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' })
@@ -15,8 +14,6 @@ export const useAuth = () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
       toast.add({ title: 'Erro ao tentar sair', color: 'error' })
-    } else {
-      simulacao.value.clear()
     }
   }
 

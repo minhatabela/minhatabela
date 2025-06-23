@@ -5,5 +5,7 @@ import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.in
 export class UpdateLocalPredictedMatchObserver implements IPredictedMatchObserver {
   execute(match: PredictedMatch): void {
     usePredictionsStore().updatePredictedMatch(match)
+    console.log('local match update executed')
+
   }
 }

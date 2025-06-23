@@ -1,16 +1,25 @@
 import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server'
-import { PredictedMatch } from '~~/layers/predictions/domain/entities/PredictedMatch'
 
 export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const user = await serverSupabaseUser(event)
-  const { predictedMatchId, homeGoals, awayGoals } = (await readBody(event)) as PredictedMatch
+  const { match } = (await readBody(event))
+
+  const record = {
+    id: match.predictedMatchId || crypto.randomUUID(),
+    user_id: user?.id,
+    partida: match.id,
+    gols_mandante: match.homeGoals,
+    gols_visitante: match.awayGoals,
+  }
+
+  console.log(record)
+  // console.log(prediction.toString())
 
   if (user) {
     let { data } = await client
       .from('simulacao')
-      .update({ gols_mandante: homeGoals, gols_visitante: awayGoals })
-      .eq('id', predictedMatchId)
+      .upsert([record])
 
     return data
   }

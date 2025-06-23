@@ -21,8 +21,6 @@ export class Standings extends Validatable<Match[]> implements IStandings {
       ['desc', 'desc', 'desc', 'desc']
     )
 
-    console.log('ordered Standings :', orderedStandings)
-
     return orderedStandings
   }
 }

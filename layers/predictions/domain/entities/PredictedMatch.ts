@@ -12,19 +12,19 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
   private readonly observers: IPredictedMatchObserver[] = []
 
   constructor(
-    readonly predictedMatchId: string,
-    private readonly _id: string,
-    private readonly _round: Round,
-    private readonly _number: MatchNumber,
-    private readonly _date: MatchDate,
-    private readonly _time: MatchTime,
-    private readonly _homeTeam: Team,
-    private readonly _awayTeam: Team,
-    private readonly _vanue?: Vanue,
-    private _homeGoals?: number,
-    private _awayGoals?: number
+    override readonly id: string,
+    override readonly round: Round,
+    override readonly number: MatchNumber,
+    override readonly date: MatchDate,
+    override readonly time: MatchTime,
+    override readonly homeTeam: Team,
+    override readonly awayTeam: Team,
+    override readonly vanue?: Vanue,
+    override homeGoals?: number,
+    override awayGoals?: number,
+    readonly predictedMatchId?: string
   ) {
-    super(_id, _round, _number, _date, _time, _homeTeam, _awayTeam, _vanue, _homeGoals, _awayGoals)
+    super(id, round, number, date, time, homeTeam, awayTeam, vanue, homeGoals, awayGoals)
   }
 
   addObserver(observer: IPredictedMatchObserver): void {
@@ -32,9 +32,11 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
   }
 
   setScore(homeGols: number, awayGoals: number) {
-    this._awayGoals = awayGoals
-    this._homeGoals = homeGols
+    this.awayGoals = awayGoals
+    this.homeGoals = homeGols
 
-    this.observers.forEach(observer => observer.execute(this))
+    if(isDefined(this.homeGoals) && isDefined(this.awayGoals)) {
+      this.observers.forEach(observer => observer.execute(this))
+    }
   }
 }

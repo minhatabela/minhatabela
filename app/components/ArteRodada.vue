@@ -6,9 +6,8 @@
     <div class="flex flex-col items-center gap-2">
       <h1 class="text-7xl font-black">minhatabela</h1>
       <h2 class="text-5xl font-bold">Brasileirão 2025</h2>
-      <h3 class="text-3xl font-semibold">Rodada {{ rodada }}</h3>
+      <h3 class="text-3xl font-semibold">Rodada {{ round }}</h3>
     </div>
-    <!-- <div class="flex flex-wrap gap-16 justify-center"> -->
     <div
       class="grid grid-cols-2 gap-16"
       :class="{ '!grid-cols-1': partidasRodada.length === 1 }"
@@ -20,16 +19,16 @@
       >
         <img
           class="h-20 w-20"
-          :src="partida.mandante.escudo"
+          :src="partida.homeTeam.emblem"
           alt=""
         />
         <p class="font-black text-7xl">
-          {{ simulacao.get(partida.id)?.gols_mandante }} x
-          {{ simulacao.get(partida.id)?.gols_visitante }}
+          {{ getPrediction(partida.id)?.homeGoals }} x
+          {{ getPrediction(partida.id)?.awayGoals }}
         </p>
         <img
           class="h-20 w-20"
-          :src="partida.visitante.escudo"
+          :src="partida.awayTeam.emblem"
           alt=""
         />
       </div>
@@ -41,19 +40,21 @@
 </template>
 
 <script lang="ts" setup>
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store';
+import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store';
+
 const arte = ref()
 defineExpose(arte)
-const props = defineProps({ rodada: { type: Number, required: true } })
+const { round } = defineProps<{
+  round: number
+}>()
 
-const { partidas } = useApi()
 
-const { simulacao } = useSimulador()
+const partidasRodada = computed(() => useMatchesStore().getRoundMatches())
 
-const partidasRodada = computed(() => {
-  return partidas.value
-    ?.filter(partida => partida.rodada === props.rodada)
-    .filter(partida => simulacao.value.has(partida.id))
-})
+function getPrediction(matchId: string) {
+  return usePredictionsStore().findPrediction(matchId)
+}
 </script>
 
 <style></style>

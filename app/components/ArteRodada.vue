@@ -21,7 +21,7 @@
           class="h-20 w-20"
           :src="partida.homeTeam.emblem"
           alt=""
-        >
+        />
         <p class="font-black text-7xl">
           {{ getPrediction(partida.id)?.homeGoals }} x
           {{ getPrediction(partida.id)?.awayGoals }}
@@ -30,7 +30,7 @@
           class="h-20 w-20"
           :src="partida.awayTeam.emblem"
           alt=""
-        >
+        />
       </div>
     </div>
     <div class="p-2 w-full text-center text-xl">

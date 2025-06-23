@@ -27,7 +27,11 @@ export default defineEventHandler(async event => {
       }
     )
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: 'Erro ao buscar dados da CBF', message: error as string })
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Erro ao buscar dados da CBF',
+      message: error as string
+    })
   }
 
   const minhatabela = Object.fromEntries(

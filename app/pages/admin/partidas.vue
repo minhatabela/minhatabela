@@ -1,106 +1,106 @@
 <template>
   <div>
-  <UTabs
-    v-model="view"
-    :content="false"
-    :items="items"
-    class="w-full mb-4"
-  />
-  <UCard
-    v-if="view === MatchesView.STORED"
-    variant="subtle"
-  >
-    <UTable
-      :loading="status !== 'success'"
-      :data="data?.partidas"
-      :columns="colunas"
+    <UTabs
+      v-model="view"
+      :content="false"
+      :items="items"
+      class="w-full mb-4"
+    />
+    <UCard
+      v-if="view === MatchesView.STORED"
+      variant="subtle"
     >
-      <template #mandante_nome_popular-cell="{ getValue, row }">
-        <TeamBadge
-          :name="getValue()"
-          :emblem="row.original.mandante.escudo"
-        />
-      </template>
-      <template #visitante_nome_popular-cell="{ getValue, row }">
-        <div class="flex justify-end">
+      <UTable
+        :loading="status !== 'success'"
+        :data="data?.partidas"
+        :columns="colunas"
+      >
+        <template #mandante_nome_popular-cell="{ getValue, row }">
           <TeamBadge
             :name="getValue()"
-            :emblem="row.original.visitante.escudo"
+            :emblem="row.original.mandante.escudo"
           />
-        </div>
-      </template>
-      <template #status-cell="{ getValue }">
-        <UBadge
-          class="rounded-full"
-          variant="subtle"
-          :icon="statusPartida[getValue()].icon"
-          :color="statusPartida[getValue()].color"
-          size="lg"
-          >{{ statusPartida[getValue()].label }}</UBadge
-        >
-      </template>
-      <template #inconsistencias-cell="{ getValue, row }">
-        <UButton
-          class="rounded-full"
-          variant="ghost"
-          :icon="
-            Object.values(getValue()).length ? 'i-lucide-circle-alert' : 'i-lucide-check-circle'
-          "
-          :class="Object.values(getValue()).length ? 'text-yellow-700' : 'text-green-700'"
-          @click="setPickedPartida(row.original)"
-        />
-      </template>
-      <template #data-cell="{ getValue, row }">
-        {{
-          format(new Date(getValue().split('-')), 'd MMM', { locale: ptBR }) +
-          ' ' +
-          row.original.hora.substring(0, 5)
-        }}
-      </template>
-      <template #actions-cell="{ row }">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          :icon="'i-lucide-pencil'"
-          @click="setPickedPartida(row.original)"
-        />
-      </template>
-    </UTable>
-  </UCard>
-  <UCard v-else>
-    <UTable
-      :loading="status !== 'success'"
-      :data="data?.partidasParaCriar"
-      :columns="colunasNovasPartidas"
-    >
-      <template #mandante_nome_popular-cell="{ getValue, row }">
-        <TeamBadge
-          :name="getValue()"
-          :emblem="row.original.mandante.escudo"
-        />
-      </template>
-      <template #visitante_nome_popular-cell="{ getValue, row }">
-        <TeamBadge
-          :name="getValue()"
-          :emblem="row.original.visitante.escudo!"
-        />
-      </template>
-      <template #actions-cell="{ row }">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          :loading="loadingCreate.has(row.original.numero)"
-          :icon="'i-lucide-plus'"
-          @click="storeMatch(row.original)"
-        />
-      </template>
-    </UTable>
-  </UCard>
-  <FormEditarPartida
-    v-model:opened="opened"
-    :partida="pickedPartida"
-    @refresh="refresh"
-  />
+        </template>
+        <template #visitante_nome_popular-cell="{ getValue, row }">
+          <div class="flex justify-end">
+            <TeamBadge
+              :name="getValue()"
+              :emblem="row.original.visitante.escudo"
+            />
+          </div>
+        </template>
+        <template #status-cell="{ getValue }">
+          <UBadge
+            class="rounded-full"
+            variant="subtle"
+            :icon="statusPartida[getValue()].icon"
+            :color="statusPartida[getValue()].color"
+            size="lg"
+            >{{ statusPartida[getValue()].label }}</UBadge
+          >
+        </template>
+        <template #inconsistencias-cell="{ getValue, row }">
+          <UButton
+            class="rounded-full"
+            variant="ghost"
+            :icon="
+              Object.values(getValue()).length ? 'i-lucide-circle-alert' : 'i-lucide-check-circle'
+            "
+            :class="Object.values(getValue()).length ? 'text-yellow-700' : 'text-green-700'"
+            @click="setPickedPartida(row.original)"
+          />
+        </template>
+        <template #data-cell="{ getValue, row }">
+          {{
+            format(new Date(getValue().split('-')), 'd MMM', { locale: ptBR }) +
+            ' ' +
+            row.original.hora.substring(0, 5)
+          }}
+        </template>
+        <template #actions-cell="{ row }">
+          <UButton
+            color="neutral"
+            variant="ghost"
+            :icon="'i-lucide-pencil'"
+            @click="setPickedPartida(row.original)"
+          />
+        </template>
+      </UTable>
+    </UCard>
+    <UCard v-else>
+      <UTable
+        :loading="status !== 'success'"
+        :data="data?.partidasParaCriar"
+        :columns="colunasNovasPartidas"
+      >
+        <template #mandante_nome_popular-cell="{ getValue, row }">
+          <TeamBadge
+            :name="getValue()"
+            :emblem="row.original.mandante.escudo"
+          />
+        </template>
+        <template #visitante_nome_popular-cell="{ getValue, row }">
+          <TeamBadge
+            :name="getValue()"
+            :emblem="row.original.visitante.escudo!"
+          />
+        </template>
+        <template #actions-cell="{ row }">
+          <UButton
+            color="neutral"
+            variant="ghost"
+            :loading="loadingCreate.has(row.original.numero)"
+            :icon="'i-lucide-plus'"
+            @click="storeMatch(row.original)"
+          />
+        </template>
+      </UTable>
+    </UCard>
+    <FormEditarPartida
+      v-model:opened="opened"
+      :partida="pickedPartida"
+      @refresh="refresh"
+    />
   </div>
 </template>
 

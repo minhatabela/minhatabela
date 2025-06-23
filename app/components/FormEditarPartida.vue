@@ -160,10 +160,7 @@ function acceptOficialDateTime() {
   partidaAuxiliar.value!.hora = props.partida.inconsistencias.hora
 }
 
-const {
-  execute: acceptChanges,
-  status: statusChanges
-} = useAsyncData(
+const { execute: acceptChanges, status: statusChanges } = useAsyncData(
   'changes',
   async () =>
     await useSupabaseClient()
@@ -243,7 +240,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.mandante.escudo!"
                 size="lg"
-              >
+              />
               {{ partida.mandante.nome_popular }}
             </div>
             <UIcon
@@ -256,7 +253,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.visitante.escudo!"
                 size="lg"
-              >
+              />
             </div>
           </div>
         </div>

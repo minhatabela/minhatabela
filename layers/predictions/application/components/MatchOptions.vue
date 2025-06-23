@@ -7,7 +7,9 @@ const { match } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'assingAwayWin' | 'assingAwayWin' | 'assingHomeWin' | 'declareDraw' | 'clearPrediction'): void
+  (
+    event: 'assingAwayWin' | 'assingAwayWin' | 'assingHomeWin' | 'declareDraw' | 'clearPrediction'
+  ): void
 }>()
 
 const confirm = ref(false)
@@ -43,7 +45,7 @@ function clearPrediction() {
               class="h-6 w-6"
               :src="match.homeTeam.emblem"
               alt=""
-            >
+            />
             {{ match.homeTeam.name }} vence</span
           >
           <span
@@ -54,7 +56,7 @@ function clearPrediction() {
               class="h-6 w-6"
               :src="match.awayTeam.emblem"
               alt=""
-            >
+            />
             {{ match.awayTeam.name }} vence</span
           >
           <span

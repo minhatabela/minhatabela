@@ -8,7 +8,7 @@
         <img
           class="h-10 w-10"
           :src="LogoCookie"
-        >
+        />
       </div>
       <div>
         <p class="text-xl font-black">O minhatabela usa cookies</p>

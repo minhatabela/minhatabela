@@ -18,7 +18,7 @@ export default defineNuxtConfig({
       enabled: true
     }
   },
-  css: ['../public/main.css'],
+  css: ['~/assets/css/main.css'],
   modules: [
     '@nuxt/ui',
     'nuxt-lodash',

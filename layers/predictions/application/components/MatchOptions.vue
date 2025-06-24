@@ -45,7 +45,7 @@ function clearPrediction() {
               class="h-6 w-6"
               :src="match.homeTeam.emblem"
               alt=""
-            >
+            />
             {{ match.homeTeam.name }} vence</span
           >
           <span
@@ -56,7 +56,7 @@ function clearPrediction() {
               class="h-6 w-6"
               :src="match.awayTeam.emblem"
               alt=""
-            >
+            />
             {{ match.awayTeam.name }} vence</span
           >
           <span

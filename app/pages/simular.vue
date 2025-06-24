@@ -48,7 +48,7 @@ watch(matchesStatus, value => {
 </template>
 
 <style>
-@reference "../../public/main.css";
+@reference "~/assets/css/main.css";
 
 html,
 body {

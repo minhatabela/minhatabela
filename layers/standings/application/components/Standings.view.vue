@@ -6,6 +6,7 @@ import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches
 import { TeamMap } from '../../infra/mappers/Team.map'
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 import { useMatchesStore } from '../stores/Matches.store'
+import type { Match } from '~~/layers/shared/entities/Match'
 
 const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
 
@@ -26,7 +27,7 @@ const predictions = computed(() => usePredictionsStore().getPredictions())
 const matches = computed(() => useMatchesStore().matches)
 
 const standingsMatches = computed(() =>
-  StandingsMatchesFactory.make(tableView.value, matches.value!, predictions.value!)
+  StandingsMatchesFactory.make(tableView.value, matches.value as Match[], predictions.value!)
 )
 
 const standings = computed(() =>

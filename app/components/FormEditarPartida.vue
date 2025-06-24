@@ -239,7 +239,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.mandante.escudo!"
                 size="lg"
-              >
+              />
               {{ partida.mandante.nome_popular }}
             </div>
             <UIcon
@@ -252,7 +252,7 @@ onUnmounted(() => {
                 class="h-10"
                 :src="partida.visitante.escudo!"
                 size="lg"
-              >
+              />
             </div>
           </div>
         </div>

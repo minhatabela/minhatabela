@@ -26,7 +26,7 @@ function previousRound() {
     />
     <div
       v-if="roundMatches.length"
-      class="grid grid-cols-2 gap-4 sm:grid-cols-1"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2"
     >
       <MatchCardFactory
         v-for="match in roundMatches"

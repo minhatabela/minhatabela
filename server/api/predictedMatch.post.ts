@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
   const { match } = await readBody(event)
 
   const record = {
-    id: match.predictedMatchId || crypto.randomUUID(),
+    id: match.predictedMatchId,
     user_id: user?.id,
     partida: match.id,
     gols_mandante: match.homeGoals,

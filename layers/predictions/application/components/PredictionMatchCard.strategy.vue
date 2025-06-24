@@ -20,7 +20,10 @@ const newPrediction = computed(
       match.time,
       match.homeTeam,
       match.awayTeam,
-      match.vanue
+      match.vanue,
+      undefined,
+      undefined,
+      crypto.randomUUID()
     )
 )
 

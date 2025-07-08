@@ -98,10 +98,10 @@ function assingHomeWin() {
         <span class="text-xs text-slate-400">{{ match.vanue?.getValue }}</span>
       </div>
       <MatchOptions
+        :match="match"
         @declare-draw="declareDraw"
         @assing-away-win="assingAwayWin"
         @assing-home-win="assingHomeWin"
-        :match="match"
       />
     </div>
     <div class="flex gap-4 items-center justify-center mt-3">

@@ -29,8 +29,12 @@ const newPrediction = computed(
 
 newPrediction.value.addObserver(new UpdateLocalPredictedMatchObserver())
 
-const updatePredictedMatchUseCase = new UpdatePredictedMatchUseCase()
-newPrediction.value.addObserver(new UpdateRemotePredictedMatchObserver(updatePredictedMatchUseCase))
+if (useSupabaseUser().value) {
+  const updatePredictedMatchUseCase = new UpdatePredictedMatchUseCase()
+  newPrediction.value.addObserver(
+    new UpdateRemotePredictedMatchObserver(updatePredictedMatchUseCase)
+  )
+}
 
 const predictedMatch = computed(
   () => usePredictionsStore().findPrediction(match.id) || newPrediction.value
@@ -68,6 +72,18 @@ function setAwayScore(event: FocusEvent) {
   const value = Math.abs(Number((event.target as HTMLInputElement)?.value))
   awayGoals.value = value
 }
+
+function declareDraw() {
+  predictedMatch.value.setScore(0, 0)
+}
+
+function assingAwayWin() {
+  predictedMatch.value.setScore(0, 1)
+}
+
+function assingHomeWin() {
+  predictedMatch.value.setScore(1, 0)
+}
 </script>
 
 <template>
@@ -81,7 +97,12 @@ function setAwayScore(event: FocusEvent) {
         <span class="text-xs text-slate-400">{{ match.time.formattedValue }}</span>
         <span class="text-xs text-slate-400">{{ match.vanue?.getValue }}</span>
       </div>
-      <MatchOptions :match="match" />
+      <MatchOptions
+        @declare-draw="declareDraw"
+        @assing-away-win="assingAwayWin"
+        @assing-home-win="assingHomeWin"
+        :match="match"
+      />
     </div>
     <div class="flex gap-4 items-center justify-center mt-3">
       <UTooltip :text="match.homeTeam.name">

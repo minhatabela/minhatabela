@@ -13,14 +13,13 @@ export const usePredictionsStore = defineStore('predictions', () => {
       const prediction = findPrediction(match.id)
       prediction!.awayGoals = match.awayGoals
       prediction!.homeGoals = match.homeGoals
-      console.log('ja tem', prediction)
     } else {
       setPrediction(match)
-      console.log('ja criado', match)
     }
   }
 
   function getPredictions(): PredictedMatch[] {
+    console.log(predictions.value)
     return predictions.value ? Array.from(predictions.value.values()) : []
   }
 
@@ -29,11 +28,15 @@ export const usePredictionsStore = defineStore('predictions', () => {
   }
 
   function hasMatchPredicted(matchId: string): boolean {
-    return predictions.value!.has(matchId)
+    return predictions.value?.has(matchId) || false
   }
 
   function setPrediction(prediction: PredictedMatch) {
-    predictions.value!.set(prediction.id, prediction)
+    if (predictions.value) {
+      predictions.value.set(prediction.id, prediction)
+    } else {
+      predictions.value = new Map().set(prediction.id, prediction)
+    }
   }
 
   return {

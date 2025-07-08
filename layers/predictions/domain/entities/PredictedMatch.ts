@@ -9,7 +9,7 @@ import type { Round } from '~~/layers/shared/values/Round'
 import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.interface'
 
 export class PredictedMatch extends Match implements IObservable<IPredictedMatchObserver> {
-  private readonly observers: IPredictedMatchObserver[] = []
+  private readonly observers?: IPredictedMatchObserver[] = []
 
   constructor(
     override readonly id: string,
@@ -28,7 +28,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
   }
 
   addObserver(observer: IPredictedMatchObserver): void {
-    this.observers.push(observer)
+    this.observers!.push(observer)
   }
 
   setScore(homeGols: number, awayGoals: number) {
@@ -36,7 +36,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
     this.homeGoals = homeGols
 
     if (isDefined(this.homeGoals) && isDefined(this.awayGoals)) {
-      this.observers.forEach(observer => observer.execute(this))
+      this.observers!.forEach(observer => observer.execute(this))
     }
   }
 }

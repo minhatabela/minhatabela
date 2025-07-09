@@ -16,9 +16,6 @@ function previousRound() {
 
 <template>
   <div class="flex w-full flex-col gap-4">
-    <div class="flex justify-between items-center">
-      <!-- <Syncing :syncing="syncing" /> -->
-    </div>
     <RoundPagination
       :round="round!"
       @previous="previousRound"

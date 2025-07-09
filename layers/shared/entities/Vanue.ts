@@ -1,6 +1,10 @@
 export class Vanue {
   constructor(
-    private id: string,
-    private name: string
+    readonly id: string,
+    readonly name: string
   ) {}
+
+  get getValue() {
+    return this.name ? this.name : 'A definir'
+  }
 }

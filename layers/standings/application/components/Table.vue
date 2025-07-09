@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type TableColumn } from '#ui/types'
+import type { TableColumn } from '#ui/types'
 import type { StandingPositon } from '../../domain/dtos/StandingPosition.dto'
 import { Position } from '../../domain/values/Position'
 import PositionBadge from './PositionBadge.vue'

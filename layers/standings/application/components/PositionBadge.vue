@@ -13,7 +13,8 @@ const standingsPositionColor = computed(() => {
 <template>
   <UBadge
     :color="standingsPositionColor"
-    class="rounded-full w-6 h-6 p-0 font-bold justify-center"
+    class="rounded-full p-0 font-bold justify-center"
+    style="height: 24px; width: 24px"
   >
     {{ position._value }}
   </UBadge>

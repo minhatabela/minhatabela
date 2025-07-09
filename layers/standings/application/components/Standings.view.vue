@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { Match } from '~~/layers/shared/entities/Match'
 import { Standings } from '../../domain/entities/Standings'
 import { TableViewEnum } from '../../domain/enums/TableView.enum'
 import { StandignsHeaderFactory } from '../../domain/factories/StandingsHeader.factory'
 import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches.factory'
-import { MatchMap } from '../../infra/mappers/Match.map'
-import { PredictionMap } from '../../infra/mappers/Prediction.map'
 import { TeamMap } from '../../infra/mappers/Team.map'
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
+import { useMatchesStore } from '../stores/Matches.store'
+import type { Match } from '~~/layers/shared/entities/Match'
 
 const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
 
@@ -18,26 +18,16 @@ const tableViewOptions = [
 
 const [sensitive, toggle] = useToggle()
 
-const { data: matches } = useAsyncData('standings/matches', () => $fetch('/api/partidas'), {
-  transform: response => response?.map(match => new MatchMap().mapTo(match)),
-  default: () => [] as Match[]
-})
-
 const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
   transform: response => response?.map(team => new TeamMap().mapTo(team))
 })
 
-const { data: predictions } = useAsyncData(
-  'standings/predictions',
-  () => $fetch('/api/predictions'),
-  {
-    transform: response => response?.map(prediction => new PredictionMap().mapTo(prediction)),
-    default: () => []
-  }
-)
+const predictions = computed(() => usePredictionsStore().getPredictions())
+
+const matches = computed(() => useMatchesStore().matches)
 
 const standingsMatches = computed(() =>
-  StandingsMatchesFactory.make(tableView.value, matches.value!, predictions.value!)
+  StandingsMatchesFactory.make(tableView.value, matches.value as Match[], predictions.value!)
 )
 
 const standings = computed(() =>
@@ -53,8 +43,8 @@ const columns = StandignsHeaderFactory.make()
   <div class="w-full">
     <div class="flex justify-between items-center mb-4">
       <USelect
-        :items="tableViewOptions"
         v-model="tableView"
+        :items="tableViewOptions"
       />
       <UButton
         size="xs"

@@ -1,7 +1,7 @@
 import { ClubeStats } from '~/utils/clubeStats'
-import { type IClube } from '../../types/clube'
-import { type IClubeStats } from '../../types/clubeStats.d'
-import { type Partida } from '../../types/partida'
+import type { IClube } from '../../types/clube'
+import type { IClubeStats } from '../../types/clubeStats.d'
+import type { Partida } from '../../types/partida'
 
 interface ICampeonato {
   partidasOficiais: Partida[]

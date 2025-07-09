@@ -1,7 +1,7 @@
 import { serverSupabaseClient } from '#supabase/server'
 import orderBy from 'lodash/orderBy'
-import diff, { DifferenceChange } from 'microdiff'
-import { PartidaCriar } from '~/types/partida'
+import diff, { type DifferenceChange } from 'microdiff'
+import type { PartidaCriar } from '~/types/partida'
 import { diffToObject, mapPartidaCBF, mapPartidaMT } from '../../utils/mapper'
 
 export default defineEventHandler(async event => {
@@ -28,7 +28,11 @@ export default defineEventHandler(async event => {
       }
     )
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: 'Erro ao buscar dados da CBF' })
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Erro ao buscar dados da CBF',
+      message: error as string
+    })
   }
 
   const cbf = orderBy(response['jogos'], o => Number(o.num_jogo)).map(mapPartidaCBF)

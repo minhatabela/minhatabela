@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen flex flex-col items-center">
     <nav
-      class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm"
+      class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-xs"
     >
       <div class="max-w-7xl w-full justify-between items-center flex">
         <h1
@@ -97,10 +97,10 @@
 </template>
 
 <script lang="ts" setup>
+import * as pkg from '../package.json'
 const consent = useCookie<boolean>('consent')
 
 definePageMeta({ layout: false })
-import * as pkg from '../package.json'
 
 useSeoMeta({
   title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',

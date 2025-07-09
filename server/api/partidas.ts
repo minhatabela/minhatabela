@@ -4,7 +4,7 @@ export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const rodada = getRouterParam(event, 'rodada')
 
-  let { data } = await client
+  const { data } = await client
     .from('partida')
     .select('*, visitante(*), mandante(*), sede(*)')
     .match(rodada ? { rodada } : {})

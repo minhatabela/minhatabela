@@ -3,7 +3,7 @@ import type { Match } from '~~/layers/shared/entities/Match'
 export class OfficialPredictedMatchesStrategy {
   constructor(
     private readonly officialMatches: Match[],
-    private readonly predictedMatches: Match[]
+    private readonly predictedMatches: Match[] = []
   ) {}
 
   private getFinishedOfficialMatches(): Match[] {

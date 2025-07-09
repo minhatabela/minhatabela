@@ -18,7 +18,7 @@ export default defineNuxtConfig({
       enabled: true
     }
   },
-  css: ['../public/main.css'],
+  css: ['~/assets/css/main.css'],
   modules: [
     '@nuxt/ui',
     'nuxt-lodash',
@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'nuxt-og-image',
     '@nuxt/test-utils/module',
-    '@nuxt/eslint'
+    '@nuxt/eslint',
+    '@pinia/nuxt'
   ],
   supabase: {
     redirect: false

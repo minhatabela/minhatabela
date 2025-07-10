@@ -5,6 +5,7 @@ import { PredictedMatch } from '../../domain/entities/PredictedMatch'
 import { UpdateLocalPredictedMatchObserver } from '../../domain/observers/UpdateLocalPredictedMatch.observer'
 import { UpdatePredictedMatchUseCase } from '../usecases/UpdatePredictedMatchUseCase'
 import { UpdateRemotePredictedMatchObserver } from '../../domain/observers/UpdateRemotePredictedMatch.observer'
+import { DeletePredictedMatchUseCase } from '../usecases/DeletePredictedMatchUseCase'
 
 const { match } = defineProps<{
   match: Match
@@ -84,6 +85,14 @@ function assingAwayWin() {
 function assingHomeWin() {
   predictedMatch.value.setScore(1, 0)
 }
+
+function deletePredictedMatch() {
+  usePredictionsStore().syncing = true
+  new DeletePredictedMatchUseCase().execute(predictedMatch.value.predictedMatchId!).then(() => {
+    usePredictionsStore().deletePrediction(predictedMatch.value.id!)
+    usePredictionsStore().syncing = false
+  })
+}
 </script>
 
 <template>
@@ -102,6 +111,7 @@ function assingHomeWin() {
         @declare-draw="declareDraw"
         @assing-away-win="assingAwayWin"
         @assing-home-win="assingHomeWin"
+        @clear-prediction="deletePredictedMatch"
       />
     </div>
     <div class="flex gap-4 items-center justify-center mt-3">

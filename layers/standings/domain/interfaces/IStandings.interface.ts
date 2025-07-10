@@ -1,5 +1,5 @@
-import type { TableHeader } from '../dtos/TableHeader.dto'
+import type { StandingPositon } from '../dtos/StandingPosition.dto'
 
 export interface IStandings {
-  getStandings(): TableHeader[]
+  getStandings(): StandingPositon[]
 }

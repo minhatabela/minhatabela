@@ -3,10 +3,11 @@ import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server'
 export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const user = await serverSupabaseUser(event)
-  const predictionId = getRouterParam(event, 'predictionId')
+  const { id } = await readBody(event)
 
-  if (user) {
-    const { data } = await client.from('simulacao').delete().eq('id', predictionId!)
+  if (user && id) {
+    console.log(id)
+    const { data } = await client.from('simulacao').delete().eq('id', id)
 
     return data
   }

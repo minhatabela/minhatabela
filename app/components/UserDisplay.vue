@@ -1,15 +1,20 @@
 <template>
   <UPopover
-    mode="hover"
+    mode="click"
     :popper="{ offsetDistance: 0 }"
+    v-model:open="open"
   >
     <div class="flex items-center gap-3 min-w-max">
-      <UAvatar
-        :class="{ 'animate-spin': usePredictionsStore().syncing }"
-        :src="user?.user_metadata.avatar_url"
-        alt="Avatar"
-      />
-      <span class="hidden lg:inline-block">{{ user?.user_metadata.name }}</span>
+      <UBadge
+        class="rounded-full p-2 cursor-pointer"
+        color="neutral"
+        variant="outline"
+        :avatar="{ src: user?.user_metadata.avatar_url }"
+        :trailing-icon="trailingIcon"
+        size="lg"
+      >
+        {{ user?.user_metadata.name }}
+      </UBadge>
     </div>
 
     <template #content>
@@ -36,10 +41,12 @@
 </template>
 
 <script lang="ts" setup>
-import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
-
 const { logout } = useAuth()
 const user = useSupabaseUser()
+
+const open = ref(false)
+
+const trailingIcon = computed(() => (open.value ? `i-formkit-up` : `i-formkit-down`))
 </script>
 
 <style></style>

@@ -20,12 +20,17 @@ const user = useSupabaseUser()
             label="beta"
           />
         </h1>
-        <UButton
+        <UBadge
           v-if="!user"
-          color="primary"
           @click="login"
-          >entrar</UButton
+          variant="subtle"
+          icon="i-mdi-anonymous"
+          class="rounded-full cursor-pointer"
+          size="lg"
+          trailing-icon="i-formkit-right"
         >
+          Entrar
+        </UBadge>
         <UserDisplay v-else />
       </div>
     </div>

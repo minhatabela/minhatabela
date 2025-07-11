@@ -1,8 +1,8 @@
 <template>
   <UPopover
+    v-model:open="open"
     mode="click"
     :popper="{ offsetDistance: 0 }"
-    v-model:open="open"
   >
     <div class="flex items-center gap-3 min-w-max">
       <UBadge
@@ -46,7 +46,7 @@ const user = useSupabaseUser()
 
 const open = ref(false)
 
-const trailingIcon = computed(() => (open.value ? `i-formkit-up` : `i-formkit-down`))
+const trailingIcon = computed(() => (open.value ? `i-lucide-chevron-up` : `i-lucide-chevron-down`))
 </script>
 
 <style></style>

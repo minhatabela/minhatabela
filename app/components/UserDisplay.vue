@@ -46,7 +46,7 @@ const user = useSupabaseUser()
 
 const open = ref(false)
 
-const trailingIcon = computed(() => (open.value ? `i-formkit-up` : `i-formkit-down`))
+const trailingIcon = computed(() => (open.value ? `i-lucide-chevron-up` : `i-lucide-chevron-down`))
 </script>
 
 <style></style>

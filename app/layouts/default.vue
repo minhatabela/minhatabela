@@ -31,7 +31,13 @@ const user = useSupabaseUser()
         >
           Entrar
         </UBadge>
-        <UserDisplay v-else />
+        <div
+          v-else
+          class="flex items-center gap-2"
+        >
+          <SyncBadge />
+          <UserDisplay />
+        </div>
       </div>
     </div>
 

@@ -1,8 +1,8 @@
 <template>
   <UPopover
+    v-model:open="open"
     mode="click"
     :popper="{ offsetDistance: 0 }"
-    v-model:open="open"
   >
     <div class="flex items-center gap-3 min-w-max">
       <UBadge

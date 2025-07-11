@@ -22,12 +22,12 @@ const user = useSupabaseUser()
         </h1>
         <UBadge
           v-if="!user"
-          @click="login"
           variant="subtle"
           icon="i-mdi-anonymous"
           class="rounded-full cursor-pointer"
           size="lg"
           trailing-icon="i-formkit-right"
+          @click="login"
         >
           Entrar
         </UBadge>

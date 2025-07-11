@@ -5,17 +5,17 @@ import { usePredictionsStore } from '~~/layers/predictions/application/stores/Pr
 <template>
   <TransitionGroup name="list">
     <UIcon
+      :key="1"
       v-if="usePredictionsStore().syncing"
       name="i-lucide-refresh-ccw"
       class="animate-spin"
-      :key="1"
     />
     <UIcon
       v-else
+      :key="2"
       name="i-lucide-cloud-check"
       mode="svg"
       class="text-success"
-      :key="2"
     />
   </TransitionGroup>
 </template>

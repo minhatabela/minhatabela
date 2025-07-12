@@ -4,7 +4,7 @@
       class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-xs"
     >
       <div class="max-w-7xl w-full justify-between items-center flex">
-        <h1 class="inline-block text-inverted bg-clip-text text-2xl font-bold">
+        <h1 class="inline-block dark:text-white text-gray-800 bg-clip-text text-2xl font-bold">
           minhatabela
           <UBadge
             class="absolute ml-1 rounded-full"
@@ -18,7 +18,7 @@
     <section class="max-w-7xl w-full h-full flex pt-20">
       <div class="px-4">
         <div class="flex flex-col gap-4">
-          <h4 class="text-inverted text-6xl font-bold">minhatabela</h4>
+          <h4 class="dark:text-white text-gray-800 text-6xl font-bold">minhatabela</h4>
           <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">
             Simule a classificação do Brasileirão rodada a rodada e veja as chances do seu time do
             coração de alcançar um dos mais desejados títulos nacionais.

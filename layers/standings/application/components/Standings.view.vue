@@ -15,8 +15,7 @@ const tableViewOptions = [
     label: 'Oficial Simulada',
     value: TableViewEnum.OFICIAL_SIMULADA,
     disabled: true,
-    icon: 'i-lucide-lock-keyhole',
-    tooltip: { text: 'Entre para liberar' }
+    icon: 'i-lucide-lock-keyhole'
   },
   { label: 'Simulada', value: TableViewEnum.SIMULADA },
   { label: 'Oficial', value: TableViewEnum.OFICIAL }

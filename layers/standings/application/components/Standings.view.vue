@@ -8,10 +8,16 @@ import { usePredictionsStore } from '~~/layers/predictions/application/stores/Pr
 import { useMatchesStore } from '../stores/Matches.store'
 import type { Match } from '~~/layers/shared/entities/Match'
 
-const tableView = ref(TableViewEnum.OFICIAL_SIMULADA)
+const tableView = ref(useSupabaseUser() ? TableViewEnum.OFICIAL_SIMULADA : TableViewEnum.SIMULADA)
 
 const tableViewOptions = [
-  { label: 'Oficial Simulada', value: TableViewEnum.OFICIAL_SIMULADA },
+  {
+    label: 'Oficial Simulada',
+    value: TableViewEnum.OFICIAL_SIMULADA,
+    disabled: true,
+    icon: 'i-lucide-lock-keyhole',
+    tooltip: { text: 'Entre para liberar' }
+  },
   { label: 'Simulada', value: TableViewEnum.SIMULADA },
   { label: 'Oficial', value: TableViewEnum.OFICIAL }
 ]

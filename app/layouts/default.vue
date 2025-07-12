@@ -26,7 +26,7 @@ const user = useSupabaseUser()
           icon="i-mdi-anonymous"
           class="rounded-full cursor-pointer"
           size="lg"
-          trailing-icon="i-formkit-right"
+          trailing-icon="i-lucide-chevron-right"
           @click="login"
         >
           Entrar

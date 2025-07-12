@@ -2,7 +2,7 @@ import type { PredictedMatch } from '../../domain/entities/PredictedMatch'
 
 export const usePredictionsStore = defineStore('predictions', () => {
   const predictions = ref<Map<string, PredictedMatch> | undefined>()
-  const syncing = ref<boolean>(false)
+  const syncing = ref<boolean>(true)
 
   function setPredictions(_predictions: PredictedMatch[]) {
     const map = new Map(_predictions.map(predictionMatch => [predictionMatch.id, predictionMatch]))
@@ -44,6 +44,10 @@ export const usePredictionsStore = defineStore('predictions', () => {
     predictions.value?.delete(matchId)
   }
 
+  function clearPredictions() {
+    predictions.value = undefined
+  }
+
   return {
     predictions,
     setPredictions,
@@ -53,6 +57,7 @@ export const usePredictionsStore = defineStore('predictions', () => {
     hasMatchPredicted,
     setPrediction,
     syncing,
-    deletePrediction
+    deletePrediction,
+    clearPredictions
   }
 })

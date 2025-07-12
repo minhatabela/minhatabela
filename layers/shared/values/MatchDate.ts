@@ -8,7 +8,14 @@ export class MatchDate extends Validatable<string> {
     super(value, new MatchDateValidator())
   }
 
-  get formattedDate() {
-    return this.value ? format(new Date(this.value), 'd MMM', { locale: ptBR }) : 'A definir'
+  get formattedDate(): string | undefined {
+    return this.dateValue ? format(this.dateValue, 'd MMM', { locale: ptBR }) : undefined
+  }
+
+  get dateValue(): Date | undefined {
+    if (!this.value) return undefined
+
+    const date = new Date(this.value)
+    return new Date(date.setHours(date.getHours() + 3))
   }
 }

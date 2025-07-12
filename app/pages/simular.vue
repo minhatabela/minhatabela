@@ -21,6 +21,7 @@ const { data: predictions, status: predictionsStatus } = useAsyncData(
 watch(predictionsStatus, value => {
   if (value === 'success') {
     usePredictionsStore().setPredictions(predictions.value!)
+    usePredictionsStore().syncing = false
   }
 })
 

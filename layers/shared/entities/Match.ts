@@ -22,4 +22,12 @@ export class Match {
   get isFinished(): boolean {
     return isDefined(this.awayGoals) && isDefined(this.homeGoals)
   }
+
+  get isThisWeek(): boolean {
+    if (!this.date.dateValue) return false
+
+    const sevenDaysAhead = new Date(new Date().setDate(new Date().getDate() + 7))
+
+    return this.date.dateValue > new Date() && this.date.dateValue < sevenDaysAhead
+  }
 }

@@ -1,5 +1,8 @@
 {
   "name": "minhatabela",
+  "author": {
+    "name": "Alexis Lopes"
+  },
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,6 +25,7 @@
     "@nuxthub/core": "^0.8.27",
     "@nuxtjs/seo": "^3.0.3",
     "@nuxtjs/supabase": "^1.5.1",
+    "@pinia/nuxt": "^0.11.1",
     "@unhead/vue": "^2.0.0-rc.13",
     "@vueuse/nuxt": "^13.2.0",
     "date-fns": "^4.1.0",
@@ -32,13 +36,17 @@
     "microdiff": "^1.5.0",
     "nuxt": "^3.17.4",
     "nuxt-gtag": "^3.0.2",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.3.0",
     "posthog-js": "^1.246.0",
     "v-calendar": "^3.1.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.44",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@iconify-json/lucide": "^1.2.56",
     "@iconify-json/material-symbols": "^1.2.21",
     "@nuxt/test-utils": "^3.19.1",
     "@types/downloadjs": "^1.4.6",

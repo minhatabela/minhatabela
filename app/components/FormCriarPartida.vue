@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { format } from 'date-fns'
-import type { IClube } from '~/types/clube'
-import { type PartidaNormalizada } from '~/types/partida'
-import type { ISede } from '~/types/sede'
+import type { Team } from '~~/layers/shared/entities/Team'
+import type { Match } from '~~/layers/shared/entities/Match'
+import type { Vanue } from '~~/layers/shared/entities/Vanue'
 const opened = defineModel('opened', {
   type: Boolean,
   default: false
 })
 
 const props = defineProps<{
-  partida: PartidaNormalizada
+  partida: Match
 }>()
 
 const emit = defineEmits(['refresh'])
 
-const { clubes, sedes } = useApi()
+const clubes = ref<Team[]>([])
+const sedes = ref<Vanue[]>([])
 const clubesDropdown = computed(() => {
-  return clubes.value.map((clube: IClube) => {
+  return clubes.value.map((clube: Team) => {
     return {
-      label: clube.nome_popular,
+      label: clube.name,
       value: clube.id
     }
   })
 })
 const sedesDrodpwn = computed(() => {
-  return sedes.value.map((sede: ISede) => {
+  return sedes.value.map((sede: Vanue) => {
     return {
-      label: sede.nome_popular,
+      label: sede.name,
       value: sede.id
     }
   })
@@ -35,7 +35,7 @@ const sedesDrodpwn = computed(() => {
 const mandanteId = ref()
 const mandante = computed({
   get() {
-    return clubes.value.find((clube: any) => clube.slug === props.partida.mandante)?.id
+    return clubes.value.find((clube: any) => clube.slug === props.partida.homeTeam)?.id
   },
   set(value: string) {
     mandanteId.value = value
@@ -45,7 +45,7 @@ const mandante = computed({
 const visitanteId = ref()
 const visitante = computed({
   get() {
-    return clubes.value.find((clube: any) => clube.slug === props.partida.visitante)?.id
+    return clubes.value.find((clube: any) => clube.slug === props.partida.awayTeam)?.id
   },
   set(value: string) {
     visitanteId.value = value
@@ -55,7 +55,7 @@ const visitante = computed({
 const sedeId = ref()
 const sede = computed({
   get() {
-    return sedes.value.find((sede: any) => sede.key === props.partida.sede)?.id
+    return sedes.value.find((sede: any) => sede.key === props.partida.vanue)?.id
   },
   set(value: string) {
     sedeId.value = value
@@ -65,7 +65,7 @@ const sede = computed({
 const numeroPartida = ref()
 const numero = computed({
   get() {
-    return props.partida.numero
+    return props.partida.number.value
   },
   set(value: string) {
     numeroPartida.value = value
@@ -75,7 +75,7 @@ const numero = computed({
 const rodadaPartida = ref()
 const rodada = computed({
   get() {
-    return props.partida.rodada
+    return props.partida.round.value
   },
   set(value: string) {
     rodadaPartida.value = value
@@ -85,7 +85,7 @@ const rodada = computed({
 const dataPartida = ref()
 const data = computed({
   get() {
-    return format(new Date(props.partida.data?.split('/').reverse()), 'yyyy-MM-dd')
+    return props.partida.date.formattedDate
   },
   set(value: string) {
     dataPartida.value = value
@@ -95,7 +95,7 @@ const data = computed({
 const horaPartida = ref()
 const hora = computed({
   get() {
-    return props.partida.hora
+    return props.partida.time.formattedValue
   },
   set(value: string) {
     horaPartida.value = value
@@ -206,8 +206,8 @@ async function criarPartida() {
     <template #footer>
       <div>
         <UButton
-          @click="criarPartida"
           label="Criar partida na base do minhatabela"
+          @click="criarPartida"
         />
       </div>
     </template>

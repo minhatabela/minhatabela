@@ -1,12 +1,10 @@
 <template>
   <div class="w-screen h-screen flex flex-col items-center">
     <nav
-      class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-sm"
+      class="w-full py-5 flex border-b justify-center border-slate-200 dark:border-slate-800 shadow-xs"
     >
       <div class="max-w-7xl w-full justify-between items-center flex">
-        <h1
-          class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold"
-        >
+        <h1 class="inline-block dark:text-white text-gray-800 bg-clip-text text-2xl font-bold">
           minhatabela
           <UBadge
             class="absolute ml-1 rounded-full"
@@ -20,11 +18,7 @@
     <section class="max-w-7xl w-full h-full flex pt-20">
       <div class="px-4">
         <div class="flex flex-col gap-4">
-          <h4
-            class="bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold"
-          >
-            minhatabela
-          </h4>
+          <h4 class="dark:text-white text-gray-800 text-6xl font-bold">minhatabela</h4>
           <p class="text-lg font-normal text-slate-800 dark:text-slate-300 lg:w-1/2">
             Simule a classificação do Brasileirão rodada a rodada e veja as chances do seu time do
             coração de alcançar um dos mais desejados títulos nacionais.
@@ -60,9 +54,7 @@
           </UCard>
           <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">📃 Salve suas simulações</h4>
-            <p class="text-slate-400">
-              Suas simulações são salvas localmente, entre para salvar na nuvem
-            </p>
+            <p class="text-slate-400">Faça login, salve-as e acesse em qualquer lugar!</p>
           </UCard>
           <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">🙈 Oculte a tabela</h4>
@@ -97,10 +89,10 @@
 </template>
 
 <script lang="ts" setup>
+import * as pkg from '../package.json'
 const consent = useCookie<boolean>('consent')
 
 definePageMeta({ layout: false })
-import * as pkg from '../package.json'
 
 useSeoMeta({
   title: 'Simule as rodadas e a tabela do Brasileirão Betano 2025 com o minhatabela',

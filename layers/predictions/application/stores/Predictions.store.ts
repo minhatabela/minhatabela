@@ -44,6 +44,10 @@ export const usePredictionsStore = defineStore('predictions', () => {
     predictions.value?.delete(matchId)
   }
 
+  function clearPredictions() {
+    predictions.value = undefined
+  }
+
   return {
     predictions,
     setPredictions,
@@ -53,6 +57,7 @@ export const usePredictionsStore = defineStore('predictions', () => {
     hasMatchPredicted,
     setPrediction,
     syncing,
-    deletePrediction
+    deletePrediction,
+    clearPredictions
   }
 })

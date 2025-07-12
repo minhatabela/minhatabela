@@ -7,19 +7,28 @@ import { TeamMap } from '../../infra/mappers/Team.map'
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 import { useMatchesStore } from '../stores/Matches.store'
 import type { Match } from '~~/layers/shared/entities/Match'
+import { TableViewOptionsFactory } from '../factories/TableViewOptions.factory'
 
-const tableView = ref(useSupabaseUser() ? TableViewEnum.OFICIAL_SIMULADA : TableViewEnum.SIMULADA)
+const tableViewValue = ref()
 
-const tableViewOptions = [
-  {
-    label: 'Oficial Simulada',
-    value: TableViewEnum.OFICIAL_SIMULADA,
-    disabled: true,
-    icon: 'i-lucide-lock-keyhole'
+const tableView = computed({
+  get() {
+    if (useSupabaseUser().value && !tableViewValue.value) return TableViewEnum.OFICIAL_SIMULADA
+    if (!useSupabaseUser().value && usePredictionsStore().predictions && !tableViewValue.value)
+      return TableViewEnum.SIMULADA
+    if (!useSupabaseUser().value && !usePredictionsStore().predictions && !tableViewValue.value)
+      return TableViewEnum.OFICIAL
+
+    return tableViewValue.value
   },
-  { label: 'Simulada', value: TableViewEnum.SIMULADA },
-  { label: 'Oficial', value: TableViewEnum.OFICIAL }
-]
+  set(value: TableViewEnum) {
+    tableViewValue.value = value
+  }
+})
+
+const tableViewOptions = computed(() =>
+  TableViewOptionsFactory.make(useSupabaseUser().value ? true : false)
+)
 
 const [sensitive, toggle] = useToggle()
 
@@ -48,6 +57,7 @@ const columns = StandignsHeaderFactory.make()
   <div class="w-full">
     <div class="flex justify-between items-center mb-4">
       <USelect
+        class="w-[25%]"
         v-model="tableView"
         :items="tableViewOptions"
       />

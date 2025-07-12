@@ -1,3 +1,5 @@
+import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
+
 const toast = useToast()
 const supabase = useSupabaseClient()
 
@@ -13,6 +15,8 @@ export const useAuth = () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
       toast.add({ title: 'Erro ao tentar sair', color: 'error' })
+    } else {
+      usePredictionsStore().clearPredictions()
     }
   }
 

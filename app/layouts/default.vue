@@ -9,9 +9,7 @@ const user = useSupabaseUser()
     <UToaster />
     <div class="w-full flex justify-center items-center">
       <div class="max-w-[1400px] w-full h-20 flex items-center justify-between px-8 lg:px-0">
-        <h1
-          class="px-4 bg-gradient-to-r dark:from-violet-500 from-violet-600 dark:to-indigo-500 to-indigo-600 inline-block text-transparent bg-clip-text text-2xl font-bold"
-        >
+        <h1 class="inline-block text-inverted text-2xl font-bold">
           minhatabela
           <UBadge
             class="absolute ml-1 rounded-full"

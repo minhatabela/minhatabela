@@ -5,8 +5,8 @@ import { usePredictionsStore } from '~~/layers/predictions/application/stores/Pr
 <template>
   <TransitionGroup name="list">
     <UIcon
-      :key="1"
       v-if="usePredictionsStore().syncing"
+      :key="1"
       name="i-lucide-refresh-ccw"
       class="animate-spin"
     />

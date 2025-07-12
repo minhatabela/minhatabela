@@ -57,8 +57,8 @@ const columns = StandignsHeaderFactory.make()
   <div class="w-full">
     <div class="flex justify-between items-center mb-4">
       <USelect
-        class="w-[25%]"
         v-model="tableView"
+        class="w-[25%]"
         :items="tableViewOptions"
       />
       <UButton

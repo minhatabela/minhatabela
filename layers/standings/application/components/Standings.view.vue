@@ -51,6 +51,8 @@ const standings = computed(() =>
 )
 
 const columns = StandignsHeaderFactory.make()
+
+const { width } = useWindowSize()
 </script>
 
 <template>
@@ -58,7 +60,7 @@ const columns = StandignsHeaderFactory.make()
     <div class="flex justify-between items-center mb-4">
       <USelect
         v-model="tableView"
-        class="w-[25%]"
+        :class="width < 500 ? 'w-1/2' : 'w-[25%]'"
         :items="tableViewOptions"
       />
       <UButton

@@ -12,9 +12,8 @@
         :avatar="{ src: user?.user_metadata.avatar_url }"
         :trailing-icon="trailingIcon"
         size="lg"
-      >
-        {{ user?.user_metadata.name }}
-      </UBadge>
+        :label="width < 500 ? '' : user?.user_metadata.name"
+      />
     </div>
 
     <template #content>
@@ -43,6 +42,8 @@
 <script lang="ts" setup>
 const { logout } = useAuth()
 const user = useSupabaseUser()
+
+const { width } = useWindowSize()
 
 const open = ref(false)
 

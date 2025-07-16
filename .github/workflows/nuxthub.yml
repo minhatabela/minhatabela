@@ -6,7 +6,7 @@ jobs:
     name: 'Deploy to NuxtHub'
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref == 'refs/heads/master' && 'production' || 'preview' }}
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
       url: ${{ steps.deploy.outputs.deployment-url }}
     permissions:
       contents: read
@@ -17,7 +17,7 @@ jobs:
       SUPABASE_SERVICE_KEY: ${{secrets.SUPABASE_SERVICE_KEY}}
       SUPABASE_KEY: ${{secrets.SUPABASE_KEY}}
       NUXT_HUB_PROJECT_KEY: ${{secrets.NUXT_HUB_PROJECT_KEY}}
-      NUXT_HUB_ENV: ${{ github.ref == 'refs/heads/master' && 'production' || 'preview' }}
+      NUXT_HUB_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
 
     steps:
       - uses: actions/checkout@v4

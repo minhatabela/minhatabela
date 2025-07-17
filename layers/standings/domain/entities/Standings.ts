@@ -5,6 +5,7 @@ import type { StandingPositon } from '../dtos/StandingPosition.dto'
 import type { IStandings } from '../interfaces/IStandings.interface'
 import { MatchesValidator } from '../validators/Matches.validator'
 import { TeamStats } from './TeamStats'
+import { orderBy } from 'lodash'
 
 export class Standings extends Validatable<Match[]> implements IStandings {
   constructor(
@@ -15,7 +16,7 @@ export class Standings extends Validatable<Match[]> implements IStandings {
   }
 
   getStandings(): StandingPositon[] {
-    const orderedStandings = useOrderBy(
+    const orderedStandings = orderBy(
       this.teams.map(team => new TeamStats(team, this.matches).getTeamStats),
       ['points', 'wins', 'diffGoals', 'proGoals'],
       ['desc', 'desc', 'desc', 'desc']

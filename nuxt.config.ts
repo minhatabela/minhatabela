@@ -21,7 +21,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   modules: [
     '@nuxt/ui',
-    'nuxt-lodash',
     '@vueuse/nuxt',
     '@nuxt/fonts',
     'nuxt-gtag',

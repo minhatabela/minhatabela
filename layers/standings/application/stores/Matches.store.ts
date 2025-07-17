@@ -1,11 +1,12 @@
 import type { Match } from '~~/layers/shared/entities/Match'
+import { orderBy } from 'lodash'
 
 export const useMatchesStore = defineStore('matches', () => {
   const matches = ref<Match[]>([])
   const round = ref<number>()
 
   function setMatches(_matches: Match[]): void {
-    matches.value = useOrderBy(_matches, match => new Date(match.date.value).getTime())
+    matches.value = orderBy(_matches, match => new Date(match.date.value).getTime())
   }
 
   const nextMatch = computed(() => {

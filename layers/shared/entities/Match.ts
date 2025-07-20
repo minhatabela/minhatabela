@@ -1,3 +1,4 @@
+import isThisWeek from 'date-fns/isThisWeek'
 import type { MatchDate } from '../values/MatchDate'
 import type { MatchNumber } from '../values/MatchNumber'
 import type { MatchTime } from '../values/MatchTime'
@@ -23,11 +24,12 @@ export class Match {
     return isDefined(this.awayGoals) && isDefined(this.homeGoals)
   }
 
+  get isPostponed(): boolean {
+    return !isDefined(this.date.value) && !isDefined(this.time.value)
+  }
+
   get isThisWeek(): boolean {
     if (!this.date.dateValue) return false
-
-    const sevenDaysAhead = new Date(new Date().setDate(new Date().getDate() + 7))
-
-    return this.date.dateValue > new Date() && this.date.dateValue < sevenDaysAhead
+    return isThisWeek(this.date.dateValue)
   }
 }

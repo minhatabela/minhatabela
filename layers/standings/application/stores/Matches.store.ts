@@ -6,11 +6,14 @@ export const useMatchesStore = defineStore('matches', () => {
   const round = ref<number>()
 
   function setMatches(_matches: Match[]): void {
-    matches.value = orderBy(_matches, match => new Date(match.date.value).getTime())
+    matches.value = _matches
   }
 
   const nextMatch = computed(() => {
-    return matches.value.filter(match => match.isThisWeek && !match.isFinished).at(0)
+    return orderBy(
+      matches.value.filter(match => !match.isFinished && !match.isPostponed && match.isThisWeek),
+      match => match.round.value
+    )[0]
   })
 
   const currentRound = computed({
@@ -31,7 +34,17 @@ export const useMatchesStore = defineStore('matches', () => {
   }
 
   function getRoundMatches(): Match[] {
-    return matches.value.filter(match => match.round.value === currentRound.value) as Match[]
+    const roundMatches = matches.value.filter(
+      match => match.round.value === currentRound.value
+    ) as Match[]
+    return orderBy(roundMatches, match => {
+      if (match.time.value) {
+        const [hours, mins, secs] = match.time.value.split(':').map(Number)
+        return match.date.dateValue!.setHours(hours!, mins, secs)
+      }
+
+      return match.date.dateValue
+    })
   }
 
   return {

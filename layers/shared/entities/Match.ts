@@ -1,4 +1,4 @@
-import isThisWeek from 'date-fns/isThisWeek'
+import { isThisWeek } from 'date-fns'
 import type { MatchDate } from '../values/MatchDate'
 import type { MatchNumber } from '../values/MatchNumber'
 import type { MatchTime } from '../values/MatchTime'

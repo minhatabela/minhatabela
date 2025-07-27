@@ -101,9 +101,21 @@ function deletePredictedMatch() {
     class="flex items-center justify-center"
   >
     <div class="flex w-full justify-between pb-2">
-      <div class="pb-2 flex justify-between gap-2">
-        <span class="text-xs text-slate-400">{{ match.date.formattedDate }}</span>
-        <span class="text-xs text-slate-400">{{ match.time.formattedValue }}</span>
+      <div class="pb-2 flex justify-between gap-2 items-center">
+        <span
+          v-if="match.realizationDateTime"
+          class="text-xs text-slate-400"
+          >{{ match.realizationDateTime }}</span
+        >
+        <UBadge
+          v-else
+          color="error"
+          icon="i-lucide-calendar-sync"
+          class="rounded-full"
+          size="sm"
+          variant="outline"
+          label="postergada"
+        />
         <span class="text-xs text-slate-400">{{ match.vanue?.getValue }}</span>
       </div>
       <MatchOptions

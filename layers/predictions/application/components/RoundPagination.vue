@@ -12,9 +12,9 @@ const emit = defineEmits<{
   <div class="flex w-full items-center justify-between">
     <UButton
       :disabled="round === 1"
-      icon="uil:angle-left"
+      icon="i-lucide-chevron-left"
       size="sm"
-      variant="ghost"
+      variant="outline"
       class="cursor-pointer"
       @click="emit('previous')"
     />
@@ -22,9 +22,9 @@ const emit = defineEmits<{
     <UButton
       type="button"
       :disabled="round === 38"
-      icon="uil:angle-right"
+      icon="i-lucide-chevron-right"
       size="sm"
-      variant="ghost"
+      variant="outline"
       class="cursor-pointer"
       @click="emit('next')"
     />

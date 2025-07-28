@@ -57,18 +57,17 @@ const { width } = useWindowSize()
 
 <template>
   <div class="w-full">
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex gap-4 items-center mb-4">
       <USelect
         v-model="tableView"
         :class="width < 500 ? 'w-1/2' : 'w-[25%]'"
         :items="tableViewOptions"
       />
       <UButton
-        size="xs"
+        size="md"
         variant="ghost"
         color="primary"
-        :label="`${sensitive ? 'ver' : 'ocultar'} tabela`"
-        :icon="sensitive ? 'i-carbon-view-filled' : 'i-carbon-view-off-filled'"
+        :icon="sensitive ? 'i-lucide-eye' : 'i-lucide-eye-off'"
         @click="toggle()"
       />
     </div>

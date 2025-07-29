@@ -58,18 +58,22 @@ const { width } = useWindowSize()
 <template>
   <div class="w-full">
     <div class="flex gap-4 items-center mb-4">
-      <USelect
-        v-model="tableView"
-        :class="width < 500 ? 'w-1/2' : 'w-[25%]'"
-        :items="tableViewOptions"
-      />
-      <UButton
-        size="md"
-        variant="ghost"
-        color="primary"
-        :icon="sensitive ? 'i-lucide-eye' : 'i-lucide-eye-off'"
-        @click="toggle()"
-      />
+      <div class="w-full flex items-center gap-4">
+        <USelect
+          v-model="tableView"
+          :class="width < 500 ? 'w-1/2' : 'w-[25%]'"
+          :items="tableViewOptions"
+        />
+        <UButton
+          size="md"
+          variant="ghost"
+          color="primary"
+          :icon="sensitive ? 'i-lucide-eye' : 'i-lucide-eye-off'"
+          @click="toggle()"
+        />
+      </div>
+
+      <StandingsFilter />
     </div>
     <Table
       v-if="standings.length"

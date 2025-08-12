@@ -26,7 +26,13 @@ export const useMatchesStore = defineStore('matches', () => {
 
   const currentRound = computed({
     get() {
-      return round.value || nextMatch.value?.round.value
+      if (nextMatch.value) return nextMatch.value.round.value
+
+      if (round.value) return round.value
+
+      const notPostponedMatches = matches.value.filter(match => !match.isPostponed)
+
+      return notPostponedMatches[notPostponedMatches.length - 1]?.round.value
     },
     set(value: number) {
       round.value = value

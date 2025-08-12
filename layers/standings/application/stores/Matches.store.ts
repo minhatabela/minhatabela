@@ -1,11 +1,13 @@
 import type { Match } from '~~/layers/shared/entities/Match'
 import { orderBy } from 'lodash'
 import { HomeAwayEnum } from '../enums/HomeAway.enum'
+import { TurnReturnEnum } from '../enums/TurnReturn.enum'
 
 export const useMatchesStore = defineStore('matches', () => {
   const matches = ref<Match[]>([])
   const round = ref<number>()
   const homeAwayFilter = ref(HomeAwayEnum.ALL)
+  const turnReturnFilter = ref(TurnReturnEnum.TURN)
 
   function setMatches(_matches: Match[]): void {
     matches.value = orderBy(_matches, match => {
@@ -50,6 +52,7 @@ export const useMatchesStore = defineStore('matches', () => {
     getRoundMatches,
     nextRound,
     previousRound,
-    homeAwayFilter
+    homeAwayFilter,
+    turnReturnFilter
   }
 })

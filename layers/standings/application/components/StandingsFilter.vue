@@ -2,8 +2,9 @@
 import type { TabsItem } from '@nuxt/ui'
 import { useMatchesStore } from '../stores/Matches.store'
 import { HomeAwayEnum } from '../enums/HomeAway.enum'
+import { TurnReturnEnum } from '../enums/TurnReturn.enum'
 
-const items = ref<TabsItem[]>([
+const homeAwayFilterItems = ref<TabsItem[]>([
   {
     label: 'Tudo',
     icon: 'i-lucide-circle',
@@ -20,6 +21,19 @@ const items = ref<TabsItem[]>([
     value: HomeAwayEnum.AWAY
   }
 ])
+
+const turnReturnItems = ref<TabsItem[]>([
+  {
+    label: 'Turno',
+    icon: 'i-lucide-corner-up-right',
+    value: TurnReturnEnum.TURN
+  },
+  {
+    label: 'Returno',
+    icon: 'i-lucide-corner-down-left',
+    value: TurnReturnEnum.RETURN
+  }
+])
 </script>
 
 <template>
@@ -32,7 +46,12 @@ const items = ref<TabsItem[]>([
     <template #content>
       <UTabs
         v-model="useMatchesStore().homeAwayFilter"
-        :items="items"
+        :items="homeAwayFilterItems"
+        class="w-full"
+      />
+      <UTabs
+        v-model="useMatchesStore().turnReturnFilter"
+        :items="turnReturnItems"
         class="w-full"
       />
     </template>

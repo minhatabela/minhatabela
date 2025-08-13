@@ -22,9 +22,9 @@ export const useMatchesStore = defineStore('matches', () => {
 
   const currentRound = computed({
     get() {
-      if (nextMatch.value) return nextMatch.value.round.value
-
       if (round.value) return round.value
+
+      if (nextMatch.value) return nextMatch.value.round.value
 
       const notPostponedMatches = matches.value.filter(match => !match.isPostponed)
 

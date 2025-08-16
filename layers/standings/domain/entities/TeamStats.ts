@@ -5,6 +5,7 @@ import type { ITeamStats } from '../interfaces/ITeamStats.interface'
 import type { StandingsFiltersDto } from '../../application/dtos/StandingsFilters.dto'
 import { HomeAwayMatchesFactory } from '../../domain/factories/HomeAwayMatches.factory'
 import { TurnReturnMatchesFactory } from '../../domain/factories/TurnReturnMatches.factory'
+import { PeakRoundMatchesFactory } from '../../domain/factories/PeakRoundMatches.factory'
 
 export class TeamStats implements ITeamStats {
   constructor(
@@ -38,7 +39,7 @@ export class TeamStats implements ITeamStats {
 
     matches = TurnReturnMatchesFactory.make(matches, this.standingsFilters.turnReturn)
 
-    console.log('matches: ', matches)
+    matches = PeakRoundMatchesFactory.make(matches, this.standingsFilters.peakRound)
 
     return matches
   }

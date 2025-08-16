@@ -1,4 +1,5 @@
 export enum TurnReturnEnum {
   TURN,
-  RETURN
+  RETURN,
+  BOTH
 }

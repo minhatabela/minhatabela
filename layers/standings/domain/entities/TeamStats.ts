@@ -4,6 +4,7 @@ import type { StandingPositon } from '../dtos/StandingPosition.dto'
 import type { ITeamStats } from '../interfaces/ITeamStats.interface'
 import type { StandingsFiltersDto } from '../../application/dtos/StandingsFilters.dto'
 import { HomeAwayMatchesFactory } from '../../domain/factories/HomeAwayMatches.factory'
+import { TurnReturnMatchesFactory } from '../../domain/factories/TurnReturnMatches.factory'
 
 export class TeamStats implements ITeamStats {
   constructor(
@@ -34,6 +35,8 @@ export class TeamStats implements ITeamStats {
     )
 
     matches = HomeAwayMatchesFactory.make(this.team, matches, this.standingsFilters.homeAway)
+
+    matches = TurnReturnMatchesFactory.make(matches, this.standingsFilters.turnReturn)
 
     console.log('matches: ', matches)
 

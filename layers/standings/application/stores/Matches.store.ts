@@ -41,7 +41,7 @@ export const useMatchesStore = defineStore('matches', () => {
   const standingsFilter = ref<StandingsFiltersDto>({
     homeAway: HomeAwayEnum.ALL,
     turnReturn: TurnReturnEnum.BOTH,
-    peakRound: currentRound.value || 1
+    peakRound: undefined
   })
 
   function nextRound() {

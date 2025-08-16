@@ -1,5 +1,8 @@
 import type { Match } from '~~/layers/shared/entities/Match'
 import { orderBy } from 'lodash'
+import type { StandingsFiltersDto } from '../dtos/StandingsFilters.dto'
+import { HomeAwayEnum } from '../enums/HomeAway.enum'
+import { TurnReturnEnum } from '../enums/TurnReturn.enum'
 
 export const useMatchesStore = defineStore('matches', () => {
   const matches = ref<Match[]>([])
@@ -35,6 +38,12 @@ export const useMatchesStore = defineStore('matches', () => {
     }
   })
 
+  const standingsFilter = ref<StandingsFiltersDto>({
+    homeAway: HomeAwayEnum.ALL,
+    turnReturn: TurnReturnEnum.BOTH,
+    peakRound: currentRound.value || 1
+  })
+
   function nextRound() {
     currentRound.value = currentRound.value! + 1
   }
@@ -53,6 +62,7 @@ export const useMatchesStore = defineStore('matches', () => {
     currentRound,
     getRoundMatches,
     nextRound,
-    previousRound
+    previousRound,
+    standingsFilter
   }
 })

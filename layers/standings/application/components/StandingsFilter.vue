@@ -24,6 +24,11 @@ const homeAwayFilterItems = ref<TabsItem[]>([
 
 const turnReturnItems = ref<TabsItem[]>([
   {
+    label: 'Ambos',
+    icon: 'i-lucide-circle',
+    value: TurnReturnEnum.BOTH
+  },
+  {
     label: 'Turno',
     icon: 'i-lucide-corner-up-right',
     value: TurnReturnEnum.TURN
@@ -45,12 +50,12 @@ const turnReturnItems = ref<TabsItem[]>([
 
     <template #content>
       <UTabs
-        v-model="useMatchesStore().homeAwayFilter"
+        v-model="useMatchesStore().standingsFilter.homeAway"
         :items="homeAwayFilterItems"
         class="w-full"
       />
       <UTabs
-        v-model="useMatchesStore().turnReturnFilter"
+        v-model="useMatchesStore().standingsFilter.turnReturn"
         :items="turnReturnItems"
         class="w-full"
       />

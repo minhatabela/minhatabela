@@ -46,7 +46,11 @@ const standingsMatches = computed(() =>
 
 const standings = computed(() =>
   teams.value && standingsMatches.value
-    ? new Standings(standingsMatches.value!, teams.value!).getStandings()
+    ? new Standings(
+        standingsMatches.value!,
+        teams.value!,
+        useMatchesStore().standingsFilter
+      ).getStandings()
     : []
 )
 

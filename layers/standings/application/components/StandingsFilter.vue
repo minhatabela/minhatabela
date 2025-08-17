@@ -24,7 +24,7 @@ const homeAwayFilterItems = ref<TabsItem[]>([
 
 const turnReturnItems = ref<TabsItem[]>([
   {
-    label: 'Ambos',
+    label: 'Tudo',
     icon: 'i-lucide-circle',
     value: TurnReturnEnum.BOTH
   },
@@ -42,23 +42,39 @@ const turnReturnItems = ref<TabsItem[]>([
 </script>
 
 <template>
-  <UPopover>
+  <UPopover
+    :content="{
+      align: 'start',
+      side: 'bottom',
+      sideOffset: 10
+    }"
+  >
     <UButton
       icon="i-lucide-filter"
       variant="ghost"
     />
 
     <template #content>
-      <UTabs
-        v-model="useMatchesStore().standingsFilter.homeAway"
-        :items="homeAwayFilterItems"
-        class="w-full"
-      />
-      <UTabs
-        v-model="useMatchesStore().standingsFilter.turnReturn"
-        :items="turnReturnItems"
-        class="w-full"
-      />
+      <div class="p-4 flex flex-col gap-2">
+        <p>Mandante</p>
+        <UTabs
+          v-model="useMatchesStore().standingsFilter.homeAway"
+          :items="homeAwayFilterItems"
+          class="w-full"
+          size="xs"
+        />
+
+        Fase
+        <UTabs
+          v-model="useMatchesStore().standingsFilter.turnReturn"
+          :items="turnReturnItems"
+          class="w-full"
+          size="xs"
+        />
+
+        Rodada {{ useMatchesStore().peakRoundOrDefault }}
+        <RoundPicker v-model="useMatchesStore().peakRoundOrDefault" />
+      </div>
     </template>
   </UPopover>
 </template>

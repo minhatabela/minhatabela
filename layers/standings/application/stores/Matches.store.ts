@@ -23,15 +23,26 @@ export const useMatchesStore = defineStore('matches', () => {
     return matches.value.find(match => !match.isFinished && !match.isPostponed && match.isThisWeek)
   })
 
+  const notPostponedMatches = computed(() => matches.value.filter(match => !match.isPostponed))
+
+  const peakRoundOrDefault = computed({
+    get() {
+      return standingsFilter.value.peakRound || findNextRound()
+    },
+    set(value: number) {
+      standingsFilter.value.peakRound = value
+    }
+  })
+
+  function findNextRound() {
+    if (nextMatch.value) return nextMatch.value.round.value
+    return notPostponedMatches.value[notPostponedMatches.value.length - 1]?.round.value
+  }
+
   const currentRound = computed({
     get() {
       if (round.value) return round.value
-
-      if (nextMatch.value) return nextMatch.value.round.value
-
-      const notPostponedMatches = matches.value.filter(match => !match.isPostponed)
-
-      return notPostponedMatches[notPostponedMatches.length - 1]?.round.value
+      return findNextRound()
     },
     set(value: number) {
       round.value = value
@@ -63,6 +74,7 @@ export const useMatchesStore = defineStore('matches', () => {
     getRoundMatches,
     nextRound,
     previousRound,
-    standingsFilter
+    standingsFilter,
+    peakRoundOrDefault
   }
 })

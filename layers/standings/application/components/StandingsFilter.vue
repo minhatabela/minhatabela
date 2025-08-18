@@ -74,8 +74,8 @@ const turnReturnItems = ref<TabsItem[]>([
 
         Rodada {{ useMatchesStore().peakRoundOrDefault }}
         <RoundPicker
-          fill-previous
           v-model="useMatchesStore().peakRoundOrDefault"
+          fill-previous
         />
       </div>
     </template>

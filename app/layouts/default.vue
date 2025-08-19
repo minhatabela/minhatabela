@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as pkg from '../package.json'
-const { login } = useAuth()
+
 const user = useSupabaseUser()
 </script>
 
@@ -18,17 +18,7 @@ const user = useSupabaseUser()
             label="beta"
           />
         </h1>
-        <UBadge
-          v-if="!user"
-          variant="subtle"
-          icon="i-mdi-anonymous"
-          class="rounded-full cursor-pointer"
-          size="lg"
-          trailing-icon="i-lucide-chevron-right"
-          @click="login"
-        >
-          Entrar
-        </UBadge>
+        <LoginButton v-if="!user" />
         <div
           v-else
           class="flex items-center gap-2"

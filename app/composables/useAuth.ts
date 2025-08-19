@@ -1,9 +1,9 @@
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 
 const toast = useToast()
-const supabase = useSupabaseClient()
 
 export const useAuth = () => {
+  const supabase = useSupabaseClient()
   async function login() {
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' })
     if (error) {

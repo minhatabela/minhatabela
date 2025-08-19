@@ -77,7 +77,7 @@ const { width } = useWindowSize()
         />
       </div>
 
-      <StandingsFilter />
+      <StandingsFilterView />
     </div>
     <Table
       v-if="standings.length"

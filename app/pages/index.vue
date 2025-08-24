@@ -38,7 +38,8 @@
           <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">📈 Visualize a classificação</h4>
             <p class="text-slate-400">
-              Veja a tabela atualizada e como ela comporta com suas simulações
+              Veja a tabela atualizada e como ela comporta com suas simulações. Alterne entre
+              Oficial Simulada, Simulada e Oficial
             </p>
           </UCard>
           <UCard variant="subtle">
@@ -59,10 +60,6 @@
           <UCard variant="subtle">
             <h4 class="text-semibold text-lg py-2">🙈 Oculte a tabela</h4>
             <p class="text-slate-400">Com emoção: esconda a tebela enquanto simula</p>
-          </UCard>
-          <UCard variant="subtle">
-            <h4 class="text-semibold text-lg py-2">⬇️ Baixe a rodada simulada</h4>
-            <p class="text-slate-400">Faça download dos resultados simulados da rodada</p>
           </UCard>
         </div>
       </div>

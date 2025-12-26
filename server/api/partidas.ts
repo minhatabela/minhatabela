@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
     .from('partida')
     .select('*, visitante(*), mandante(*), sede(*)')
     .match(rodada ? { rodada } : {})
-    .order('numero')
+    .eq('season', 2025)
 
   return data
 })

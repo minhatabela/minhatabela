@@ -3,7 +3,6 @@ import { Team } from '~~/layers/shared/entities/Team'
 import { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IMapper } from '~~/layers/shared/ports/IMapper.interface'
 import { MatchDate } from '~~/layers/shared/values/MatchDate'
-import { MatchNumber } from '~~/layers/shared/values/MatchNumber'
 import { MatchTime } from '~~/layers/shared/values/MatchTime'
 import { Round } from '~~/layers/shared/values/Round'
 
@@ -19,7 +18,7 @@ export class MatchMap implements IMapper<any, Match> {
       visitante,
       sede,
       hora,
-      numero
+      season
     } = item
 
     const homeTeam = new Team(mandante.id, mandante.nome_popular, mandante.escudo)
@@ -30,7 +29,7 @@ export class MatchMap implements IMapper<any, Match> {
     return new Match(
       id,
       new Round(rodada),
-      new MatchNumber(numero),
+      season,
       new MatchDate(data),
       new MatchTime(hora),
       homeTeam,

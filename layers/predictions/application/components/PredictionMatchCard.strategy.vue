@@ -16,7 +16,7 @@ const newPrediction = computed(
     new PredictedMatch(
       match.id,
       match.round,
-      match.number,
+      match.season,
       match.date,
       match.time,
       match.homeTeam,

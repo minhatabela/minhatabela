@@ -1,6 +1,5 @@
 import { format, isThisWeek } from 'date-fns'
 import type { MatchDate } from '../values/MatchDate'
-import type { MatchNumber } from '../values/MatchNumber'
 import type { MatchTime } from '../values/MatchTime'
 import type { Round } from '../values/Round'
 import type { Team } from './Team'
@@ -11,7 +10,7 @@ export class Match {
   constructor(
     readonly id: string,
     readonly round: Round,
-    readonly number: MatchNumber,
+    readonly season: number,
     readonly date: MatchDate,
     readonly time: MatchTime,
     readonly homeTeam: Team,

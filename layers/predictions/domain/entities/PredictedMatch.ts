@@ -3,7 +3,6 @@ import type { Team } from '~~/layers/shared/entities/Team'
 import type { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IObservable } from '~~/layers/shared/ports/IObservable.interface'
 import type { MatchDate } from '~~/layers/shared/values/MatchDate'
-import type { MatchNumber } from '~~/layers/shared/values/MatchNumber'
 import type { MatchTime } from '~~/layers/shared/values/MatchTime'
 import type { Round } from '~~/layers/shared/values/Round'
 import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.interface'
@@ -14,7 +13,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
   constructor(
     override readonly id: string,
     override readonly round: Round,
-    override readonly number: MatchNumber,
+    override readonly season: number,
     override readonly date: MatchDate,
     override readonly time: MatchTime,
     override readonly homeTeam: Team,
@@ -24,7 +23,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
     override awayGoals?: number,
     readonly predictedMatchId?: string
   ) {
-    super(id, round, number, date, time, homeTeam, awayTeam, vanue, homeGoals, awayGoals)
+    super(id, round, season, date, time, homeTeam, awayTeam, vanue, homeGoals, awayGoals)
   }
 
   addObserver(observer: IPredictedMatchObserver): void {

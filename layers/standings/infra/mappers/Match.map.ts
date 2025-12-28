@@ -2,8 +2,6 @@ import { Match } from '~~/layers/shared/entities/Match'
 import { Team } from '~~/layers/shared/entities/Team'
 import { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IMapper } from '~~/layers/shared/ports/IMapper.interface'
-import { MatchDate } from '~~/layers/shared/values/MatchDate'
-import { MatchTime } from '~~/layers/shared/values/MatchTime'
 import { Round } from '~~/layers/shared/values/Round'
 
 export class MatchMap implements IMapper<any, Match> {
@@ -30,10 +28,10 @@ export class MatchMap implements IMapper<any, Match> {
       id,
       new Round(rodada),
       season,
-      new MatchDate(data),
-      new MatchTime(hora),
       homeTeam,
       awayTeam,
+      new Date(data),
+      hora,
       vanue,
       isDefined(gols_mandante) ? gols_mandante : undefined,
       isDefined(gols_visitante) ? gols_visitante : undefined

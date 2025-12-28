@@ -5,8 +5,6 @@ import { UpdatePredictedMatchUseCase } from '~~/layers/predictions/application/u
 import { Team } from '~~/layers/shared/entities/Team'
 import { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IMapper } from '~~/layers/shared/ports/IMapper.interface'
-import { MatchDate } from '~~/layers/shared/values/MatchDate'
-import { MatchTime } from '~~/layers/shared/values/MatchTime'
 import { Round } from '~~/layers/shared/values/Round'
 
 export class PredictionMap implements IMapper<any, PredictedMatch> {
@@ -24,10 +22,10 @@ export class PredictionMap implements IMapper<any, PredictedMatch> {
       id,
       new Round(rodada),
       season,
-      new MatchDate(date),
-      new MatchTime(hora),
       new Team(homeTeamId, homeTeamName, homeTeamEmblem),
       new Team(awayTeamId, awayTeamName, awayTeamEmblem),
+      new Date(date),
+      hora,
       vanue,
       gols_mandante,
       gols_visitante,

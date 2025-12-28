@@ -49,7 +49,9 @@ export default defineNuxtConfig({
     '/simular': { ssr: false },
     '/': { ssr: true },
     '/admin/consistencia': { ssr: false },
-    '/admin/partidas': { ssr: false }
+    '/admin/partidas': { ssr: false },
+    '/generate': { ssr: false },
+    '/matches': { ssr: false }
   },
   app: {
     head: {

@@ -10,12 +10,12 @@ export const useMatchesStore = defineStore('matches', () => {
 
   function setMatches(_matches: Match[]): void {
     matches.value = orderBy(_matches, match => {
-      if (match.time.value) {
-        const [hours, mins, secs] = match.time.value.split(':').map(Number)
-        return match.date.dateValue!.setHours(hours!, mins, secs)
+      if (match.time) {
+        const [hours, mins, secs] = match.time.split(':').map(Number)
+        return match.date!.setHours(hours!, mins, secs)
       }
 
-      return match.date.dateValue
+      return match.date
     })
   }
 

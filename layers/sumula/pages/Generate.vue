@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePredictionsStore } from '../../predictions/application/stores/Predictions.store'
 import { computed, onMounted, ref, watch } from 'vue'
-import { TeamMap } from '../../standings/infra/mappers/Team.map'
+import { TeamSchema } from '../../shared/schemas/Team.schema'
 import { useAsyncData } from 'nuxt/app'
 import type { Team } from '../../shared/entities/Team'
 import { orderBy } from 'lodash'
@@ -13,7 +13,7 @@ definePageMeta({
 onMounted(() => (usePredictionsStore().syncing = false))
 
 const { data: teams } = useAsyncData('generate/teams', () => $fetch('/api/allTeams'), {
-  transform: response => (response as any[])?.map(team => new TeamMap().mapTo(team))
+  transform: response => TeamSchema.array().parse(response)
 })
 
 const { execute: createMatches, status } = useAsyncData(
@@ -30,7 +30,9 @@ const items = computed(() =>
   })
 )
 
-const selectedTeamsObj = computed(() => selectedTeams.value.map(teamId => findTeam(teamId)))
+const selectedTeamsObj = computed(() =>
+  selectedTeams.value.map(teamId => findTeam(teamId)).filter(team => team)
+)
 
 const calendar = ref<Array<{ home: Team; away: Team; round: number }> | undefined>([])
 
@@ -67,10 +69,13 @@ function generateChampionshipCalendar(
 }
 
 function setupCalendar() {
-  calendar.value = generateChampionshipCalendar(selectedTeamsObj.value)
+  if (selectedTeamsObj.value.some(team => !team)) return
+  calendar.value = generateChampionshipCalendar(
+    selectedTeamsObj.value.filter((team): team is Team => team !== undefined)
+  )
 }
 
-function findTeam(teamId: string): Team {
+function findTeam(teamId: string): Team | undefined {
   return teams.value?.find(team => team.id === teamId)
 }
 

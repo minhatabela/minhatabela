@@ -3,7 +3,7 @@ import { Standings } from '../../domain/entities/Standings'
 import { TableViewEnum } from '../../domain/enums/TableView.enum'
 import { StandignsHeaderFactory } from '../../domain/factories/StandingsHeader.factory'
 import { StandingsMatchesFactory } from '../../domain/factories/StandingsMatches.factory'
-import { TeamMap } from '../../infra/mappers/Team.map'
+import { TeamSchema } from '../../../shared/schemas/Team.schema'
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 import { useMatchesStore } from '../stores/Matches.store'
 import type { Match } from '~~/layers/shared/entities/Match'
@@ -33,7 +33,7 @@ const tableViewOptions = computed(() =>
 const [sensitive, toggle] = useToggle()
 
 const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
-  transform: response => response?.map(team => new TeamMap().mapTo(team))
+  transform: response => response?.map(team => TeamSchema.parse(team))
 })
 
 const predictions = computed(() => usePredictionsStore().getPredictions())

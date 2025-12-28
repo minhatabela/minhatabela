@@ -4,7 +4,7 @@ import { useLazyAsyncData } from 'nuxt/app'
 import { onMounted, ref } from 'vue'
 import type { Match } from '../../shared/entities/Match'
 import { usePredictionsStore } from '../../predictions/application/stores/Predictions.store'
-import { MatchMap } from '../../standings/infra/mappers/Match.map'
+import { MatchSchema } from '../../shared/schemas/Match.schema'
 
 onMounted(() => (usePredictionsStore().syncing = false))
 
@@ -20,7 +20,7 @@ const { data, status, refresh } = useLazyAsyncData(
   'partidas-admin',
   () => $fetch('/api/seasonMatches'),
   {
-    transform: response => (response as any[])?.map(team => new MatchMap().mapTo(team))
+    transform: response => (response as any[])?.map(team => MatchSchema.parse(team))
   }
 )
 

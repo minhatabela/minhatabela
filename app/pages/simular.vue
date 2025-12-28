@@ -2,8 +2,8 @@
 import { usePredictionsStore } from '~~/layers/predictions/application/stores/Predictions.store'
 import type { Match } from '~~/layers/shared/entities/Match'
 import { useMatchesStore } from '~~/layers/standings/application/stores/Matches.store'
-import { MatchMap } from '~~/layers/standings/infra/mappers/Match.map'
 import { PredictionMap } from '~~/layers/standings/infra/mappers/Prediction.map'
+import { MatchSchema } from '../../layers/shared/schemas/Match.schema'
 
 useHead({
   title: 'Simulando'
@@ -29,7 +29,7 @@ const { data: matches, status: matchesStatus } = useAsyncData(
   'standings/matches',
   () => $fetch('/api/partidas'),
   {
-    transform: response => response?.map(match => new MatchMap().mapTo(match)),
+    transform: response => response?.map(match => MatchSchema.parse(match)),
     default: () => [] as Match[]
   }
 )

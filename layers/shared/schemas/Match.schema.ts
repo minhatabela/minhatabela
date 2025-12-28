@@ -6,28 +6,28 @@ import { Match } from '../entities/Match'
 export const MatchSchema = z
   .object({
     id: z.uuid(),
-    data: z.preprocess((value: string) => new Date(value), z.date().optional()),
-    gols_mandante: z.number().optional(),
-    gols_visitante: z.number().optional(),
-    hora: z.string(),
+    data: z.preprocess((value: string) => new Date(value), z.date().nullable()),
+    gols_mandante: z.number().nullable(),
+    gols_visitante: z.number().nullable(),
+    hora: z.string().nullable(),
     mandante: TeamSchema,
     visitante: TeamSchema,
-    rodada: z.number(),
+    rodada: z.number().nullable(),
     season: z.number(),
-    sede: VanueSchema
+    sede: VanueSchema.nullable()
   })
   .transform(
     data =>
       new Match(
         data.id,
-        data.rodada,
         data.season,
         data.mandante,
         data.visitante,
-        data.data,
-        data.hora,
-        data.sede,
-        data.gols_mandante,
-        data.gols_visitante
+        data.rodada || undefined,
+        data.data || undefined,
+        data.hora || undefined,
+        data.sede || undefined,
+        isDefined(data.gols_mandante) ? data.gols_mandante : undefined,
+        isDefined(data.gols_visitante) ? data.gols_visitante : undefined
       )
   )

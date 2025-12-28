@@ -20,12 +20,12 @@ const { data, status, refresh } = useLazyAsyncData(
   'partidas-admin',
   () => $fetch('/api/seasonMatches'),
   {
-    transform: response => (response as any[])?.map(team => MatchSchema.parse(team))
+    transform: response => MatchSchema.array().parse(response)
   }
 )
 
 const colunas: TableColumn<Match>[] = [
-  { header: 'Rodada', accessorKey: 'round.value' },
+  { header: 'Rodada', accessorKey: 'round' },
   { header: 'Data e hora', accessorKey: 'realizationDateTime' },
   {
     header: 'Mandante',

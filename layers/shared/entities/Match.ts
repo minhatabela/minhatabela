@@ -7,10 +7,10 @@ import { isUndefined } from 'lodash'
 export class Match {
   constructor(
     readonly id: string,
-    readonly round: number,
     readonly season: number,
     readonly homeTeam: Team,
     readonly awayTeam: Team,
+    readonly round?: number,
     readonly date?: Date,
     readonly time?: string,
     readonly vanue?: Vanue,

@@ -13,7 +13,7 @@ const { data: predictions, status: predictionsStatus } = useAsyncData(
   'standings/predictions',
   () => $fetch('/api/predictions'),
   {
-    transform: response => response?.map(prediction => PredictionSchema.parse(prediction)),
+    transform: response => PredictionSchema.array().parse(response),
     default: () => []
   }
 )
@@ -29,7 +29,7 @@ const { data: matches, status: matchesStatus } = useAsyncData(
   'standings/matches',
   () => $fetch('/api/partidas'),
   {
-    transform: response => response?.map(match => MatchSchema.parse(match)),
+    transform: response => MatchSchema.array().parse(response),
     default: () => [] as Match[]
   }
 )

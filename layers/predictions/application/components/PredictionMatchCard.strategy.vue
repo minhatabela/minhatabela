@@ -15,10 +15,10 @@ const newPrediction = computed(
   () =>
     new PredictedMatch(
       match.id,
-      match.round,
       match.season,
       match.homeTeam,
       match.awayTeam,
+      match.round,
       match.date,
       match.time,
       match.vanue,

@@ -13,10 +13,10 @@ export const PredictionSchema = z
     data =>
       new PredictedMatch(
         data.id,
-        data.partida.round,
         data.partida.season,
         data.partida.homeTeam,
         data.partida.awayTeam,
+        data.partida.round,
         data.partida.date,
         data.partida.time,
         data.partida.vanue,

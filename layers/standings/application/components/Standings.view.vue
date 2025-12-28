@@ -33,7 +33,7 @@ const tableViewOptions = computed(() =>
 const [sensitive, toggle] = useToggle()
 
 const { data: teams } = useAsyncData('standings/teams', () => $fetch('/api/clubes'), {
-  transform: response => response?.map(team => TeamSchema.parse(team))
+  transform: response => TeamSchema.array().parse(response)
 })
 
 const predictions = computed(() => usePredictionsStore().getPredictions())

@@ -9,10 +9,10 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
 
   constructor(
     override readonly id: string,
-    override readonly round: number,
     override readonly season: number,
     override readonly homeTeam: Team,
     override readonly awayTeam: Team,
+    override readonly round?: number,
     override readonly date?: Date,
     override readonly time?: string,
     override readonly vanue?: Vanue,
@@ -20,7 +20,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
     override awayGoals?: number,
     readonly predictedMatchId?: string
   ) {
-    super(id, round, season, homeTeam, awayTeam, date, time, vanue, homeGoals, awayGoals)
+    super(id, season, homeTeam, awayTeam, round, date, time, vanue, homeGoals, awayGoals)
   }
 
   addObserver(observer: IPredictedMatchObserver): void {

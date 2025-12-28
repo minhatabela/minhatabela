@@ -140,7 +140,7 @@ onUnmounted(() => {
     <template #body>
       <div class="flex gap-2 justify-end py-4">
         <UBadge
-          :label="`Rodada ${partida.round.value}`"
+          :label="`Rodada ${partida.round}`"
           variant="subtle"
           class="rounded-full"
           color="neutral"

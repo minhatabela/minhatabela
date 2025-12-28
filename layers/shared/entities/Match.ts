@@ -1,5 +1,4 @@
 import { format, isThisWeek } from 'date-fns'
-import type { Round } from '../values/Round'
 import type { Team } from './Team'
 import type { Vanue } from './Vanue'
 import { ptBR } from 'date-fns/locale'
@@ -8,7 +7,7 @@ import { isUndefined } from 'lodash'
 export class Match {
   constructor(
     readonly id: string,
-    readonly round: Round,
+    readonly round: number,
     readonly season: number,
     readonly homeTeam: Team,
     readonly awayTeam: Team,

@@ -53,17 +53,17 @@ function setPickedPartida(partida: Match) {
         :data="data"
         :columns="colunas"
       >
-        <template #mandante_nome_popular-cell="{ getValue, row }">
+        <template #homeTeam_name-cell="{ getValue, row }">
           <TeamBadge
             :name="getValue()"
-            :emblem="row.original.mandante.escudo"
+            :emblem="row.original.homeTeam.emblem"
           />
         </template>
-        <template #visitante_nome_popular-cell="{ getValue, row }">
+        <template #awayTeam_name-cell="{ getValue, row }">
           <div class="flex justify-end">
             <TeamBadge
               :name="getValue()"
-              :emblem="row.original.visitante.escudo"
+              :emblem="row.original.awayTeam.emblem"
             />
           </div>
         </template>
@@ -76,17 +76,6 @@ function setPickedPartida(partida: Match) {
             size="lg"
             >{{ row.original.status.label }}</UBadge
           >
-        </template>
-        <template #inconsistencias-cell="{ getValue, row }">
-          <UButton
-            class="rounded-full"
-            variant="ghost"
-            :icon="
-              Object.values(getValue()).length ? 'i-lucide-circle-alert' : 'i-lucide-check-circle'
-            "
-            :class="Object.values(getValue()).length ? 'text-yellow-700' : 'text-green-700'"
-            @click="setPickedPartida(row.original)"
-          />
         </template>
         <template #actions-cell="{ row }">
           <UButton

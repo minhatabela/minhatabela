@@ -41,7 +41,8 @@
     "posthog-js": "^1.246.0",
     "v-calendar": "^3.1.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

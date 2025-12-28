@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
     .from('partida')
     .select('*, visitante(*), mandante(*), sede(*)')
     .match(rodada ? { rodada } : {})
-    .eq('season', new Date().getFullYear())
+    .eq('season', 2026)
 
   return data
 })

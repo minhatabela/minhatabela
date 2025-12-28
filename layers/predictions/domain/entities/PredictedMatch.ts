@@ -2,7 +2,6 @@ import { Match } from '~~/layers/shared/entities/Match'
 import type { Team } from '~~/layers/shared/entities/Team'
 import type { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { IObservable } from '~~/layers/shared/ports/IObservable.interface'
-import type { Round } from '~~/layers/shared/values/Round'
 import type { IPredictedMatchObserver } from '../ports/IPreditedMatchObserver.interface'
 
 export class PredictedMatch extends Match implements IObservable<IPredictedMatchObserver> {
@@ -10,7 +9,7 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
 
   constructor(
     override readonly id: string,
-    override readonly round: Round,
+    override readonly round: number,
     override readonly season: number,
     override readonly homeTeam: Team,
     override readonly awayTeam: Team,

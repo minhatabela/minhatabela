@@ -10,12 +10,12 @@ export class Match {
     readonly season: number,
     readonly homeTeam: Team,
     readonly awayTeam: Team,
-    readonly round?: number,
-    readonly date?: Date,
-    readonly time?: string,
-    readonly vanue?: Vanue,
-    readonly homeGoals?: number,
-    readonly awayGoals?: number
+    public round?: number,
+    public date?: Date,
+    public time?: string,
+    public vanue?: Vanue,
+    public homeGoals?: number,
+    public awayGoals?: number
   ) {}
 
   get isFinished(): boolean {

@@ -1,22 +1,36 @@
 <script setup lang="ts">
 import type { Vanue } from '~~/layers/shared/entities/Vanue'
-import type { Match } from '../../layers/shared/entities/Match'
+import type { MatchesViewModel } from '../viewmodels/Matches.viewmodel'
+import { VanueSchema } from '../../shared/schemas/Vanue.schema'
 
-interface FormEditarPartidaProps {
-  partida: Match
-}
-
-const props = defineProps<FormEditarPartidaProps>()
-
-const sedes = ref<Vanue[]>([])
+const vm = inject<MatchesViewModel>('matches-view-model')!
 
 const opened = defineModel('opened', {
   type: Boolean,
   default: false
 })
 
+// const toast = useToast()
+
+// const { execute: acceptChanges, status: statusChanges } = useAsyncData(
+//   'changes',
+//   async () =>
+//     await useSupabaseClient()
+//       .from('partida')
+//       .update(partidaAuxiliar.value)
+//       .eq('id', props.partida.id),
+//   {
+//     immediate: false
+//   }
+// )
+
+const { data: vanues } = useAsyncData('matches/management/vanues', () => $fetch('/api/sedes'), {
+  transform: response => VanueSchema.array().parse(response),
+  default: () => []
+})
+
 const sedesDrodpwn = computed(() => {
-  return sedes.value.map((sede: Vanue) => {
+  return vanues.value.map((sede: Vanue) => {
     return {
       label: sede.name,
       value: sede.id
@@ -24,108 +38,16 @@ const sedesDrodpwn = computed(() => {
   })
 })
 
-const toast = useToast()
-
-function useCamposParidas() {
-  const partidaAuxiliar = ref({
-    homeGoals: undefined,
-    awayGoals: undefined,
-    date: undefined,
-    time: undefined,
-    vanue: undefined,
-    status: undefined
-  })
-
-  const data = computed({
-    get() {
-      return partidaAuxiliar.value?.data || props.partida.data
-    },
-    set(value: string) {
-      partidaAuxiliar.value!.data = value
-    }
-  })
-
-  const hora = computed({
-    get() {
-      return partidaAuxiliar.value?.hora || props.partida.hora
-    },
-    set(value: string) {
-      partidaAuxiliar.value!.hora = value
-    }
-  })
-
-  const golsMandante = computed({
-    get() {
-      return partidaAuxiliar.value?.gols_mandante || props.partida.gols_mandante
-    },
-    set(value: number) {
-      partidaAuxiliar.value!.gols_mandante = value
-    }
-  })
-
-  const golsVisitante = computed({
-    get() {
-      return partidaAuxiliar.value?.gols_visitante || props.partida.gols_visitante
-    },
-    set(value: number) {
-      partidaAuxiliar.value!.gols_visitante = value
-    }
-  })
-
-  const sede = computed({
-    get() {
-      return partidaAuxiliar.value?.sede || props.partida.vanue?.id
-    },
-    set(value: string) {
-      partidaAuxiliar.value!.sede = value
-    }
-  })
-
-  return {
-    partidaAuxiliar,
-    sede,
-    golsMandante,
-    golsVisitante,
-    data,
-    hora
-  }
-}
-
-const { partidaAuxiliar, sede, golsMandante, golsVisitante, data, hora } = useCamposParidas()
-
-const { execute: acceptChanges, status: statusChanges } = useAsyncData(
-  'changes',
-  async () =>
-    await useSupabaseClient()
-      .from('partida')
-      .update(partidaAuxiliar.value)
-      .eq('id', props.partida.id),
-  {
-    immediate: false
-  }
-)
-
-const emit = defineEmits(['refresh'])
-watch(statusChanges, value => {
-  if (value === 'success') {
-    toast.add({ description: 'Sucesso ao atualizar partida', color: 'success' })
-    opened.value = false
-    emit('refresh')
-  } else if (value === 'error') {
-    toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
-  }
-})
-
-onUnmounted(() => {
-  partidaAuxiliar.value = {
-    gols_mandante: undefined,
-    gols_visitante: undefined,
-    data: undefined,
-    hora: undefined,
-    sede: undefined,
-    status: undefined
-  }
-})
+// const emit = defineEmits(['refresh'])
+// watch(statusChanges, value => {
+//   if (value === 'success') {
+//     toast.add({ description: 'Sucesso ao atualizar partida', color: 'success' })
+//     opened.value = false
+//     emit('refresh')
+//   } else if (value === 'error') {
+//     toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
+//   }
+// })
 </script>
 
 <template>
@@ -140,17 +62,18 @@ onUnmounted(() => {
     <template #body>
       <div class="flex gap-2 justify-end py-4">
         <UBadge
-          :label="`Rodada ${partida.round}`"
+          v-if="vm.selectedMatch.value?.round"
+          :label="`Rodada ${vm.selectedMatch.value.round}`"
           variant="subtle"
           class="rounded-full"
           color="neutral"
         />
         <UBadge
-          :label="partida.status.label"
+          :label="vm.selectedMatch.value?.status.label"
           class="rounded-full"
           variant="subtle"
-          :icon="partida.status.icon"
-          :color="partida.status.color"
+          :icon="vm.selectedMatch.value?.status.icon"
+          :color="vm.selectedMatch.value?.status.color"
         />
       </div>
       <div class="flex flex-col gap-4">
@@ -160,20 +83,20 @@ onUnmounted(() => {
             <div class="flex gap-2 items-center">
               <img
                 class="h-10"
-                :src="partida.homeTeam.emblem"
+                :src="vm.selectedMatch.value?.homeTeam.emblem"
                 size="lg"
               />
-              {{ partida.homeTeam.name }}
+              {{ vm.selectedMatch.value?.homeTeam.name }}
             </div>
             <UIcon
               class="text-2xl"
               name="i-lucide-x"
             />
             <div class="flex gap-2 items-center">
-              {{ partida.awayTeam.name }}
+              {{ vm.selectedMatch.value?.awayTeam.name }}
               <img
                 class="h-10"
-                :src="partida.awayTeam.emblem"
+                :src="vm.selectedMatch.value?.awayTeam.emblem"
                 size="lg"
               />
             </div>
@@ -185,16 +108,16 @@ onUnmounted(() => {
           </div>
           <div class="flex gap-4">
             <label class="flex flex-col gap-2 w-full">
-              Gols mandante
+              Gols {{ vm.selectedMatch.value?.homeTeam.name }}
               <UInput
-                v-model="golsMandante"
+                v-model="vm.homeGoals.value"
                 type="number"
               />
             </label>
             <label class="flex flex-col gap-2 w-full text-end">
-              Gols visitante
+              Gols {{ vm.selectedMatch.value?.awayTeam.name }}
               <UInput
-                v-model="golsVisitante"
+                v-model="vm.awayGoals.value"
                 type="number"
               />
             </label>
@@ -206,7 +129,7 @@ onUnmounted(() => {
         <label class="flex flex-col gap-2 w-full">
           Sede
           <USelect
-            v-model="sede"
+            v-model="vm.vanue.value"
             :items="sedesDrodpwn"
             placeholder="Selecione a sede"
           />
@@ -218,7 +141,7 @@ onUnmounted(() => {
           <label class="flex flex-col gap-2 w-3/2">
             Data
             <UInput
-              v-model="data"
+              v-model="vm.date.value"
               type="date"
               placeholder="Selecione a data"
             />
@@ -226,7 +149,7 @@ onUnmounted(() => {
           <label class="flex flex-col gap-2">
             Hora
             <UInput
-              v-model="hora"
+              v-model="vm.time.value"
               type="time"
               placeholder="Selecione a data"
             />
@@ -248,10 +171,9 @@ onUnmounted(() => {
           <UButton
             class="justify-center w-1/2"
             variant="solid"
-            :disabled="Object.values(partidaAuxiliar).filter(f => f).length === 0"
             :loading="statusChanges === 'pending'"
             @click="acceptChanges()"
-            >Aceitar mudanças
+            >Salvar mudanças
           </UButton>
         </div>
       </div>

@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui'
 import { useLazyAsyncData } from 'nuxt/app'
-import { onMounted, ref } from 'vue'
+import { onMounted, provide, ref } from 'vue'
 import type { Match } from '../../shared/entities/Match'
 import { usePredictionsStore } from '../../predictions/application/stores/Predictions.store'
 import { MatchSchema } from '../../shared/schemas/Match.schema'
+import { MatchesViewModel } from '../viewmodels/Matches.viewmodel'
 
 onMounted(() => (usePredictionsStore().syncing = false))
 
@@ -12,7 +13,8 @@ definePageMeta({
   middleware: ['auth']
 })
 
-const pickedPartida = ref()
+const vm = new MatchesViewModel()
+provide('matches-view-model', vm)
 
 const opened = ref(false)
 
@@ -40,7 +42,7 @@ const colunas: TableColumn<Match>[] = [
 ]
 
 function setPickedPartida(partida: Match) {
-  pickedPartida.value = partida
+  vm.selectedMatch.value = partida
   opened.value = true
 }
 </script>
@@ -89,7 +91,6 @@ function setPickedPartida(partida: Match) {
     </UCard>
     <FormEditarPartida
       v-model:opened="opened"
-      :partida="pickedPartida"
       @refresh="refresh"
     />
   </div>

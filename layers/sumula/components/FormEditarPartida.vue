@@ -2,6 +2,7 @@
 import type { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { MatchesViewModel } from '../viewmodels/Matches.viewmodel'
 import { VanueSchema } from '../../shared/schemas/Vanue.schema'
+import { useMatchesManagementStore } from '../stores/MatchesManagement.store'
 
 const vm = inject<MatchesViewModel>('matches-view-model')!
 
@@ -10,23 +11,46 @@ const opened = defineModel('opened', {
   default: false
 })
 
-// const toast = useToast()
+const toast = useToast()
 
-// const { execute: acceptChanges, status: statusChanges } = useAsyncData(
-//   'changes',
-//   async () =>
-//     await useSupabaseClient()
-//       .from('partida')
-//       .update(partidaAuxiliar.value)
-//       .eq('id', props.partida.id),
-//   {
-//     immediate: false
-//   }
-// )
+const createMatch = computed(() => {
+  return {
+    rodada: vm.selectedMatch.value?.round,
+    data: vm.selectedMatch.value?.date?.toISOString(),
+    hora: vm.selectedMatch.value?.time,
+    gols_mandante: vm.homeGoals.value,
+    gols_visitante: vm.awayGoals.value,
+    mandante: vm.selectedMatch.value?.homeTeam.id,
+    visitante: vm.selectedMatch.value?.awayTeam.id,
+    sede: vm.selectedMatch.value?.vanue?.id
+  }
+})
 
-const { data: vanues } = useAsyncData('matches/management/vanues', () => $fetch('/api/sedes'), {
-  transform: response => VanueSchema.array().parse(response),
-  default: () => []
+const { execute: acceptChanges, status: statusChanges } = useAsyncData(
+  'changes',
+  async () =>
+    await useSupabaseClient()
+      .from('partida')
+      .update(createMatch.value as never)
+      .eq('id', vm.selectedMatch.value!.id),
+  {
+    immediate: false
+  }
+)
+
+const { data: vanues, status: vanuesStatus } = useAsyncData(
+  'matches/management/vanues',
+  () => $fetch('/api/sedes'),
+  {
+    transform: response => VanueSchema.array().parse(response),
+    default: () => []
+  }
+)
+
+watch(vanuesStatus, value => {
+  if (value === 'success') {
+    useMatchesManagementStore().vanues = vanues.value
+  }
 })
 
 const sedesDrodpwn = computed(() => {
@@ -38,16 +62,19 @@ const sedesDrodpwn = computed(() => {
   })
 })
 
-// const emit = defineEmits(['refresh'])
-// watch(statusChanges, value => {
-//   if (value === 'success') {
-//     toast.add({ description: 'Sucesso ao atualizar partida', color: 'success' })
-//     opened.value = false
-//     emit('refresh')
-//   } else if (value === 'error') {
-//     toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
-//   }
-// })
+const emit = defineEmits(['refresh'])
+
+watch(statusChanges, value => {
+  if (value === 'success') {
+    toast.add({ description: 'Sucesso ao atualizar partida', color: 'success' })
+    opened.value = false
+    emit('refresh')
+  } else if (value === 'error') {
+    toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
+  }
+})
+
+onUnmounted(() => (vm.selectedMatch.value = undefined))
 </script>
 
 <template>
@@ -128,11 +155,18 @@ const sedesDrodpwn = computed(() => {
         </div>
         <label class="flex flex-col gap-2 w-full">
           Sede
-          <USelect
+          <USelectMenu
             v-model="vm.vanue.value"
+            value-key="value"
             :items="sedesDrodpwn"
             placeholder="Selecione a sede"
           />
+        </label>
+        <div class="flex gap-2 items-center justify-between text-2xl">
+          <h2 class="text-2xl">Rodada</h2>
+        </div>
+        <label class="flex flex-col gap-2 w-full">
+          <RoundPicker v-model="vm.round.value" />
         </label>
         <div class="flex gap-2 items-center justify-between text-2xl">
           <h2>Data e hora</h2>

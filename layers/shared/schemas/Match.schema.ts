@@ -6,7 +6,7 @@ import { Match } from '../entities/Match'
 export const MatchSchema = z
   .object({
     id: z.uuid(),
-    data: z.preprocess((value: string) => new Date(value), z.date().nullable()),
+    data: z.preprocess((value: string) => (value ? new Date(value) : null), z.date().nullable()),
     gols_mandante: z.number().nullable(),
     gols_visitante: z.number().nullable(),
     hora: z.string().nullable(),

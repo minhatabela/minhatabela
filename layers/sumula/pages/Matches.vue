@@ -56,13 +56,15 @@ function setPickedPartida(partida: Match) {
         :columns="colunas"
       >
         <template #homeTeam_name-cell="{ getValue, row }">
-          <TeamBadge
-            :name="getValue()"
-            :emblem="row.original.homeTeam.emblem"
-          />
+          <div class="flex justify-end">
+            <TeamBadge
+              :name="getValue()"
+              :emblem="row.original.homeTeam.emblem"
+            />
+          </div>
         </template>
         <template #awayTeam_name-cell="{ getValue, row }">
-          <div class="flex justify-end">
+          <div class="flex justify-start">
             <TeamBadge
               :name="getValue()"
               :emblem="row.original.awayTeam.emblem"

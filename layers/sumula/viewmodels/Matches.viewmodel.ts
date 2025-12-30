@@ -6,7 +6,7 @@ export class MatchesViewModel {
     get() {
       return useMatchesManagementStore().selectedMatch
     },
-    set(match: Match) {
+    set(match: Match | undefined) {
       useMatchesManagementStore().selectedMatch = match
     }
   })
@@ -32,7 +32,7 @@ export class MatchesViewModel {
 
   homeGoals = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.homeGoals
+      return useMatchesManagementStore().selectedMatch?.homeGoals || null
     },
     set(goals: number) {
       useMatchesManagementStore().selectedMatch!.homeGoals = goals
@@ -41,7 +41,7 @@ export class MatchesViewModel {
 
   awayGoals = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.awayGoals
+      return useMatchesManagementStore().selectedMatch?.awayGoals || null
     },
     set(goals: number) {
       useMatchesManagementStore().selectedMatch!.awayGoals = goals

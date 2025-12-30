@@ -13,9 +13,8 @@ const { match } = defineProps<{
   >
     <div class="flex w-full justify-between pb-2">
       <div class="pb-2 flex justify-between gap-2">
-        <span class="text-xs text-slate-400">{{ match.date.formattedDate }}</span>
-        <span class="text-xs text-slate-400">{{ match.time.formattedValue }}</span>
-        <span class="text-xs text-slate-400">{{ match.vanue?.getValue }}</span>
+        <span class="text-xs text-slate-400">{{ match.realizationDateTime }}</span>
+        <span class="text-xs text-slate-400">{{ match.vanue?.name }}</span>
       </div>
     </div>
     <div class="flex gap-4 items-center justify-center mt-3">

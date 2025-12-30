@@ -1,23 +1,21 @@
 import { format, isThisWeek } from 'date-fns'
-import type { MatchDate } from '../values/MatchDate'
-import type { MatchTime } from '../values/MatchTime'
-import type { Round } from '../values/Round'
 import type { Team } from './Team'
 import type { Vanue } from './Vanue'
 import { ptBR } from 'date-fns/locale'
+import { isUndefined } from 'lodash'
 
 export class Match {
   constructor(
     readonly id: string,
-    readonly round: Round,
     readonly season: number,
-    readonly date: MatchDate,
-    readonly time: MatchTime,
     readonly homeTeam: Team,
     readonly awayTeam: Team,
-    readonly vanue?: Vanue,
-    readonly homeGoals?: number,
-    readonly awayGoals?: number
+    public round?: number,
+    public date?: Date,
+    public time?: string,
+    public vanue?: Vanue,
+    public homeGoals?: number,
+    public awayGoals?: number
   ) {}
 
   get isFinished(): boolean {
@@ -25,19 +23,27 @@ export class Match {
   }
 
   get isPostponed(): boolean {
-    return !isDefined(this.date.value) || !isDefined(this.time.value)
+    return !isDefined(this.date) || !isDefined(this.time)
   }
 
   get isThisWeek(): boolean {
-    if (!this.date.dateValue) return false
-    return isThisWeek(this.date.dateValue)
+    if (!this.date) return false
+    return isThisWeek(this.date)
   }
 
   get realizationDateTime(): string | undefined {
-    if (!this.date.dateValue || !this.time.value) return undefined
+    if (!this.date || !this.time) return undefined
 
-    const [hours, mins, secs] = this.time.value.split(':').map(Number)
+    const [hours, mins, secs] = this.time.split(':').map(Number)
 
-    return format(this.date.dateValue.setHours(hours!, mins, secs), 'd MMM HH:mm', { locale: ptBR })
+    return format(this.date.setHours(hours!, mins, secs), 'd MMM HH:mm', { locale: ptBR })
+  }
+
+  get status() {
+    if (!isUndefined(this.awayGoals) && !isUndefined(this.homeGoals)) {
+      return { label: 'Finalizada', color: 'success', icon: 'i-lucide-check-circle' }
+    }
+
+    return { label: 'Não iniciada', color: 'neutral', icon: 'i-lucide-pause' }
   }
 }

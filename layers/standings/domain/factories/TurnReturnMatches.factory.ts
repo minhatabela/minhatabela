@@ -5,9 +5,9 @@ export class TurnReturnMatchesFactory {
   static make(matches: Match[], turnReturn: TurnReturnEnum): Match[] {
     switch (turnReturn) {
       case TurnReturnEnum.TURN:
-        return matches.filter(match => match.round.value <= 19)
+        return matches.filter(match => (match.round || 0) <= 19)
       case TurnReturnEnum.RETURN:
-        return matches.filter(match => match.round.value >= 20)
+        return matches.filter(match => (match.round || 0) >= 20)
       default:
         return matches
     }

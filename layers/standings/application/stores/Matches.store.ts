@@ -10,12 +10,12 @@ export const useMatchesStore = defineStore('matches', () => {
 
   function setMatches(_matches: Match[]): void {
     matches.value = orderBy(_matches, match => {
-      if (match.time.value) {
-        const [hours, mins, secs] = match.time.value.split(':').map(Number)
-        return match.date.dateValue!.setHours(hours!, mins, secs)
+      if (match.time) {
+        const [hours, mins, secs] = match.time.split(':').map(Number)
+        return match.date!.setHours(hours!, mins, secs)
       }
 
-      return match.date.dateValue
+      return match.date
     })
   }
 
@@ -35,8 +35,8 @@ export const useMatchesStore = defineStore('matches', () => {
   })
 
   function findNextRound() {
-    if (nextMatch.value) return nextMatch.value.round.value
-    return notPostponedMatches.value[notPostponedMatches.value.length - 1]?.round.value
+    if (nextMatch.value) return nextMatch.value.round
+    return notPostponedMatches.value[notPostponedMatches.value.length - 1]?.round
   }
 
   const currentRound = computed({
@@ -64,7 +64,7 @@ export const useMatchesStore = defineStore('matches', () => {
   }
 
   function getRoundMatches(): Match[] {
-    return matches.value.filter(match => match.round.value === currentRound.value) as Match[]
+    return matches.value.filter(match => match.round === currentRound.value) as Match[]
   }
 
   return {

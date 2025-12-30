@@ -7,10 +7,7 @@ export default defineNuxtPlugin(() => {
   const posthogClient = posthog.init(runtimeConfig.public.posthogPublicKey, {
     api_host: runtimeConfig.public.posthogHost,
     person_profiles: 'always', // or 'always' to create profiles for anonymous users as well
-    capture_pageview: false, // we add manual pageview capturing below
-    loaded: posthog => {
-      if (import.meta.env.MODE === 'development') posthog.debug()
-    }
+    capture_pageview: false // we add manual pageview capturing below
   })
 
   //identify the user

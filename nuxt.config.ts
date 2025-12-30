@@ -50,7 +50,8 @@ export default defineNuxtConfig({
     '/': { ssr: true },
     '/admin/consistencia': { ssr: false },
     '/admin/partidas': { ssr: false },
-    '/generate': { ssr: false }
+    '/generate': { ssr: false },
+    '/matches': { ssr: false }
   },
   app: {
     head: {

@@ -58,6 +58,7 @@ function setPickedPartida(partida: Match) {
         <template #homeTeam_name-cell="{ getValue, row }">
           <div class="flex justify-end">
             <TeamBadge
+              reverse
               :name="getValue()"
               :emblem="row.original.homeTeam.emblem"
             />

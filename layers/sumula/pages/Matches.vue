@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui'
 import { useLazyAsyncData } from 'nuxt/app'
-import { onMounted, provide, ref } from 'vue'
+import { computed, onMounted, provide, ref } from 'vue'
 import type { Match } from '../../shared/entities/Match'
 import { usePredictionsStore } from '../../predictions/application/stores/Predictions.store'
 import { MatchSchema } from '../../shared/schemas/Match.schema'
 import { MatchesViewModel } from '../viewmodels/Matches.viewmodel'
+import { TeamSchema } from '../../shared/schemas/Team.schema'
 
 onMounted(() => (usePredictionsStore().syncing = false))
 
@@ -24,6 +25,16 @@ const { data, status, refresh } = useLazyAsyncData(
   {
     transform: response => MatchSchema.array().parse(response)
   }
+)
+
+const { data: teams } = useLazyAsyncData('generate/teams', () => $fetch('/api/allTeams'), {
+  transform: response => TeamSchema.array().parse(response)
+})
+
+const items = computed(() =>
+  teams.value?.map(team => {
+    return { label: team.name, value: team.id }
+  })
 )
 
 const colunas: TableColumn<Match>[] = [
@@ -45,14 +56,30 @@ function setPickedPartida(partida: Match) {
   vm.selectedMatch.value = partida
   opened.value = true
 }
+
+const homeTeam = ref()
+
+const filteredMatches = computed(() => {
+  if (!homeTeam.value) return data.value
+
+  return data.value?.filter(match => match.homeTeam.id === homeTeam.value)
+})
 </script>
 
 <template>
   <div>
+    <USelectMenu
+      v-model="homeTeam"
+      value-key="value"
+      :items="items"
+      placeholder="Selecione o mandante"
+      clear
+      class="mb-4"
+    />
     <UCard variant="subtle">
       <UTable
         :loading="status !== 'success'"
-        :data="data"
+        :data="filteredMatches"
         :columns="colunas"
       >
         <template #homeTeam_name-cell="{ getValue, row }">

@@ -9,14 +9,15 @@ useHead({
   title: 'Simulando'
 })
 
-const { data: predictions, status: predictionsStatus } = useAsyncData(
-  'standings/predictions',
-  () => $fetch('/api/predictions'),
-  {
-    transform: response => PredictionSchema.array().parse(response),
-    default: () => []
-  }
-)
+const {
+  data: predictions,
+  status: predictionsStatus,
+  execute: getPredictions
+} = useAsyncData('standings/predictions', () => $fetch('/api/predictions'), {
+  transform: response => PredictionSchema.array().parse(response),
+  default: () => [],
+  immediate: false
+})
 
 watch(predictionsStatus, value => {
   if (value === 'success') {
@@ -38,6 +39,10 @@ watch(matchesStatus, value => {
   if (value === 'success') {
     useMatchesStore().setMatches(matches.value!)
   }
+})
+
+onMounted(() => {
+  if (useSupabaseUser().value) getPredictions()
 })
 </script>
 

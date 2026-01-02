@@ -4,6 +4,8 @@ export default defineEventHandler(async event => {
   const client = serverSupabaseServiceRole(event)
   const user = await serverSupabaseUser(event)
 
+  if (!user) return
+
   if (user) {
     const { data } = await client
       .from('simulacao')

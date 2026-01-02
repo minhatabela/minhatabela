@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
     .select('*, visitante(*), mandante(*), sede(*)')
     .not('rodada', 'is', null)
     .match(rodada ? { rodada } : {})
-    .eq('season', 2025)
+    .eq('season', 2026)
 
   return data
 })

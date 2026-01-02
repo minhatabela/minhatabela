@@ -9,6 +9,7 @@ export default defineEventHandler(async event => {
       .from('simulacao')
       .select('*, partida(*, mandante(*), visitante(*), sede(*))')
       .eq('user_id', user.id)
+      .eq('season', 2026)
 
     return data
   }

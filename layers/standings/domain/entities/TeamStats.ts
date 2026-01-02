@@ -27,7 +27,7 @@ export class TeamStats implements ITeamStats {
   }
 
   get perf(): number {
-    return Math.floor((this.points / (this.matchesCount * 3)) * 100)
+    return Math.floor((this.points / (this.matchesCount * 3)) * 100) || 0
   }
 
   private validMatches(): Match[] {

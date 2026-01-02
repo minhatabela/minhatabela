@@ -140,8 +140,8 @@ const payload = computed(() => {
     <UButton
       class="mt-4"
       label="Gerar calendário"
-      @click="setupCalendar"
       :disabled="selectedTeams.length != 20"
+      @click="setupCalendar"
     />
   </div>
 </template>

@@ -36,7 +36,9 @@ export const useMatchesStore = defineStore('matches', () => {
 
   function findNextRound() {
     if (nextMatch.value) return nextMatch.value.round
-    return notPostponedMatches.value[notPostponedMatches.value.length - 1]?.round
+    else if (notPostponedMatches.value.length > 0)
+      return notPostponedMatches.value[notPostponedMatches.value.length - 1]?.round
+    return matches.value.at(0)?.round
   }
 
   const currentRound = computed({

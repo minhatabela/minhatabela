@@ -109,12 +109,12 @@ function deletePredictedMatch() {
         >
         <UBadge
           v-else
-          color="error"
+          color="neutral"
           icon="i-lucide-calendar-sync"
           class="rounded-full"
           size="sm"
           variant="outline"
-          label="postergada"
+          label="A definir"
         />
         <span class="text-xs text-slate-400">{{ match.vanue?.getValue }}</span>
       </div>

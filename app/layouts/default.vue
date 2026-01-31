@@ -8,7 +8,7 @@ const user = useSupabaseUser()
   <UApp>
     <UToaster />
     <div class="w-full flex justify-center items-center">
-      <div class="max-w-35045 w-full h-20 flex items-center justify-between px-8 lg:px-0">
+      <div class="max-w-350 w-full h-20 flex items-center justify-between px-8 lg:px-0">
         <h1 class="inline-block dark:text-white text-gray-700 text-2xl font-bold">
           minhatabela
           <UBadge

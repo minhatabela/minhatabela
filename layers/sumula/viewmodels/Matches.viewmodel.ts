@@ -1,3 +1,4 @@
+import { type CalendarDate, CalendarDateTime, Time } from '@internationalized/date'
 import type { Match } from '../../shared/entities/Match'
 import { useMatchesManagementStore } from '../stores/MatchesManagement.store'
 
@@ -32,7 +33,9 @@ export class MatchesViewModel {
 
   homeGoals = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.homeGoals || null
+      return isDefined(useMatchesManagementStore().selectedMatch?.homeGoals)
+        ? useMatchesManagementStore().selectedMatch?.homeGoals
+        : null
     },
     set(goals: number) {
       useMatchesManagementStore().selectedMatch!.homeGoals = goals
@@ -41,7 +44,9 @@ export class MatchesViewModel {
 
   awayGoals = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.awayGoals || null
+      return isDefined(useMatchesManagementStore().selectedMatch?.awayGoals)
+        ? useMatchesManagementStore().selectedMatch?.awayGoals
+        : null
     },
     set(goals: number) {
       useMatchesManagementStore().selectedMatch!.awayGoals = goals
@@ -50,19 +55,38 @@ export class MatchesViewModel {
 
   date = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.date?.toDateString()
+      const selectedDate = useMatchesManagementStore().selectedMatch?.date
+      if (!selectedDate) return
+      return new CalendarDateTime(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() - 1,
+        selectedDate.getDate()
+      )
     },
-    set(date: Date) {
-      useMatchesManagementStore().selectedMatch!.date = date
+    set(date: CalendarDate) {
+      if (!date) return
+
+      const selectedDate = useMatchesManagementStore().selectedMatch?.date
+
+      console.log('date: ', date)
+      useMatchesManagementStore().selectedMatch!.date = new Date(
+        date.year,
+        date.month - 1,
+        date.day,
+        selectedDate?.getHours() || 0,
+        selectedDate?.getMinutes() || 0
+      )
     }
   })
 
   time = computed({
     get() {
-      return useMatchesManagementStore().selectedMatch?.time
+      const selectedTime = useMatchesManagementStore().selectedMatch?.date
+      if (!selectedTime) return
+      return new Time(selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds())
     },
-    set(time: string) {
-      useMatchesManagementStore().selectedMatch!.time = time
+    set(time: Time) {
+      useMatchesManagementStore().selectedMatch!.date?.setHours(time.hour, time.minute, time.second)
     }
   })
 }

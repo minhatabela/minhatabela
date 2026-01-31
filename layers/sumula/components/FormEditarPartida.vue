@@ -3,6 +3,7 @@ import type { Vanue } from '~~/layers/shared/entities/Vanue'
 import type { MatchesViewModel } from '../viewmodels/Matches.viewmodel'
 import { VanueSchema } from '../../shared/schemas/Vanue.schema'
 import { useMatchesManagementStore } from '../stores/MatchesManagement.store'
+import { DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 const vm = inject<MatchesViewModel>('matches-view-model')!
 
@@ -16,8 +17,7 @@ const toast = useToast()
 const createMatch = computed(() => {
   return {
     rodada: vm.selectedMatch.value?.round,
-    data: vm.selectedMatch.value?.date?.toISOString(),
-    hora: vm.selectedMatch.value?.time,
+    data: vm.selectedMatch.value?.date,
     gols_mandante: vm.homeGoals.value,
     gols_visitante: vm.awayGoals.value,
     mandante: vm.selectedMatch.value?.homeTeam.id,
@@ -25,6 +25,8 @@ const createMatch = computed(() => {
     sede: vm.selectedMatch.value?.vanue?.id
   }
 })
+
+const inputDate = useTemplateRef('inputDate')
 
 const { execute: acceptChanges, status: statusChanges } = useAsyncData(
   'changes',
@@ -72,6 +74,10 @@ watch(statusChanges, value => {
   } else if (value === 'error') {
     toast.add({ description: 'Erro ao atualizar partida', color: 'error' })
   }
+})
+
+const df = new DateFormatter('pt-BR', {
+  dateStyle: 'long'
 })
 
 onUnmounted(() => (vm.selectedMatch.value = undefined))
@@ -174,19 +180,34 @@ onUnmounted(() => (vm.selectedMatch.value = undefined))
         <div class="flex gap-4">
           <label class="flex flex-col gap-2 w-3/2">
             Data
-            <UInput
-              v-model="vm.date.value"
-              type="date"
-              placeholder="Selecione a data"
-            />
-          </label>
-          <label class="flex flex-col gap-2">
-            Hora
-            <UInput
-              v-model="vm.time.value"
-              type="time"
-              placeholder="Selecione a data"
-            />
+
+            <UPopover :reference="inputDate?.inputsRef[3]?.$el">
+              <UButton
+                color="neutral"
+                variant="subtle"
+                icon="i-lucide-calendar"
+              >
+                {{
+                  vm.date.value
+                    ? df.format(vm.date.value.toDate(getLocalTimeZone()))
+                    : 'Selecione a data e hora'
+                }}
+              </UButton>
+              <template #content>
+                <div class="flex flex-col items-center justify-center">
+                  <UCalendar
+                    v-model="vm.date.value"
+                    :year-controls="false"
+                    :fixed-weeks="true"
+                    class="p-2"
+                  />
+                  <UInputTime
+                    v-model="vm.time.value"
+                    :hour-cycle="24"
+                  />
+                </div>
+              </template>
+            </UPopover>
           </label>
         </div>
       </div>

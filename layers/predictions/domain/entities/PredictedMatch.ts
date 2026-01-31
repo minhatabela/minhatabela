@@ -14,13 +14,12 @@ export class PredictedMatch extends Match implements IObservable<IPredictedMatch
     override readonly awayTeam: Team,
     override readonly round?: number,
     override readonly date?: Date,
-    override readonly time?: string,
     override readonly vanue?: Vanue,
     override homeGoals?: number,
     override awayGoals?: number,
     readonly predictedMatchId?: string
   ) {
-    super(id, season, homeTeam, awayTeam, round, date, time, vanue, homeGoals, awayGoals)
+    super(id, season, homeTeam, awayTeam, round, date, vanue, homeGoals, awayGoals)
   }
 
   addObserver(observer: IPredictedMatchObserver): void {

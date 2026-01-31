@@ -20,7 +20,6 @@ const newPrediction = computed(
       match.awayTeam,
       match.round,
       match.date,
-      match.time,
       match.vanue,
       undefined,
       undefined,

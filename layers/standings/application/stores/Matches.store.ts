@@ -10,11 +10,6 @@ export const useMatchesStore = defineStore('matches', () => {
 
   function setMatches(_matches: Match[]): void {
     matches.value = orderBy(_matches, match => {
-      if (match.time) {
-        const [hours, mins, secs] = match.time.split(':').map(Number)
-        return match.date!.setHours(hours!, mins, secs)
-      }
-
       return match.date
     })
   }

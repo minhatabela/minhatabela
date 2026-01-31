@@ -12,7 +12,6 @@ export class Match {
     readonly awayTeam: Team,
     public round?: number,
     public date?: Date,
-    public time?: string,
     public vanue?: Vanue,
     public homeGoals?: number,
     public awayGoals?: number
@@ -23,7 +22,7 @@ export class Match {
   }
 
   get isPostponed(): boolean {
-    return !isDefined(this.date) || !isDefined(this.time)
+    return !isDefined(this.date)
   }
 
   get isThisWeek(): boolean {
@@ -32,11 +31,8 @@ export class Match {
   }
 
   get realizationDateTime(): string | undefined {
-    if (!this.date || !this.time) return undefined
-
-    const [hours, mins, secs] = this.time.split(':').map(Number)
-
-    return format(this.date.setHours(hours!, mins, secs), 'd MMM HH:mm', { locale: ptBR })
+    if (!this.date) return undefined
+    return format(this.date, 'd MMM HH:mm', { locale: ptBR })
   }
 
   get status() {

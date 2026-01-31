@@ -18,7 +18,6 @@ export const PredictionSchema = z
         data.partida.awayTeam,
         data.partida.round,
         data.partida.date,
-        data.partida.time,
         data.partida.vanue,
         data.gols_mandante,
         data.gols_visitante,

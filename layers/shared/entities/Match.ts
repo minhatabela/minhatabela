@@ -37,9 +37,9 @@ export class Match {
 
   get status() {
     if (!isUndefined(this.awayGoals) && !isUndefined(this.homeGoals)) {
-      return { label: 'Finalizada', color: 'success', icon: 'i-lucide-check-circle' }
+      return { label: 'Finalizada', color: 'success' as const, icon: 'i-lucide-check-circle' }
     }
 
-    return { label: 'Não iniciada', color: 'neutral', icon: 'i-lucide-pause' }
+    return { label: 'Não iniciada', color: 'neutral' as const, icon: 'i-lucide-pause' }
   }
 }

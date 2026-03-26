@@ -15,7 +15,7 @@ export const useMatchesStore = defineStore('matches', () => {
   }
 
   const nextMatch = computed(() => {
-    return matches.value.find(match => !match.isFinished && !match.isPostponed && match.isThisWeek)
+    return matches.value.find(match => !match.isFinished && !match.isPostponed)
   })
 
   const notPostponedMatches = computed(() => matches.value.filter(match => !match.isPostponed))
